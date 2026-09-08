@@ -9,7 +9,7 @@ and defaults to `results-reactome.json`.
 | `accuracy_by_db.py` | Accuracy per DB × difficulty, collapsing all run variations (highest retry level; averaged over example count, skills, repetitions). |
 | `accuracy_by_variation.py` | Accuracy per (model, db, skills, examples, retries) × difficulty — one row per variation, so you can see the effect of skill injection, few-shot count, and retry budget. |
 | `incorrect_queries.py` | Every failing run: the question, its config, the expected and generated queries, and the expected vs actual answer. For debugging *what* the model got wrong. Accepts `key=value` filters (`db=`, `difficulty=`, `model=`, `examples=`, `skills=on\|off`). |
-| `typedb_errors.py` | What kind of errors the failing TypeDB first attempts raise — syntax vs type vs other semantic vs runtime, classified by TypeDB error code, plus harness-level outcomes (truncation, timeout, spurious UNANSWERABLE) — overall and by skills × examples. `model=<substring>` filters. |
+| `query_errors.py` | What kind of errors the failing first attempts raise, for one DB (`db=typedb\|neo4j\|sql`, default typedb) — syntax vs type vs semantic vs runtime, classified by TypeDB error code, Neo4j status code plus message, or MySQL message pattern — plus harness-level outcomes (truncation, timeout, spurious UNANSWERABLE), overall and by skills × examples. `model=<substring>` filters. |
 | `failure_modes.py` | How the failing runs fail, per DB: visible error vs silently wrong answer, on the first attempt and after the full retry budget, plus a first-attempt breakdown by skills × examples showing whether in-context resources reduce the error rate. Answerable questions only; `model=<substring>` filters. |
 | `token_usage.py` | Total model tokens used (input/output), broken down by model and DB, plus run and call counts. |
 | `query_time.py` | How long the generated queries took to execute, by model and DB (median/mean/p90/slowest). Accurate runs only — a wrong query's execution time is meaningless — counting the final attempt of each. Pass `baseline=<path>` from `verify --timings` for a `vs ref` ratio column. |
@@ -20,6 +20,7 @@ and defaults to `results-reactome.json`.
 analysis/accuracy_by_db.py results-reactome.json
 analysis/accuracy_by_variation.py results-reactome.json
 analysis/incorrect_queries.py results-reactome.json db=sql difficulty=hard
+analysis/query_errors.py results-reactome.json db=neo4j
 analysis/token_usage.py results-reactome.json
 analysis/query_time.py results-reactome.json baseline=ref-timings.json
 analysis/format_questions.py data/reactome/questions.json data/reactome/questions-review.md
