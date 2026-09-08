@@ -1,0 +1,27 @@
+name: test
+
+on:
+  push:
+  pull_request:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # The runner image ships rustup with a recent stable toolchain; update
+      # it in place rather than pulling in a third-party toolchain action.
+      - run: rustup update stable && rustup default stable
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: cargo-${{ runner.os }}-${{ hashFiles('Cargo.lock') }}
+      # Live DB tests are #[ignore]d and need running servers; everything
+      # else runs hermetically.
+      - run: cargo test --workspace

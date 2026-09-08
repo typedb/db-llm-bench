@@ -1,0 +1,8 @@
+given
+    $isoform: integer,
+    $parent_gene_product: integer;
+match
+$p0 isa reference-isoform, has db-id == $isoform;
+$p1 isa reference-gene-product, has db-id == $parent_gene_product;
+insert
+$x isa isoform-parenthood, links (isoform: $p0, parent-gene-product: $p1);

@@ -1,0 +1,9 @@
+given
+    $containing_set: integer,
+    $member: integer,
+    $ordering: integer;
+match
+$p0 isa entity-set, has db-id == $containing_set;
+$p1 isa physical-entity, has db-id == $member;
+insert
+$x isa set-membership, links (containing-set: $p0, member: $p1), has ordering == $ordering;

@@ -1,0 +1,8 @@
+given
+    $external_thing: integer,
+    $reference_database: integer;
+match
+$p0 isa database-object, has db-id == $external_thing;
+$p1 isa reference-database, has db-id == $reference_database;
+insert
+$x isa database-of, links (external-thing: $p0, reference-database: $p1);

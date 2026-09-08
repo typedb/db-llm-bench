@@ -1,0 +1,10 @@
+[package]
+name = "provider-http-util"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+bench-core.workspace = true
+reqwest.workspace = true
+serde.workspace = true
+serde_json.workspace = true

@@ -1,0 +1,8 @@
+given
+    $preceding_event: integer,
+    $following_event: integer;
+match
+$p0 isa event, has db-id == $preceding_event;
+$p1 isa event, has db-id == $following_event;
+insert
+$x isa event-precedence, links (preceding-event: $p0, following-event: $p1);

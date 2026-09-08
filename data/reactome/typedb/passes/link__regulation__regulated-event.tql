@@ -1,0 +1,8 @@
+given
+    $db_id: integer,
+    $regulated_event: integer;
+match
+$x isa regulation, has db-id == $db_id;
+$p isa reaction-like-event, has db-id == $regulated_event;
+insert
+$x links (regulated-event: $p);

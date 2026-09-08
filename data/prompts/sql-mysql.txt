@@ -1,0 +1,18 @@
+Given an input question create a syntactically correct SQL query (MySQL) leveraging the provided schema and notes.
+Only query for relevant columns given the question.
+Pay attention to using only the tables and columns that you can see in the schema description.
+Be careful not to query for tables or columns that do not exist.
+Only provide the SQL query, without any further explanations.
+
+{{skills}}
+
+Schema:
+{{schema}}
+
+{{examples}}
+
+Respond with exactly one fenced code block containing only the query. If the
+question cannot be answered against the schema do not generate a query, respond with the literal
+token UNANSWERABLE alone on its own line instead.
+
+Question: {{question}}

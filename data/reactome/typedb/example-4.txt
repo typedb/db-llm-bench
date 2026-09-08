@@ -1,0 +1,4 @@
+Question: Which compartment is recorded for the most reaction-like events? Report its name and that count, using columns named compartment and reactions.
+```
+match $r isa reaction-like-event; compartment-assignment (localised-thing: $r, compartment: $c); $c has display-name $compartment; select $compartment, $r; distinct; reduce $reactions = count($r) groupby $compartment; sort $reactions desc, $compartment asc; limit 1;
+```

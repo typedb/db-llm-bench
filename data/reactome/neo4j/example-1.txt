@@ -1,0 +1,6 @@
+Question: How many events have a related species that is not also one of their own species?
+```
+MATCH (e:Event)-[:relatedSpecies]->(rs:Species)
+WHERE NOT (e)-[:species]->(rs)
+RETURN count(DISTINCT e)
+```

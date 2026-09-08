@@ -1,0 +1,8 @@
+given
+    $localised_thing: integer,
+    $compartment: integer;
+match
+$p0 isa database-object, has db-id == $localised_thing;
+$p1 isa go-cellular-component, has db-id == $compartment;
+insert
+$x isa compartment-assignment, links (localised-thing: $p0, compartment: $p1);

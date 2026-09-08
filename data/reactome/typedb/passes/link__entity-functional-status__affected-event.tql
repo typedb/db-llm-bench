@@ -1,0 +1,8 @@
+given
+    $db_id: integer,
+    $affected_event: integer;
+match
+$x isa entity-functional-status, has db-id == $db_id;
+$p isa reaction-like-event, has db-id == $affected_event;
+insert
+$x links (affected-event: $p);

@@ -1,0 +1,10 @@
+Question: Across Homo sapiens reaction-like events, how many pairings of an event with one of its compartments are recorded? Count each event-and-compartment pairing separately, so an event assigned three compartments contributes three pairings.
+```
+match
+  $r isa reaction-like-event;
+  species-assignment (classified-thing: $r, species: $sp); $sp has display-name "Homo sapiens";
+  compartment-assignment (localised-thing: $r, compartment: $c);
+select $r, $c;
+distinct;
+reduce $count = count;
+```

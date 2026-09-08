@@ -1,0 +1,8 @@
+given
+    $containing_set: integer,
+    $candidate: integer;
+match
+$p0 isa entity-set, has db-id == $containing_set;
+$p1 isa physical-entity, has db-id == $candidate;
+insert
+$x isa candidate-membership, links (containing-set: $p0, candidate: $p1);

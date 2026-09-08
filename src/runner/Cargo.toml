@@ -1,0 +1,17 @@
+[package]
+name = "bench-runner"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+bench-core.workspace = true
+thiserror.workspace = true
+tokio = { workspace = true, features = ["time"] }
+
+[dev-dependencies]
+bench-output.workspace = true
+db-dummy.workspace = true
+provider-dummy.workspace = true
+async-trait.workspace = true
+serde_json.workspace = true
+tokio = { workspace = true, features = ["test-util"] }

@@ -1,0 +1,8 @@
+given
+    $encapsulating_pathway: integer,
+    $encapsulated: integer;
+match
+$p0 isa pathway, has db-id == $encapsulating_pathway;
+$p1 isa pathway, has db-id == $encapsulated;
+insert
+$x isa encapsulated-event, links (encapsulating-pathway: $p0, encapsulated: $p1);

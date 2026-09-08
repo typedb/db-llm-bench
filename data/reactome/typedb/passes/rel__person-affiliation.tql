@@ -1,0 +1,8 @@
+given
+    $affiliated_person: integer,
+    $affiliation: integer;
+match
+$p0 isa person, has db-id == $affiliated_person;
+$p1 isa affiliation, has db-id == $affiliation;
+insert
+$x isa person-affiliation, links (affiliated-person: $p0, affiliation: $p1);

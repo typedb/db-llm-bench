@@ -1,0 +1,8 @@
+given
+    $interacting_thing: integer,
+    $other_cell_entity: integer;
+match
+$p0 isa database-object, has db-id == $interacting_thing;
+$p1 isa physical-entity, has db-id == $other_cell_entity;
+insert
+$x isa entity-on-other-cell, links (interacting-thing: $p0, other-cell-entity: $p1);

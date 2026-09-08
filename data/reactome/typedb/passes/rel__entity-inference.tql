@@ -1,0 +1,8 @@
+given
+    $inferred_entity: integer,
+    $source_entity: integer;
+match
+$p0 isa physical-entity, has db-id == $inferred_entity;
+$p1 isa physical-entity, has db-id == $source_entity;
+insert
+$x isa entity-inference, links (inferred-entity: $p0, source-entity: $p1);

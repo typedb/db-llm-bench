@@ -1,0 +1,8 @@
+given
+    $deletion: integer,
+    $deleted_thing: integer;
+match
+$p0 isa deleted, has db-id == $deletion;
+$p1 isa deleted-instance, has db-id == $deleted_thing;
+insert
+$x isa deleted-instance-record, links (deletion: $p0, deleted-thing: $p1);

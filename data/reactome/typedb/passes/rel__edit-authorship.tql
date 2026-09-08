@@ -1,0 +1,9 @@
+given
+    $authored_edit: integer,
+    $edit_author: integer,
+    $ordering: integer;
+match
+$p0 isa instance-edit, has db-id == $authored_edit;
+$p1 isa person, has db-id == $edit_author;
+insert
+$x isa edit-authorship, links (authored-edit: $p0, edit-author: $p1), has ordering == $ordering;

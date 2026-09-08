@@ -1,0 +1,8 @@
+given
+    $evidencing_reference: integer,
+    $evidenced_regulation: integer;
+match
+$p0 isa regulation-reference, has db-id == $evidencing_reference;
+$p1 isa regulation, has db-id == $evidenced_regulation;
+insert
+$x isa regulation-evidence, links (evidencing-reference: $p0, evidenced-regulation: $p1);

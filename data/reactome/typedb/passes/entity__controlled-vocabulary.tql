@@ -1,0 +1,12 @@
+given
+    $db_id: integer,
+    $display_name: string?,
+    $schema_class: string?,
+    $st_id: string?,
+    $old_st_id: string?;
+insert
+$x isa controlled-vocabulary, has db-id == $db_id;
+try { $x has display-name == $display_name; };
+try { $x has schema-class == $schema_class; };
+try { $x has st-id == $st_id; };
+try { $x has old-st-id == $old_st_id; };

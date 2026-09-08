@@ -1,0 +1,10 @@
+given
+    $containing_complex: integer,
+    $component: integer,
+    $ordering: integer,
+    $stoichiometry: integer;
+match
+$p0 isa complex, has db-id == $containing_complex;
+$p1 isa physical-entity, has db-id == $component;
+insert
+$x isa complex-composition, links (containing-complex: $p0, component: $p1), has ordering == $ordering, has stoichiometry == $stoichiometry;

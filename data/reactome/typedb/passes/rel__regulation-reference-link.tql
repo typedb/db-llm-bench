@@ -1,0 +1,8 @@
+given
+    $referencing_reaction: integer,
+    $regulation_ref: integer;
+match
+$p0 isa reaction-like-event, has db-id == $referencing_reaction;
+$p1 isa regulation-reference, has db-id == $regulation_ref;
+insert
+$x isa regulation-reference-link, links (referencing-reaction: $p0, regulation-ref: $p1);

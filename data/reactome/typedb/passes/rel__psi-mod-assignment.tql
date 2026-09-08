@@ -1,0 +1,8 @@
+given
+    $modified_thing: integer,
+    $psi_mod_term: integer;
+match
+$p0 isa database-object, has db-id == $modified_thing;
+$p1 isa psi-mod, has db-id == $psi_mod_term;
+insert
+$x isa psi-mod-assignment, links (modified-thing: $p0, psi-mod-term: $p1);

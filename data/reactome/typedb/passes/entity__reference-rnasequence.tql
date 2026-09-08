@@ -1,0 +1,16 @@
+given
+    $db_id: integer,
+    $display_name: string?,
+    $schema_class: string?,
+    $st_id: string?,
+    $old_st_id: string?,
+    $sequence_length: integer?,
+    $identifier: string?;
+insert
+$x isa reference-rnasequence, has db-id == $db_id;
+try { $x has display-name == $display_name; };
+try { $x has schema-class == $schema_class; };
+try { $x has st-id == $st_id; };
+try { $x has old-st-id == $old_st_id; };
+try { $x has sequence-length == $sequence_length; };
+try { $x has identifier == $identifier; };

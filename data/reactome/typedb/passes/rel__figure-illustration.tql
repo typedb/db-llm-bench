@@ -1,0 +1,8 @@
+given
+    $illustrated_thing: integer,
+    $figure: integer;
+match
+$p0 isa database-object, has db-id == $illustrated_thing;
+$p1 isa figure, has db-id == $figure;
+insert
+$x isa figure-illustration, links (illustrated-thing: $p0, figure: $p1);

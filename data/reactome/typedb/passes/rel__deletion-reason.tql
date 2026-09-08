@@ -1,0 +1,8 @@
+given
+    $deletion: integer,
+    $reason: integer;
+match
+$p0 isa deleted, has db-id == $deletion;
+$p1 isa deleted-controlled-vocabulary, has db-id == $reason;
+insert
+$x isa deletion-reason, links (deletion: $p0, reason: $p1);

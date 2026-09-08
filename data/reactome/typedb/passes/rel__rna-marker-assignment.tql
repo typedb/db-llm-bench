@@ -1,0 +1,8 @@
+given
+    $marked_cell: integer,
+    $rna_marker: integer;
+match
+$p0 isa cell, has db-id == $marked_cell;
+$p1 isa entity-with-accessioned-sequence, has db-id == $rna_marker;
+insert
+$x isa rna-marker-assignment, links (marked-cell: $p0, rna-marker: $p1);

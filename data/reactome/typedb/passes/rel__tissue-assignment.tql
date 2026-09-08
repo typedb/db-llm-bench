@@ -1,0 +1,8 @@
+given
+    $localised_thing: integer,
+    $tissue: integer;
+match
+$p0 isa database-object, has db-id == $localised_thing;
+$p1 isa anatomy, has db-id == $tissue;
+insert
+$x isa tissue-assignment, links (localised-thing: $p0, tissue: $p1);

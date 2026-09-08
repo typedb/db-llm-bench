@@ -1,0 +1,8 @@
+given
+    $ontology_child: integer,
+    $ontology_parent: integer;
+match
+$p0 isa database-object, has db-id == $ontology_child;
+$p1 isa database-object, has db-id == $ontology_parent;
+insert
+$x isa ontology-parenthood, links (ontology-child: $p0, ontology-parent: $p1);

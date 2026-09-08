@@ -1,0 +1,8 @@
+given
+    $typed_reaction: integer,
+    $assigned_reaction_type: integer;
+match
+$p0 isa reaction-like-event, has db-id == $typed_reaction;
+$p1 isa reaction-type, has db-id == $assigned_reaction_type;
+insert
+$x isa reaction-type-assignment, links (typed-reaction: $p0, assigned-reaction-type: $p1);

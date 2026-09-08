@@ -1,0 +1,14 @@
+# Working trees get LF on every platform, not just in the index.
+#
+# Without this, a Windows clone with core.autocrlf=true checks the shell scripts
+# out as CRLF, and the Reactome TypeDB loader dies three seconds in: the
+# container bind-mounts data/reactome and runs `bash /reactome/typedb/seed.sh`,
+# whose `set -euo pipefail` arrives as `pipefail\r` and is rejected as an
+# invalid option name. load.sh is exec'd directly and fails the same way. The
+# only symptom is that one line, so it reads as a script bug rather than a
+# checkout artifact.
+*               text=auto eol=lf
+
+# The one tracked binary. Marked explicitly rather than left to text=auto's
+# content sniffing, which is a heuristic.
+*.gz            binary

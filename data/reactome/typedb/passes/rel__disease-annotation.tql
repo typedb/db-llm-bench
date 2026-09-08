@@ -1,0 +1,8 @@
+given
+    $diseased_thing: integer,
+    $disease: integer;
+match
+$p0 isa database-object, has db-id == $diseased_thing;
+$p1 isa external-ontology, has db-id == $disease;
+insert
+$x isa disease-annotation, links (diseased-thing: $p0, disease: $p1);

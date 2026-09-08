@@ -1,0 +1,8 @@
+given
+    $varied_status: integer,
+    $variant_term: integer;
+match
+$p0 isa functional-status, has db-id == $varied_status;
+$p1 isa sequence-ontology, has db-id == $variant_term;
+insert
+$x isa structural-variant-assignment, links (varied-status: $p0, variant-term: $p1);

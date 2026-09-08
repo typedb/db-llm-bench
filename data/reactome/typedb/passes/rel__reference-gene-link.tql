@@ -1,0 +1,8 @@
+given
+    $referring_sequence: integer,
+    $gene_sequence: integer;
+match
+$p0 isa reference-sequence, has db-id == $referring_sequence;
+$p1 isa reference-dnasequence, has db-id == $gene_sequence;
+insert
+$x isa reference-gene-link, links (referring-sequence: $p0, gene-sequence: $p1);

@@ -1,0 +1,4 @@
+Question: Which compartment is recorded for the most reaction-like events? Report its name and that count, using columns named compartment and reactions.
+```
+SELECT d._displayName AS compartment, COUNT(DISTINCT rc.DB_ID) AS reactions FROM ReactionlikeEvent_2_compartment rc JOIN DatabaseObject d ON d.DB_ID = rc.compartment GROUP BY rc.compartment, d._displayName ORDER BY reactions DESC, compartment ASC LIMIT 1;
+```

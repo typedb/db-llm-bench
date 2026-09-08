@@ -1,0 +1,18 @@
+Given an input question create a syntactically correct TypeQL 3.x query leveraging the provided schema and notes.
+Only query for relevant types given the question.
+Pay attention to using only the types that you can see in the schema description.
+Be careful not to query for types that do not exist.
+Only provide the TypeQL 3.x query, without any further explanations.
+
+{{skills}}
+
+Schema:
+{{schema}}
+
+{{examples}}
+
+Respond with exactly one fenced code block containing only the query. If the
+question cannot be answered against the schema do not generate a query, respond with the literal
+token UNANSWERABLE alone on its own line instead.
+
+Question: {{question}}

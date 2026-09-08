@@ -1,0 +1,8 @@
+given
+    $localised_thing: integer,
+    $location: integer;
+match
+$p0 isa physical-entity, has db-id == $localised_thing;
+$p1 isa go-cellular-component, has db-id == $location;
+insert
+$x isa included-location, links (localised-thing: $p0, location: $p1);

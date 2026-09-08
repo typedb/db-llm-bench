@@ -1,0 +1,8 @@
+given
+    $published_work: integer,
+    $publisher: integer;
+match
+$p0 isa book, has db-id == $published_work;
+$p1 isa affiliation, has db-id == $publisher;
+insert
+$x isa publication-publisher, links (published-work: $p0, publisher: $p1);

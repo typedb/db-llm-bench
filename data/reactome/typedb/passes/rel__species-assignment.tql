@@ -1,0 +1,8 @@
+given
+    $classified_thing: integer,
+    $species: integer;
+match
+$p0 isa database-object, has db-id == $classified_thing;
+$p1 isa taxon, has db-id == $species;
+insert
+$x isa species-assignment, links (classified-thing: $p0, species: $p1);

@@ -1,0 +1,8 @@
+given
+    $tracker: integer,
+    $updated_object: integer;
+match
+$p0 isa update-tracker, has db-id == $tracker;
+$p1 isa database-object, has db-id == $updated_object;
+insert
+$x isa update-tracking, links (tracker: $p0, updated-object: $p1);

@@ -1,0 +1,12 @@
+[package]
+name = "provider-claude"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+bench-core.workspace = true
+provider-http-util.workspace = true
+async-trait.workspace = true
+reqwest.workspace = true
+serde.workspace = true
+serde_json.workspace = true

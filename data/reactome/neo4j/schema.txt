@@ -1,0 +1,2308 @@
+# Reactome graph schema, derived from CALL db.schema.visualization().
+# Every node also carries the labels of its ancestors, listed under 'is a'.
+# A pattern written with a general label also matches its subtypes.
+
+## Label hierarchy
+
+AbstractModifiedResidue is a DatabaseObject
+Affiliation is a DatabaseObject
+Anatomy is a DatabaseObject, ExternalOntology
+BlackBoxEvent is a DatabaseObject, Event, ReactionLikeEvent
+Book is a DatabaseObject, Publication
+CandidateSet is a DatabaseObject, EntitySet, PhysicalEntity
+CatalystActivity is a DatabaseObject
+CatalystActivityReference is a ControlReference, DatabaseObject
+Cell is a DatabaseObject, PhysicalEntity
+CellDevelopmentStep is a DatabaseObject, Event, ReactionLikeEvent
+CellLineagePath is a DatabaseObject, Event, Pathway
+CellType is a DatabaseObject, ExternalOntology
+ChemicalDrug is a DatabaseObject, Drug, PhysicalEntity
+Compartment is a DatabaseObject, GO_CellularComponent, GO_Term
+Complex is a DatabaseObject, PhysicalEntity
+ControlReference is a DatabaseObject
+ControlledVocabulary is a DatabaseObject
+CrosslinkedResidue is a AbstractModifiedResidue, DatabaseObject, TranslationalModification
+DBInfo is a DatabaseObject, MetaDatabaseObject, Release
+DatabaseIdentifier is a DatabaseObject
+DefinedSet is a DatabaseObject, EntitySet, PhysicalEntity
+Deletable is a DatabaseObject
+Deleted is a DatabaseObject, MetaDatabaseObject
+DeletedControlledVocabulary is a ControlledVocabulary, DatabaseObject
+DeletedInstance is a DatabaseObject, MetaDatabaseObject
+Depolymerisation is a DatabaseObject, Event, ReactionLikeEvent
+Disease is a DatabaseObject, ExternalOntology
+Drug is a DatabaseObject, PhysicalEntity
+DrugActionType is a ControlledVocabulary, DatabaseObject, ReactionType
+EntityFunctionalStatus is a DatabaseObject
+EntitySet is a DatabaseObject, PhysicalEntity
+EntityWithAccessionedSequence is a DatabaseObject, GenomeEncodedEntity, PhysicalEntity
+Event is a DatabaseObject
+EvidenceType is a DatabaseObject, ExternalOntology
+ExternalOntology is a DatabaseObject
+FailedReaction is a DatabaseObject, Event, ReactionLikeEvent
+Figure is a DatabaseObject
+FragmentDeletionModification is a AbstractModifiedResidue, DatabaseObject, FragmentModification, GeneticallyModifiedResidue
+FragmentInsertionModification is a AbstractModifiedResidue, DatabaseObject, FragmentModification, GeneticallyModifiedResidue
+FragmentModification is a AbstractModifiedResidue, DatabaseObject, GeneticallyModifiedResidue
+FragmentReplacedModification is a AbstractModifiedResidue, DatabaseObject, FragmentModification, GeneticallyModifiedResidue
+FunctionalStatus is a DatabaseObject
+FunctionalStatusType is a DatabaseObject
+GO_BiologicalProcess is a DatabaseObject, GO_Term
+GO_CellularComponent is a DatabaseObject, GO_Term
+GO_MolecularFunction is a DatabaseObject, GO_Term
+GO_Term is a DatabaseObject
+GeneticallyModifiedResidue is a AbstractModifiedResidue, DatabaseObject
+GenomeEncodedEntity is a DatabaseObject, PhysicalEntity
+GroupModifiedResidue is a AbstractModifiedResidue, DatabaseObject, TranslationalModification
+InstanceEdit is a DatabaseObject
+InterChainCrosslinkedResidue is a AbstractModifiedResidue, CrosslinkedResidue, DatabaseObject, TranslationalModification
+Interaction is a DatabaseObject, UndirectedInteraction
+IntraChainCrosslinkedResidue is a AbstractModifiedResidue, CrosslinkedResidue, DatabaseObject, TranslationalModification
+LiteratureReference is a DatabaseObject, Publication
+MarkerReference is a ControlReference, DatabaseObject
+MetaDatabaseObject is a DatabaseObject
+ModifiedNucleotide is a AbstractModifiedResidue, DatabaseObject, TranscriptionalModification
+ModifiedResidue is a AbstractModifiedResidue, DatabaseObject, TranslationalModification
+NegativeGeneExpressionRegulation is a DatabaseObject, NegativeRegulation, Regulation
+NegativePrecedingEvent is a DatabaseObject
+NegativePrecedingEventReason is a ControlledVocabulary, DatabaseObject
+NegativeRegulation is a DatabaseObject, Regulation
+NonsenseMutation is a AbstractModifiedResidue, DatabaseObject, GeneticallyModifiedResidue, ReplacedResidue
+OtherEntity is a DatabaseObject, PhysicalEntity
+Pathway is a DatabaseObject, Event
+Person is a DatabaseObject
+PhysicalEntity is a DatabaseObject
+Polymer is a DatabaseObject, PhysicalEntity
+Polymerisation is a DatabaseObject, Event, ReactionLikeEvent
+PositiveGeneExpressionRegulation is a DatabaseObject, PositiveRegulation, Regulation
+PositiveRegulation is a DatabaseObject, Regulation
+ProteinDrug is a DatabaseObject, Drug, PhysicalEntity
+PsiMod is a DatabaseObject, ExternalOntology
+Publication is a DatabaseObject
+RNADrug is a DatabaseObject, Drug, PhysicalEntity
+Reaction is a DatabaseObject, Event, ReactionLikeEvent
+ReactionLikeEvent is a DatabaseObject, Event
+ReactionType is a ControlledVocabulary, DatabaseObject, DrugActionType
+ReferenceDNASequence is a DatabaseObject, ReferenceEntity, ReferenceSequence
+ReferenceDatabase is a DatabaseObject
+ReferenceEntity is a DatabaseObject
+ReferenceGeneProduct is a DatabaseObject, ReferenceEntity, ReferenceSequence
+ReferenceGroup is a DatabaseObject, ReferenceEntity
+ReferenceIsoform is a DatabaseObject, ReferenceEntity, ReferenceGeneProduct, ReferenceSequence
+ReferenceMolecule is a DatabaseObject, ReferenceEntity
+ReferenceRNASequence is a DatabaseObject, ReferenceEntity, ReferenceSequence
+ReferenceSequence is a DatabaseObject, ReferenceEntity
+ReferenceTherapeutic is a DatabaseObject, ReferenceEntity
+Regulation is a DatabaseObject
+RegulationReference is a ControlReference, DatabaseObject
+Release is a DatabaseObject, MetaDatabaseObject
+ReplacedResidue is a AbstractModifiedResidue, DatabaseObject, GeneticallyModifiedResidue
+Requirement is a DatabaseObject, PositiveRegulation, Regulation
+ReviewStatus is a ControlledVocabulary, DatabaseObject
+SequenceOntology is a DatabaseObject, ExternalOntology
+SimpleEntity is a DatabaseObject, PhysicalEntity
+Species is a DatabaseObject, Taxon
+Summation is a DatabaseObject
+Taxon is a DatabaseObject
+TopLevelPathway is a DatabaseObject, Event, Pathway
+Trackable is a DatabaseObject
+TranscriptionalModification is a AbstractModifiedResidue, DatabaseObject, ModifiedNucleotide
+TranslationalModification is a AbstractModifiedResidue, DatabaseObject
+URL is a DatabaseObject, Publication
+UndirectedInteraction is a DatabaseObject, Interaction
+UpdateTracker is a DatabaseObject, MetaDatabaseObject
+
+## Node properties
+
+(:Affiliation)
+  address: String
+  dbId: Long
+  displayName: String
+  name: StringArray
+  schemaClass: String
+
+(:Anatomy)
+  databaseName: String
+  dbId: Long
+  definition: String
+  displayName: String
+  identifier: String
+  name: StringArray
+  schemaClass: String
+  synonym: StringArray
+  url: String
+
+(:BlackBoxEvent)
+  category: String
+  dbId: Long
+  definition: String
+  displayName: String
+  isChimeric: Boolean
+  isInDisease: Boolean
+  isInferred: Boolean
+  maxDepth: Long
+  name: StringArray
+  oldStId: String
+  releaseDate: String
+  releaseStatus: String
+  schemaClass: String
+  speciesName: String
+  stId: String
+  stIdVersion: String
+  systematicName: String
+
+(:Book)
+  ISBN: String
+  chapterTitle: String
+  dbId: Long
+  displayName: String
+  pages: String
+  schemaClass: String
+  title: String
+  year: Integer
+
+(:CandidateSet)
+  dbId: Long
+  definition: String
+  displayName: String
+  isInDisease: Boolean
+  isOrdered: Boolean
+  maxDepth: Long
+  name: StringArray
+  oldStId: String
+  schemaClass: String
+  speciesName: String
+  stId: String
+  stIdVersion: String
+  systematicName: String
+
+(:CatalystActivity)
+  dbId: Long
+  displayName: String
+  schemaClass: String
+
+(:CatalystActivityReference)
+  dbId: Long
+  displayName: String
+  schemaClass: String
+
+(:Cell)
+  dbId: Long
+  displayName: String
+  isInDisease: Boolean
+  maxDepth: Long
+  name: StringArray
+  schemaClass: String
+  speciesName: String
+  stId: String
+  stIdVersion: String
+
+(:CellDevelopmentStep)
+  category: String
+  dbId: Long
+  displayName: String
+  isChimeric: Boolean
+  isInDisease: Boolean
+  isInferred: Boolean
+  maxDepth: Long
+  name: StringArray
+  releaseDate: String
+  releaseStatus: String
+  schemaClass: String
+  speciesName: String
+  stId: String
+  stIdVersion: String
+
+(:CellLineagePath)
+  dbId: Long
+  diagramHeight: Integer
+  diagramWidth: Integer
+  displayName: String
+  doi: String
+  hasDiagram: Boolean
+  hasEHLD: Boolean
+  isInDisease: Boolean
+  isInferred: Boolean
+  maxDepth: Long
+  name: StringArray
+  releaseDate: String
+  releaseStatus: String
+  schemaClass: String
+  speciesName: String
+  stId: String
+  stIdVersion: String
+
+(:CellType)
+  databaseName: String
+  dbId: Long
+  definition: String
+  displayName: String
+  identifier: String
+  name: StringArray
+  schemaClass: String
+  synonym: StringArray
+  url: String
+
+(:ChemicalDrug)
+  dbId: Long
+  displayName: String
+  isInDisease: Boolean
+  maxDepth: Long
+  name: StringArray
+  oldStId: String
+  schemaClass: String
+  stId: String
+  stIdVersion: String
+
+(:Compartment)
+  accession: String
+  databaseName: String
+  dbId: Long
+  definition: String
+  displayName: String
+  name: String
+  schemaClass: String
+  url: String
+
+(:Complex)
+  dbId: Long
+  displayName: String
+  isChimeric: Boolean
+  isInDisease: Boolean
+  maxDepth: Long
+  name: StringArray
+  oldStId: String
+  schemaClass: String
+  speciesName: String
+  stId: String
+  stIdVersion: String
+  stoichiometryKnown: Boolean
+  systematicName: String
+
+(:DBInfo)
+  checksum: Long
+  dbId: Long
+  displayName: String
+  name: String
+  neo4j: String
+  releaseDate: String
+  releaseNumber: Integer
+  schemaClass: String
+
+(:DatabaseIdentifier)
+  databaseName: String
+  dbId: Long
+  displayName: String
+  identifier: String
+  schemaClass: String
+  url: String
+
+(:DefinedSet)
+  dbId: Long
+  displayName: String
+  isInDisease: Boolean
+  isOrdered: Boolean
+  maxDepth: Long
+  name: StringArray
+  oldStId: String
+  schemaClass: String
+  speciesName: String
+  stId: String
+  stIdVersion: String
+  systematicName: String
+
+(:Deleted)
+  curatorComment: String
+  dbId: Long
+  deletedInstanceDbId: IntegerArray
+  displayName: String
+  schemaClass: String
+
+(:DeletedControlledVocabulary)
+  dbId: Long
+  definition: String
+  displayName: String
+  name: StringArray
+  schemaClass: String
+
+(:DeletedInstance)
+  clazz: String
+  dbId: Long
+  deletedInstanceDbId: Integer
+  deletedStId: String
+  displayName: String
+  name: String
+  schemaClass: String
+
+(:Depolymerisation)
+  category: String
+  dbId: Long
+  displayName: String
+  isChimeric: Boolean
+  isInDisease: Boolean
+  isInferred: Boolean
+  maxDepth: Long
+  name: StringArray
+  oldStId: String
+  releaseDate: String
+  schemaClass: String
+  speciesName: String
+  stId: String
+  stIdVersion: String
+
+(:Disease)
+  databaseName: String
+  dbId: Long
+  definition: String
+  displayName: String
+  identifier: String
+  name: StringArray
+  schemaClass: String
+  synonym: StringArray
+  url: String
+
+(:EntityFunctionalStatus)
+  dbId: Long
+  displayName: String
+  schemaClass: String
+
+(:EntityWithAccessionedSequence)
+  dbId: Long
+  definition: String
+  displayName: String
+  endCoordinate: Integer
+  isInDisease: Boolean
+  maxDepth: Long
+  name: StringArray
+  oldStId: String
+  referenceType: String
+  schemaClass: String
+  speciesName: String
+  stId: String
+  stIdVersion: String
+  startCoordinate: Integer
+  systematicName: String
+
+(:EvidenceType)
+  databaseName: String
+  dbId: Long
+  definition: String
+  displayName: String
+  identifier: String
+  name: StringArray
+  schemaClass: String
+  url: String
+
+(:FailedReaction)
+  category: String
+  dbId: Long
+  displayName: String
+  isChimeric: Boolean
+  isInDisease: Boolean
+  isInferred: Boolean
+  maxDepth: Long
+  name: StringArray
+  oldStId: String
+  releaseDate: String
+  schemaClass: String
+  speciesName: String
+  stId: String
+  stIdVersion: String
+  systematicName: String
+
+(:Figure)
+  dbId: Long
+  displayName: String
+  schemaClass: String
+  url: String
+
+(:FragmentDeletionModification)
+  dbId: Long
+  displayName: String
+  endPositionInReferenceSequence: Integer
+  schemaClass: String
+  startPositionInReferenceSequence: Integer
+
+(:FragmentInsertionModification)
+  coordinate: Integer
+  dbId: Long
+  displayName: String
+  endPositionInReferenceSequence: Integer
+  schemaClass: String
+  startPositionInReferenceSequence: Integer
+
+(:FragmentReplacedModification)
+  alteredAminoAcidFragment: String
+  dbId: Long
+  displayName: String
+  endPositionInReferenceSequence: Integer
+  schemaClass: String
+  startPositionInReferenceSequence: Integer
+
+(:FunctionalStatus)
+  dbId: Long
+  displayName: String
+  schemaClass: String
+
+(:FunctionalStatusType)
+  dbId: Long
+  displayName: String
+  name: StringArray
+  schemaClass: String
+
+(:GO_BiologicalProcess)
+  accession: String
+  databaseName: String
+  dbId: Long
+  definition: String
+  displayName: String
+  name: String
+  schemaClass: String
+  url: String
+
+(:GO_CellularComponent)
+  accession: String
+  databaseName: String
+  dbId: Long
+  definition: String
+  displayName: String
+  name: String
+  schemaClass: String
+  url: String
+
+(:GO_MolecularFunction)
+  accession: String
+  databaseName: String
+  dbId: Long
+  definition: String
+  displayName: String
+  ecNumber: String
+  name: String
+  schemaClass: String
+  url: String
+
+(:GenomeEncodedEntity)
+  dbId: Long
+  definition: String
+  displayName: String
+  isInDisease: Boolean
+  maxDepth: Long
+  name: StringArray
+  oldStId: String
+  schemaClass: String
+  speciesName: String
+  stId: String
+  stIdVersion: String
+
+(:GroupModifiedResidue)
+  coordinate: Integer
+  dbId: Long
+  displayName: String
+  label: String
+  schemaClass: String
+
+(:InstanceEdit)
+  dateTime: String
+  dbId: Long
+  displayName: String
+  note: String
+  schemaClass: String
+
+(:InterChainCrosslinkedResidue)
+  coordinate: Integer
+  dbId: Long
+  displayName: String
+  label: String
+  schemaClass: String
+  secondCoordinate: Integer
+
+(:IntraChainCrosslinkedResidue)
+  coordinate: Integer
+  dbId: Long
+  displayName: String
+  label: String
+  schemaClass: String
+  secondCoordinate: Integer
+
+(:LiteratureReference)
+  dbId: Long
+  displayName: String
+  journal: String
+  pages: String
+  pubMedIdentifier: Integer
+  schemaClass: String
+  title: String
+  volume: Integer
+  year: Integer
+
+(:MarkerReference)
+  dbId: Long
+  displayName: String
+  schemaClass: String
+
+(:ModifiedResidue)
+  coordinate: Integer
+  dbId: Long
+  displayName: String
+  label: String
+  schemaClass: String
+
+(:NegativeGeneExpressionRegulation)
+  dbId: Long
+  displayName: String
+  oldStId: String
+  schemaClass: String
+  stId: String
+  stIdVersion: String
+
+(:NegativePrecedingEvent)
+  dbId: Long
+  displayName: String
+  schemaClass: String
+
+(:NegativePrecedingEventReason)
+  dbId: Long
+  definition: String
+  displayName: String
+  name: StringArray
+  schemaClass: String
+
+(:NegativeRegulation)
+  dbId: Long
+  displayName: String
+  oldStId: String
+  schemaClass: String
+  stId: String
+  stIdVersion: String
+
+(:NonsenseMutation)
+  coordinate: Integer
+  dbId: Long
+  displayName: String
+  schemaClass: String
+
+(:OtherEntity)
+  dbId: Long
+  definition: String
+  displayName: String
+  isInDisease: Boolean
+  maxDepth: Long
+  name: StringArray
+  oldStId: String
+  schemaClass: String
+  stId: String
+  stIdVersion: String
+
+(:Pathway)
+  dbId: Long
+  definition: String
+  diagramHeight: Integer
+  diagramWidth: Integer
+  displayName: String
+  doi: String
+  hasDiagram: Boolean
+  hasEHLD: Boolean
+  isInDisease: Boolean
+  isInferred: Boolean
+  lastUpdatedDate: String
+  maxDepth: Long
+  name: StringArray
+  oldStId: String
+  releaseDate: String
+  releaseStatus: String
+  schemaClass: String
+  speciesName: String
+  stId: String
+  stIdVersion: String
+
+(:Person)
+  dbId: Long
+  displayName: String
+  firstname: String
+  initial: String
+  orcidId: String
+  project: String
+  schemaClass: String
+  surname: String
+
+(:Polymer)
+  dbId: Long
+  definition: String
+  displayName: String
+  isInDisease: Boolean
+  maxDepth: Long
+  maxUnitCount: Integer
+  minUnitCount: Integer
+  name: StringArray
+  oldStId: String
+  schemaClass: String
+  speciesName: String
+  stId: String
+  stIdVersion: String
+
+(:Polymerisation)
+  category: String
+  dbId: Long
+  displayName: String
+  isChimeric: Boolean
+  isInDisease: Boolean
+  isInferred: Boolean
+  maxDepth: Long
+  name: StringArray
+  oldStId: String
+  releaseDate: String
+  schemaClass: String
+  speciesName: String
+  stId: String
+  stIdVersion: String
+  systematicName: String
+
+(:PositiveGeneExpressionRegulation)
+  dbId: Long
+  displayName: String
+  oldStId: String
+  schemaClass: String
+  stId: String
+  stIdVersion: String
+
+(:PositiveRegulation)
+  dbId: Long
+  displayName: String
+  oldStId: String
+  schemaClass: String
+  stId: String
+  stIdVersion: String
+
+(:ProteinDrug)
+  dbId: Long
+  definition: String
+  displayName: String
+  isInDisease: Boolean
+  maxDepth: Long
+  name: StringArray
+  oldStId: String
+  schemaClass: String
+  stId: String
+  stIdVersion: String
+
+(:PsiMod)
+  databaseName: String
+  dbId: Long
+  definition: String
+  displayName: String
+  identifier: String
+  label: String
+  name: StringArray
+  schemaClass: String
+  synonym: StringArray
+  url: String
+
+(:RNADrug)
+  dbId: Long
+  displayName: String
+  isInDisease: Boolean
+  maxDepth: Long
+  name: StringArray
+  schemaClass: String
+  stId: String
+  stIdVersion: String
+
+(:Reaction)
+  category: String
+  dbId: Long
+  definition: String
+  displayName: String
+  isChimeric: Boolean
+  isInDisease: Boolean
+  isInferred: Boolean
+  maxDepth: Long
+  name: StringArray
+  oldStId: String
+  releaseDate: String
+  releaseStatus: String
+  schemaClass: String
+  speciesName: String
+  stId: String
+  stIdVersion: String
+  systematicName: String
+
+(:ReferenceDNASequence)
+  comment: StringArray
+  databaseName: String
+  dbId: Long
+  description: StringArray
+  displayName: String
+  geneName: StringArray
+  identifier: String
+  keyword: StringArray
+  name: StringArray
+  otherIdentifier: StringArray
+  schemaClass: String
+  sequenceLength: Integer
+  stId: String
+  url: String
+
+(:ReferenceDatabase)
+  accessUrl: String
+  dbId: Long
+  displayName: String
+  identifiersPrefix: String
+  name: StringArray
+  resourceIdentifier: String
+  schemaClass: String
+  url: String
+
+(:ReferenceGeneProduct)
+  chain: StringArray
+  checksum: String
+  comment: StringArray
+  databaseName: String
+  dbId: Long
+  description: StringArray
+  displayName: String
+  geneName: StringArray
+  identifier: String
+  isSequenceChanged: Boolean
+  keyword: StringArray
+  name: StringArray
+  otherIdentifier: StringArray
+  schemaClass: String
+  secondaryIdentifier: StringArray
+  sequenceLength: Integer
+  stId: String
+  url: String
+
+(:ReferenceGroup)
+  databaseName: String
+  dbId: Long
+  displayName: String
+  formula: String
+  identifier: String
+  name: StringArray
+  otherIdentifier: StringArray
+  schemaClass: String
+  url: String
+
+(:ReferenceIsoform)
+  chain: StringArray
+  checksum: String
+  comment: StringArray
+  databaseName: String
+  dbId: Long
+  description: StringArray
+  displayName: String
+  geneName: StringArray
+  identifier: String
+  isSequenceChanged: Boolean
+  keyword: StringArray
+  name: StringArray
+  otherIdentifier: StringArray
+  schemaClass: String
+  secondaryIdentifier: StringArray
+  sequenceLength: Integer
+  stId: String
+  url: String
+  variantIdentifier: String
+
+(:ReferenceMolecule)
+  databaseName: String
+  dbId: Long
+  displayName: String
+  formula: String
+  geneName: StringArray
+  identifier: String
+  name: StringArray
+  otherIdentifier: StringArray
+  schemaClass: String
+  secondaryIdentifier: StringArray
+  stId: String
+  trivial: Boolean
+  url: String
+
+(:ReferenceRNASequence)
+  comment: StringArray
+  databaseName: String
+  dbId: Long
+  description: StringArray
+  displayName: String
+  geneName: StringArray
+  identifier: String
+  name: StringArray
+  schemaClass: String
+  sequenceLength: Integer
+  stId: String
+  url: String
+
+(:ReferenceTherapeutic)
+  abbreviation: String
+  approvalSource: StringArray
+  approved: Boolean
+  databaseName: String
+  dbId: Long
+  displayName: String
+  identifier: String
+  inn: String
+  name: StringArray
+  schemaClass: String
+  stId: String
+  type: String
+  url: String
+
+(:RegulationReference)
+  dbId: Long
+  displayName: String
+  schemaClass: String
+
+(:Release)
+  dbId: Long
+  displayName: String
+  releaseDate: String
+  releaseNumber: Integer
+  schemaClass: String
+
+(:ReplacedResidue)
+  coordinate: Integer
+  dbId: Long
+  displayName: String
+  schemaClass: String
+
+(:Requirement)
+  dbId: Long
+  displayName: String
+  oldStId: String
+  schemaClass: String
+  stId: String
+  stIdVersion: String
+
+(:ReviewStatus)
+  dbId: Long
+  definition: String
+  displayName: String
+  name: StringArray
+  schemaClass: String
+
+(:SequenceOntology)
+  databaseName: String
+  dbId: Long
+  definition: String
+  displayName: String
+  identifier: String
+  name: StringArray
+  schemaClass: String
+  synonym: StringArray
+  url: String
+
+(:SimpleEntity)
+  dbId: Long
+  definition: String
+  displayName: String
+  isInDisease: Boolean
+  maxDepth: Long
+  name: StringArray
+  oldStId: String
+  referenceType: String
+  schemaClass: String
+  stId: String
+  stIdVersion: String
+
+(:Species)
+  abbreviation: String
+  dbId: Long
+  displayName: String
+  name: StringArray
+  schemaClass: String
+  taxId: String
+
+(:Summation)
+  dbId: Long
+  displayName: String
+  schemaClass: String
+  text: String
+
+(:Taxon)
+  dbId: Long
+  displayName: String
+  name: StringArray
+  schemaClass: String
+  taxId: String
+
+(:TopLevelPathway)
+  dbId: Long
+  diagramHeight: Integer
+  diagramWidth: Integer
+  displayName: String
+  doi: String
+  hasDiagram: Boolean
+  hasEHLD: Boolean
+  isInDisease: Boolean
+  isInferred: Boolean
+  lastUpdatedDate: String
+  maxDepth: Long
+  name: StringArray
+  oldStId: String
+  releaseDate: String
+  releaseStatus: String
+  schemaClass: String
+  speciesName: String
+  stId: String
+  stIdVersion: String
+
+(:URL)
+  dbId: Long
+  displayName: String
+  schemaClass: String
+  title: String
+  uniformResourceLocator: String
+
+(:UpdateTracker)
+  action: StringArray
+  dbId: Long
+  displayName: String
+  schemaClass: String
+
+## Relationships
+
+(:Anatomy)-[:referenceDatabase]->(:ReferenceDatabase)
+(:BlackBoxEvent)-[:catalystActivity]->(:CatalystActivity)
+(:BlackBoxEvent)-[:catalystActivityReference]->(:CatalystActivityReference)
+(:BlackBoxEvent)-[:compartment]->(:Compartment)
+(:BlackBoxEvent)-[:crossReference]->(:DatabaseIdentifier)
+(:BlackBoxEvent)-[:disease]->(:Disease)
+(:BlackBoxEvent)-[:entityFunctionalStatus]->(:EntityFunctionalStatus)
+(:BlackBoxEvent)-[:entityOnOtherCell]->(:CandidateSet)
+(:BlackBoxEvent)-[:entityOnOtherCell]->(:Complex)
+(:BlackBoxEvent)-[:entityOnOtherCell]->(:DefinedSet)
+(:BlackBoxEvent)-[:entityOnOtherCell]->(:EntityWithAccessionedSequence)
+(:BlackBoxEvent)-[:entityOnOtherCell]->(:OtherEntity)
+(:BlackBoxEvent)-[:entityOnOtherCell]->(:Polymer)
+(:BlackBoxEvent)-[:entityOnOtherCell]->(:SimpleEntity)
+(:BlackBoxEvent)-[:evidenceType]->(:EvidenceType)
+(:BlackBoxEvent)-[:figure]->(:Figure)
+(:BlackBoxEvent)-[:goBiologicalProcess]->(:GO_BiologicalProcess)
+(:BlackBoxEvent)-[:inferredTo]->(:BlackBoxEvent)
+(:BlackBoxEvent)-[:inferredTo]->(:CandidateSet)
+(:BlackBoxEvent)-[:inferredTo]->(:Complex)
+(:BlackBoxEvent)-[:inferredTo]->(:DefinedSet)
+(:BlackBoxEvent)-[:inferredTo]->(:Depolymerisation)
+(:BlackBoxEvent)-[:inferredTo]->(:EntityWithAccessionedSequence)
+(:BlackBoxEvent)-[:inferredTo]->(:FailedReaction)
+(:BlackBoxEvent)-[:inferredTo]->(:Polymer)
+(:BlackBoxEvent)-[:inferredTo]->(:Polymerisation)
+(:BlackBoxEvent)-[:inferredTo]->(:Reaction)
+(:BlackBoxEvent)-[:inferredTo]->(:TopLevelPathway)
+(:BlackBoxEvent)-[:input]->(:CandidateSet)
+(:BlackBoxEvent)-[:input]->(:Cell)
+(:BlackBoxEvent)-[:input]->(:ChemicalDrug)
+(:BlackBoxEvent)-[:input]->(:Complex)
+(:BlackBoxEvent)-[:input]->(:DefinedSet)
+(:BlackBoxEvent)-[:input]->(:EntityWithAccessionedSequence)
+(:BlackBoxEvent)-[:input]->(:OtherEntity)
+(:BlackBoxEvent)-[:input]->(:Polymer)
+(:BlackBoxEvent)-[:input]->(:ProteinDrug)
+(:BlackBoxEvent)-[:input]->(:RNADrug)
+(:BlackBoxEvent)-[:input]->(:SimpleEntity)
+(:BlackBoxEvent)-[:internalReviewed]->(:InstanceEdit)
+(:BlackBoxEvent)-[:literatureReference]->(:Book)
+(:BlackBoxEvent)-[:literatureReference]->(:LiteratureReference)
+(:BlackBoxEvent)-[:literatureReference]->(:URL)
+(:BlackBoxEvent)-[:negativePrecedingEvent]->(:NegativePrecedingEvent)
+(:BlackBoxEvent)-[:normalReaction]->(:BlackBoxEvent)
+(:BlackBoxEvent)-[:normalReaction]->(:Reaction)
+(:BlackBoxEvent)-[:output]->(:CandidateSet)
+(:BlackBoxEvent)-[:output]->(:Cell)
+(:BlackBoxEvent)-[:output]->(:ChemicalDrug)
+(:BlackBoxEvent)-[:output]->(:Complex)
+(:BlackBoxEvent)-[:output]->(:DefinedSet)
+(:BlackBoxEvent)-[:output]->(:EntityWithAccessionedSequence)
+(:BlackBoxEvent)-[:output]->(:OtherEntity)
+(:BlackBoxEvent)-[:output]->(:Polymer)
+(:BlackBoxEvent)-[:output]->(:SimpleEntity)
+(:BlackBoxEvent)-[:precedingEvent]->(:BlackBoxEvent)
+(:BlackBoxEvent)-[:precedingEvent]->(:CellDevelopmentStep)
+(:BlackBoxEvent)-[:precedingEvent]->(:Depolymerisation)
+(:BlackBoxEvent)-[:precedingEvent]->(:FailedReaction)
+(:BlackBoxEvent)-[:precedingEvent]->(:Pathway)
+(:BlackBoxEvent)-[:precedingEvent]->(:Polymerisation)
+(:BlackBoxEvent)-[:precedingEvent]->(:Reaction)
+(:BlackBoxEvent)-[:previousReviewStatus]->(:ReviewStatus)
+(:BlackBoxEvent)-[:regulatedBy]->(:NegativeGeneExpressionRegulation)
+(:BlackBoxEvent)-[:regulatedBy]->(:PositiveGeneExpressionRegulation)
+(:BlackBoxEvent)-[:regulatedBy]->(:Requirement)
+(:BlackBoxEvent)-[:regulationReference]->(:RegulationReference)
+(:BlackBoxEvent)-[:relatedSpecies]->(:Species)
+(:BlackBoxEvent)-[:requiredInputComponent]->(:CandidateSet)
+(:BlackBoxEvent)-[:requiredInputComponent]->(:Complex)
+(:BlackBoxEvent)-[:requiredInputComponent]->(:DefinedSet)
+(:BlackBoxEvent)-[:requiredInputComponent]->(:EntityWithAccessionedSequence)
+(:BlackBoxEvent)-[:requiredInputComponent]->(:OtherEntity)
+(:BlackBoxEvent)-[:requiredInputComponent]->(:SimpleEntity)
+(:BlackBoxEvent)-[:reviewStatus]->(:ReviewStatus)
+(:BlackBoxEvent)-[:species]->(:Species)
+(:BlackBoxEvent)-[:structureModified]->(:InstanceEdit)
+(:BlackBoxEvent)-[:summation]->(:Summation)
+(:Book)-[:publisher]->(:Affiliation)
+(:CandidateSet)-[:compartment]->(:Compartment)
+(:CandidateSet)-[:crossReference]->(:DatabaseIdentifier)
+(:CandidateSet)-[:disease]->(:Disease)
+(:CandidateSet)-[:goCellularComponent]->(:Compartment)
+(:CandidateSet)-[:hasCandidate]->(:CandidateSet)
+(:CandidateSet)-[:hasCandidate]->(:ChemicalDrug)
+(:CandidateSet)-[:hasCandidate]->(:Complex)
+(:CandidateSet)-[:hasCandidate]->(:DefinedSet)
+(:CandidateSet)-[:hasCandidate]->(:EntityWithAccessionedSequence)
+(:CandidateSet)-[:hasCandidate]->(:Polymer)
+(:CandidateSet)-[:hasCandidate]->(:ProteinDrug)
+(:CandidateSet)-[:hasCandidate]->(:SimpleEntity)
+(:CandidateSet)-[:hasMember]->(:CandidateSet)
+(:CandidateSet)-[:hasMember]->(:ChemicalDrug)
+(:CandidateSet)-[:hasMember]->(:Complex)
+(:CandidateSet)-[:hasMember]->(:DefinedSet)
+(:CandidateSet)-[:hasMember]->(:EntityWithAccessionedSequence)
+(:CandidateSet)-[:hasMember]->(:OtherEntity)
+(:CandidateSet)-[:hasMember]->(:Polymer)
+(:CandidateSet)-[:hasMember]->(:ProteinDrug)
+(:CandidateSet)-[:hasMember]->(:RNADrug)
+(:CandidateSet)-[:hasMember]->(:SimpleEntity)
+(:CandidateSet)-[:inferredTo]->(:BlackBoxEvent)
+(:CandidateSet)-[:inferredTo]->(:CandidateSet)
+(:CandidateSet)-[:inferredTo]->(:Complex)
+(:CandidateSet)-[:inferredTo]->(:DefinedSet)
+(:CandidateSet)-[:inferredTo]->(:Depolymerisation)
+(:CandidateSet)-[:inferredTo]->(:EntityWithAccessionedSequence)
+(:CandidateSet)-[:inferredTo]->(:FailedReaction)
+(:CandidateSet)-[:inferredTo]->(:Polymer)
+(:CandidateSet)-[:inferredTo]->(:Polymerisation)
+(:CandidateSet)-[:inferredTo]->(:Reaction)
+(:CandidateSet)-[:inferredTo]->(:TopLevelPathway)
+(:CandidateSet)-[:literatureReference]->(:Book)
+(:CandidateSet)-[:literatureReference]->(:LiteratureReference)
+(:CandidateSet)-[:literatureReference]->(:URL)
+(:CandidateSet)-[:relatedSpecies]->(:Species)
+(:CandidateSet)-[:species]->(:Species)
+(:CandidateSet)-[:summation]->(:Summation)
+(:CatalystActivity)-[:activeUnit]->(:CandidateSet)
+(:CatalystActivity)-[:activeUnit]->(:ChemicalDrug)
+(:CatalystActivity)-[:activeUnit]->(:Complex)
+(:CatalystActivity)-[:activeUnit]->(:DefinedSet)
+(:CatalystActivity)-[:activeUnit]->(:EntityWithAccessionedSequence)
+(:CatalystActivity)-[:activeUnit]->(:ProteinDrug)
+(:CatalystActivity)-[:activeUnit]->(:SimpleEntity)
+(:CatalystActivity)-[:activity]->(:GO_MolecularFunction)
+(:CatalystActivity)-[:physicalEntity]->(:CandidateSet)
+(:CatalystActivity)-[:physicalEntity]->(:Complex)
+(:CatalystActivity)-[:physicalEntity]->(:DefinedSet)
+(:CatalystActivity)-[:physicalEntity]->(:EntityWithAccessionedSequence)
+(:CatalystActivity)-[:physicalEntity]->(:OtherEntity)
+(:CatalystActivity)-[:physicalEntity]->(:Polymer)
+(:CatalystActivity)-[:physicalEntity]->(:SimpleEntity)
+(:CatalystActivityReference)-[:catalystActivity]->(:CatalystActivity)
+(:CatalystActivityReference)-[:literatureReference]->(:Book)
+(:CatalystActivityReference)-[:literatureReference]->(:LiteratureReference)
+(:CatalystActivityReference)-[:literatureReference]->(:URL)
+(:Cell)-[:RNAMarker]->(:EntityWithAccessionedSequence)
+(:Cell)-[:cellType]->(:CellType)
+(:Cell)-[:literatureReference]->(:Book)
+(:Cell)-[:literatureReference]->(:LiteratureReference)
+(:Cell)-[:literatureReference]->(:URL)
+(:Cell)-[:markerReference]->(:MarkerReference)
+(:Cell)-[:organ]->(:Anatomy)
+(:Cell)-[:proteinMarker]->(:EntityWithAccessionedSequence)
+(:Cell)-[:species]->(:Species)
+(:Cell)-[:tissue]->(:Anatomy)
+(:Cell)-[:tissueLayer]->(:Anatomy)
+(:CellDevelopmentStep)-[:compartment]->(:Compartment)
+(:CellDevelopmentStep)-[:goBiologicalProcess]->(:GO_BiologicalProcess)
+(:CellDevelopmentStep)-[:input]->(:CandidateSet)
+(:CellDevelopmentStep)-[:input]->(:Cell)
+(:CellDevelopmentStep)-[:input]->(:ChemicalDrug)
+(:CellDevelopmentStep)-[:input]->(:Complex)
+(:CellDevelopmentStep)-[:input]->(:DefinedSet)
+(:CellDevelopmentStep)-[:input]->(:EntityWithAccessionedSequence)
+(:CellDevelopmentStep)-[:input]->(:OtherEntity)
+(:CellDevelopmentStep)-[:input]->(:Polymer)
+(:CellDevelopmentStep)-[:input]->(:ProteinDrug)
+(:CellDevelopmentStep)-[:input]->(:RNADrug)
+(:CellDevelopmentStep)-[:input]->(:SimpleEntity)
+(:CellDevelopmentStep)-[:internalReviewed]->(:InstanceEdit)
+(:CellDevelopmentStep)-[:literatureReference]->(:Book)
+(:CellDevelopmentStep)-[:literatureReference]->(:LiteratureReference)
+(:CellDevelopmentStep)-[:literatureReference]->(:URL)
+(:CellDevelopmentStep)-[:output]->(:CandidateSet)
+(:CellDevelopmentStep)-[:output]->(:Cell)
+(:CellDevelopmentStep)-[:output]->(:ChemicalDrug)
+(:CellDevelopmentStep)-[:output]->(:Complex)
+(:CellDevelopmentStep)-[:output]->(:DefinedSet)
+(:CellDevelopmentStep)-[:output]->(:EntityWithAccessionedSequence)
+(:CellDevelopmentStep)-[:output]->(:OtherEntity)
+(:CellDevelopmentStep)-[:output]->(:Polymer)
+(:CellDevelopmentStep)-[:output]->(:SimpleEntity)
+(:CellDevelopmentStep)-[:precedingEvent]->(:BlackBoxEvent)
+(:CellDevelopmentStep)-[:precedingEvent]->(:CellDevelopmentStep)
+(:CellDevelopmentStep)-[:precedingEvent]->(:Depolymerisation)
+(:CellDevelopmentStep)-[:precedingEvent]->(:FailedReaction)
+(:CellDevelopmentStep)-[:precedingEvent]->(:Pathway)
+(:CellDevelopmentStep)-[:precedingEvent]->(:Polymerisation)
+(:CellDevelopmentStep)-[:precedingEvent]->(:Reaction)
+(:CellDevelopmentStep)-[:previousReviewStatus]->(:ReviewStatus)
+(:CellDevelopmentStep)-[:regulatedBy]->(:NegativeGeneExpressionRegulation)
+(:CellDevelopmentStep)-[:regulatedBy]->(:PositiveGeneExpressionRegulation)
+(:CellDevelopmentStep)-[:regulatedBy]->(:Requirement)
+(:CellDevelopmentStep)-[:regulationReference]->(:RegulationReference)
+(:CellDevelopmentStep)-[:requiredInputComponent]->(:CandidateSet)
+(:CellDevelopmentStep)-[:requiredInputComponent]->(:Complex)
+(:CellDevelopmentStep)-[:requiredInputComponent]->(:DefinedSet)
+(:CellDevelopmentStep)-[:requiredInputComponent]->(:EntityWithAccessionedSequence)
+(:CellDevelopmentStep)-[:requiredInputComponent]->(:OtherEntity)
+(:CellDevelopmentStep)-[:requiredInputComponent]->(:SimpleEntity)
+(:CellDevelopmentStep)-[:reviewStatus]->(:ReviewStatus)
+(:CellDevelopmentStep)-[:species]->(:Species)
+(:CellDevelopmentStep)-[:structureModified]->(:InstanceEdit)
+(:CellDevelopmentStep)-[:summation]->(:Summation)
+(:CellDevelopmentStep)-[:tissue]->(:Anatomy)
+(:CellLineagePath)-[:crossReference]->(:DatabaseIdentifier)
+(:CellLineagePath)-[:figure]->(:Figure)
+(:CellLineagePath)-[:goBiologicalProcess]->(:GO_BiologicalProcess)
+(:CellLineagePath)-[:hasEncapsulatedEvent]->(:CellLineagePath)
+(:CellLineagePath)-[:hasEncapsulatedEvent]->(:TopLevelPathway)
+(:CellLineagePath)-[:hasEvent]->(:BlackBoxEvent)
+(:CellLineagePath)-[:hasEvent]->(:CellDevelopmentStep)
+(:CellLineagePath)-[:hasEvent]->(:CellLineagePath)
+(:CellLineagePath)-[:hasEvent]->(:Depolymerisation)
+(:CellLineagePath)-[:hasEvent]->(:FailedReaction)
+(:CellLineagePath)-[:hasEvent]->(:Polymerisation)
+(:CellLineagePath)-[:hasEvent]->(:Reaction)
+(:CellLineagePath)-[:internalReviewed]->(:InstanceEdit)
+(:CellLineagePath)-[:literatureReference]->(:Book)
+(:CellLineagePath)-[:literatureReference]->(:LiteratureReference)
+(:CellLineagePath)-[:literatureReference]->(:URL)
+(:CellLineagePath)-[:previousReviewStatus]->(:ReviewStatus)
+(:CellLineagePath)-[:reviewStatus]->(:ReviewStatus)
+(:CellLineagePath)-[:species]->(:Species)
+(:CellLineagePath)-[:structureModified]->(:InstanceEdit)
+(:CellLineagePath)-[:summation]->(:Summation)
+(:CellType)-[:referenceDatabase]->(:ReferenceDatabase)
+(:ChemicalDrug)-[:cellType]->(:CellType)
+(:ChemicalDrug)-[:compartment]->(:Compartment)
+(:ChemicalDrug)-[:crossReference]->(:DatabaseIdentifier)
+(:ChemicalDrug)-[:disease]->(:Disease)
+(:ChemicalDrug)-[:literatureReference]->(:Book)
+(:ChemicalDrug)-[:literatureReference]->(:LiteratureReference)
+(:ChemicalDrug)-[:literatureReference]->(:URL)
+(:ChemicalDrug)-[:referenceEntity]->(:ReferenceDNASequence)
+(:ChemicalDrug)-[:referenceEntity]->(:ReferenceIsoform)
+(:ChemicalDrug)-[:referenceEntity]->(:ReferenceMolecule)
+(:ChemicalDrug)-[:referenceEntity]->(:ReferenceRNASequence)
+(:ChemicalDrug)-[:referenceEntity]->(:ReferenceTherapeutic)
+(:ChemicalDrug)-[:summation]->(:Summation)
+(:Compartment)-[:componentOf]->(:Compartment)
+(:Compartment)-[:hasPart]->(:Compartment)
+(:Compartment)-[:instanceOf]->(:Compartment)
+(:Compartment)-[:referenceDatabase]->(:ReferenceDatabase)
+(:Compartment)-[:surroundedBy]->(:Compartment)
+(:Complex)-[:cellType]->(:CellType)
+(:Complex)-[:compartment]->(:Compartment)
+(:Complex)-[:crossReference]->(:DatabaseIdentifier)
+(:Complex)-[:disease]->(:Disease)
+(:Complex)-[:entityOnOtherCell]->(:CandidateSet)
+(:Complex)-[:entityOnOtherCell]->(:Complex)
+(:Complex)-[:entityOnOtherCell]->(:DefinedSet)
+(:Complex)-[:entityOnOtherCell]->(:EntityWithAccessionedSequence)
+(:Complex)-[:entityOnOtherCell]->(:OtherEntity)
+(:Complex)-[:entityOnOtherCell]->(:Polymer)
+(:Complex)-[:entityOnOtherCell]->(:SimpleEntity)
+(:Complex)-[:figure]->(:Figure)
+(:Complex)-[:goCellularComponent]->(:Compartment)
+(:Complex)-[:hasComponent]->(:CandidateSet)
+(:Complex)-[:hasComponent]->(:ChemicalDrug)
+(:Complex)-[:hasComponent]->(:Complex)
+(:Complex)-[:hasComponent]->(:DefinedSet)
+(:Complex)-[:hasComponent]->(:EntityWithAccessionedSequence)
+(:Complex)-[:hasComponent]->(:OtherEntity)
+(:Complex)-[:hasComponent]->(:Polymer)
+(:Complex)-[:hasComponent]->(:ProteinDrug)
+(:Complex)-[:hasComponent]->(:RNADrug)
+(:Complex)-[:hasComponent]->(:SimpleEntity)
+(:Complex)-[:includedLocation]->(:Compartment)
+(:Complex)-[:inferredTo]->(:BlackBoxEvent)
+(:Complex)-[:inferredTo]->(:CandidateSet)
+(:Complex)-[:inferredTo]->(:Complex)
+(:Complex)-[:inferredTo]->(:DefinedSet)
+(:Complex)-[:inferredTo]->(:Depolymerisation)
+(:Complex)-[:inferredTo]->(:EntityWithAccessionedSequence)
+(:Complex)-[:inferredTo]->(:FailedReaction)
+(:Complex)-[:inferredTo]->(:Polymer)
+(:Complex)-[:inferredTo]->(:Polymerisation)
+(:Complex)-[:inferredTo]->(:Reaction)
+(:Complex)-[:inferredTo]->(:TopLevelPathway)
+(:Complex)-[:literatureReference]->(:Book)
+(:Complex)-[:literatureReference]->(:LiteratureReference)
+(:Complex)-[:literatureReference]->(:URL)
+(:Complex)-[:relatedSpecies]->(:Species)
+(:Complex)-[:species]->(:Species)
+(:Complex)-[:summation]->(:Summation)
+(:DatabaseIdentifier)-[:created]->(:Affiliation)
+(:DatabaseIdentifier)-[:created]->(:Anatomy)
+(:DatabaseIdentifier)-[:created]->(:BlackBoxEvent)
+(:DatabaseIdentifier)-[:created]->(:Book)
+(:DatabaseIdentifier)-[:created]->(:CandidateSet)
+(:DatabaseIdentifier)-[:created]->(:CatalystActivity)
+(:DatabaseIdentifier)-[:created]->(:CatalystActivityReference)
+(:DatabaseIdentifier)-[:created]->(:Cell)
+(:DatabaseIdentifier)-[:created]->(:CellDevelopmentStep)
+(:DatabaseIdentifier)-[:created]->(:CellLineagePath)
+(:DatabaseIdentifier)-[:created]->(:CellType)
+(:DatabaseIdentifier)-[:created]->(:ChemicalDrug)
+(:DatabaseIdentifier)-[:created]->(:Compartment)
+(:DatabaseIdentifier)-[:created]->(:Complex)
+(:DatabaseIdentifier)-[:created]->(:DatabaseIdentifier)
+(:DatabaseIdentifier)-[:created]->(:DefinedSet)
+(:DatabaseIdentifier)-[:created]->(:Deleted)
+(:DatabaseIdentifier)-[:created]->(:DeletedControlledVocabulary)
+(:DatabaseIdentifier)-[:created]->(:DeletedInstance)
+(:DatabaseIdentifier)-[:created]->(:Depolymerisation)
+(:DatabaseIdentifier)-[:created]->(:Disease)
+(:DatabaseIdentifier)-[:created]->(:EntityFunctionalStatus)
+(:DatabaseIdentifier)-[:created]->(:EntityWithAccessionedSequence)
+(:DatabaseIdentifier)-[:created]->(:EvidenceType)
+(:DatabaseIdentifier)-[:created]->(:FailedReaction)
+(:DatabaseIdentifier)-[:created]->(:Figure)
+(:DatabaseIdentifier)-[:created]->(:FragmentDeletionModification)
+(:DatabaseIdentifier)-[:created]->(:FragmentInsertionModification)
+(:DatabaseIdentifier)-[:created]->(:FragmentReplacedModification)
+(:DatabaseIdentifier)-[:created]->(:FunctionalStatus)
+(:DatabaseIdentifier)-[:created]->(:FunctionalStatusType)
+(:DatabaseIdentifier)-[:created]->(:GO_BiologicalProcess)
+(:DatabaseIdentifier)-[:created]->(:GO_MolecularFunction)
+(:DatabaseIdentifier)-[:created]->(:GroupModifiedResidue)
+(:DatabaseIdentifier)-[:created]->(:InstanceEdit)
+(:DatabaseIdentifier)-[:created]->(:InterChainCrosslinkedResidue)
+(:DatabaseIdentifier)-[:created]->(:IntraChainCrosslinkedResidue)
+(:DatabaseIdentifier)-[:created]->(:LiteratureReference)
+(:DatabaseIdentifier)-[:created]->(:MarkerReference)
+(:DatabaseIdentifier)-[:created]->(:ModifiedResidue)
+(:DatabaseIdentifier)-[:created]->(:NegativeGeneExpressionRegulation)
+(:DatabaseIdentifier)-[:created]->(:NegativePrecedingEvent)
+(:DatabaseIdentifier)-[:created]->(:NegativePrecedingEventReason)
+(:DatabaseIdentifier)-[:created]->(:NonsenseMutation)
+(:DatabaseIdentifier)-[:created]->(:OtherEntity)
+(:DatabaseIdentifier)-[:created]->(:Person)
+(:DatabaseIdentifier)-[:created]->(:Polymer)
+(:DatabaseIdentifier)-[:created]->(:Polymerisation)
+(:DatabaseIdentifier)-[:created]->(:PositiveGeneExpressionRegulation)
+(:DatabaseIdentifier)-[:created]->(:ProteinDrug)
+(:DatabaseIdentifier)-[:created]->(:PsiMod)
+(:DatabaseIdentifier)-[:created]->(:RNADrug)
+(:DatabaseIdentifier)-[:created]->(:Reaction)
+(:DatabaseIdentifier)-[:created]->(:ReferenceDNASequence)
+(:DatabaseIdentifier)-[:created]->(:ReferenceDatabase)
+(:DatabaseIdentifier)-[:created]->(:ReferenceGroup)
+(:DatabaseIdentifier)-[:created]->(:ReferenceIsoform)
+(:DatabaseIdentifier)-[:created]->(:ReferenceMolecule)
+(:DatabaseIdentifier)-[:created]->(:ReferenceRNASequence)
+(:DatabaseIdentifier)-[:created]->(:ReferenceTherapeutic)
+(:DatabaseIdentifier)-[:created]->(:RegulationReference)
+(:DatabaseIdentifier)-[:created]->(:Release)
+(:DatabaseIdentifier)-[:created]->(:Requirement)
+(:DatabaseIdentifier)-[:created]->(:ReviewStatus)
+(:DatabaseIdentifier)-[:created]->(:SequenceOntology)
+(:DatabaseIdentifier)-[:created]->(:SimpleEntity)
+(:DatabaseIdentifier)-[:created]->(:Species)
+(:DatabaseIdentifier)-[:created]->(:Summation)
+(:DatabaseIdentifier)-[:created]->(:TopLevelPathway)
+(:DatabaseIdentifier)-[:created]->(:URL)
+(:DatabaseIdentifier)-[:created]->(:UpdateTracker)
+(:DatabaseIdentifier)-[:referenceDatabase]->(:ReferenceDatabase)
+(:DefinedSet)-[:cellType]->(:CellType)
+(:DefinedSet)-[:compartment]->(:Compartment)
+(:DefinedSet)-[:crossReference]->(:DatabaseIdentifier)
+(:DefinedSet)-[:disease]->(:Disease)
+(:DefinedSet)-[:figure]->(:Figure)
+(:DefinedSet)-[:goCellularComponent]->(:Compartment)
+(:DefinedSet)-[:hasMember]->(:CandidateSet)
+(:DefinedSet)-[:hasMember]->(:ChemicalDrug)
+(:DefinedSet)-[:hasMember]->(:Complex)
+(:DefinedSet)-[:hasMember]->(:DefinedSet)
+(:DefinedSet)-[:hasMember]->(:EntityWithAccessionedSequence)
+(:DefinedSet)-[:hasMember]->(:OtherEntity)
+(:DefinedSet)-[:hasMember]->(:Polymer)
+(:DefinedSet)-[:hasMember]->(:ProteinDrug)
+(:DefinedSet)-[:hasMember]->(:RNADrug)
+(:DefinedSet)-[:hasMember]->(:SimpleEntity)
+(:DefinedSet)-[:inferredTo]->(:BlackBoxEvent)
+(:DefinedSet)-[:inferredTo]->(:CandidateSet)
+(:DefinedSet)-[:inferredTo]->(:Complex)
+(:DefinedSet)-[:inferredTo]->(:DefinedSet)
+(:DefinedSet)-[:inferredTo]->(:Depolymerisation)
+(:DefinedSet)-[:inferredTo]->(:EntityWithAccessionedSequence)
+(:DefinedSet)-[:inferredTo]->(:FailedReaction)
+(:DefinedSet)-[:inferredTo]->(:Polymer)
+(:DefinedSet)-[:inferredTo]->(:Polymerisation)
+(:DefinedSet)-[:inferredTo]->(:Reaction)
+(:DefinedSet)-[:inferredTo]->(:TopLevelPathway)
+(:DefinedSet)-[:literatureReference]->(:Book)
+(:DefinedSet)-[:literatureReference]->(:LiteratureReference)
+(:DefinedSet)-[:literatureReference]->(:URL)
+(:DefinedSet)-[:relatedSpecies]->(:Species)
+(:DefinedSet)-[:species]->(:Species)
+(:DefinedSet)-[:summation]->(:Summation)
+(:Deleted)-[:deletedInstance]->(:DeletedInstance)
+(:Deleted)-[:reason]->(:DeletedControlledVocabulary)
+(:Deleted)-[:reason]->(:NegativePrecedingEventReason)
+(:Deleted)-[:replacementInstances]->(:BlackBoxEvent)
+(:Deleted)-[:replacementInstances]->(:CandidateSet)
+(:Deleted)-[:replacementInstances]->(:CatalystActivity)
+(:Deleted)-[:replacementInstances]->(:Cell)
+(:Deleted)-[:replacementInstances]->(:CellDevelopmentStep)
+(:Deleted)-[:replacementInstances]->(:ChemicalDrug)
+(:Deleted)-[:replacementInstances]->(:Complex)
+(:Deleted)-[:replacementInstances]->(:DefinedSet)
+(:Deleted)-[:replacementInstances]->(:EntityWithAccessionedSequence)
+(:Deleted)-[:replacementInstances]->(:FailedReaction)
+(:Deleted)-[:replacementInstances]->(:FragmentReplacedModification)
+(:Deleted)-[:replacementInstances]->(:GO_BiologicalProcess)
+(:Deleted)-[:replacementInstances]->(:GO_MolecularFunction)
+(:Deleted)-[:replacementInstances]->(:LiteratureReference)
+(:Deleted)-[:replacementInstances]->(:NegativeRegulation)
+(:Deleted)-[:replacementInstances]->(:NonsenseMutation)
+(:Deleted)-[:replacementInstances]->(:OtherEntity)
+(:Deleted)-[:replacementInstances]->(:Person)
+(:Deleted)-[:replacementInstances]->(:Polymer)
+(:Deleted)-[:replacementInstances]->(:Polymerisation)
+(:Deleted)-[:replacementInstances]->(:PositiveGeneExpressionRegulation)
+(:Deleted)-[:replacementInstances]->(:Reaction)
+(:Deleted)-[:replacementInstances]->(:ReferenceDNASequence)
+(:Deleted)-[:replacementInstances]->(:ReferenceGeneProduct)
+(:Deleted)-[:replacementInstances]->(:ReferenceGroup)
+(:Deleted)-[:replacementInstances]->(:ReferenceMolecule)
+(:Deleted)-[:replacementInstances]->(:ReferenceRNASequence)
+(:Deleted)-[:replacementInstances]->(:ReferenceTherapeutic)
+(:Deleted)-[:replacementInstances]->(:Requirement)
+(:Deleted)-[:replacementInstances]->(:SimpleEntity)
+(:Deleted)-[:replacementInstances]->(:Summation)
+(:Deleted)-[:replacementInstances]->(:TopLevelPathway)
+(:DeletedInstance)-[:species]->(:Species)
+(:Depolymerisation)-[:catalystActivity]->(:CatalystActivity)
+(:Depolymerisation)-[:catalystActivityReference]->(:CatalystActivityReference)
+(:Depolymerisation)-[:compartment]->(:Compartment)
+(:Depolymerisation)-[:crossReference]->(:DatabaseIdentifier)
+(:Depolymerisation)-[:disease]->(:Disease)
+(:Depolymerisation)-[:evidenceType]->(:EvidenceType)
+(:Depolymerisation)-[:inferredTo]->(:BlackBoxEvent)
+(:Depolymerisation)-[:inferredTo]->(:CandidateSet)
+(:Depolymerisation)-[:inferredTo]->(:Complex)
+(:Depolymerisation)-[:inferredTo]->(:DefinedSet)
+(:Depolymerisation)-[:inferredTo]->(:Depolymerisation)
+(:Depolymerisation)-[:inferredTo]->(:EntityWithAccessionedSequence)
+(:Depolymerisation)-[:inferredTo]->(:FailedReaction)
+(:Depolymerisation)-[:inferredTo]->(:Polymer)
+(:Depolymerisation)-[:inferredTo]->(:Polymerisation)
+(:Depolymerisation)-[:inferredTo]->(:Reaction)
+(:Depolymerisation)-[:inferredTo]->(:TopLevelPathway)
+(:Depolymerisation)-[:input]->(:CandidateSet)
+(:Depolymerisation)-[:input]->(:Cell)
+(:Depolymerisation)-[:input]->(:ChemicalDrug)
+(:Depolymerisation)-[:input]->(:Complex)
+(:Depolymerisation)-[:input]->(:DefinedSet)
+(:Depolymerisation)-[:input]->(:EntityWithAccessionedSequence)
+(:Depolymerisation)-[:input]->(:OtherEntity)
+(:Depolymerisation)-[:input]->(:Polymer)
+(:Depolymerisation)-[:input]->(:ProteinDrug)
+(:Depolymerisation)-[:input]->(:RNADrug)
+(:Depolymerisation)-[:input]->(:SimpleEntity)
+(:Depolymerisation)-[:internalReviewed]->(:InstanceEdit)
+(:Depolymerisation)-[:literatureReference]->(:Book)
+(:Depolymerisation)-[:literatureReference]->(:LiteratureReference)
+(:Depolymerisation)-[:literatureReference]->(:URL)
+(:Depolymerisation)-[:output]->(:CandidateSet)
+(:Depolymerisation)-[:output]->(:Cell)
+(:Depolymerisation)-[:output]->(:ChemicalDrug)
+(:Depolymerisation)-[:output]->(:Complex)
+(:Depolymerisation)-[:output]->(:DefinedSet)
+(:Depolymerisation)-[:output]->(:EntityWithAccessionedSequence)
+(:Depolymerisation)-[:output]->(:OtherEntity)
+(:Depolymerisation)-[:output]->(:Polymer)
+(:Depolymerisation)-[:output]->(:SimpleEntity)
+(:Depolymerisation)-[:precedingEvent]->(:BlackBoxEvent)
+(:Depolymerisation)-[:precedingEvent]->(:CellDevelopmentStep)
+(:Depolymerisation)-[:precedingEvent]->(:Depolymerisation)
+(:Depolymerisation)-[:precedingEvent]->(:FailedReaction)
+(:Depolymerisation)-[:precedingEvent]->(:Pathway)
+(:Depolymerisation)-[:precedingEvent]->(:Polymerisation)
+(:Depolymerisation)-[:precedingEvent]->(:Reaction)
+(:Depolymerisation)-[:relatedSpecies]->(:Species)
+(:Depolymerisation)-[:reviewStatus]->(:ReviewStatus)
+(:Depolymerisation)-[:species]->(:Species)
+(:Depolymerisation)-[:summation]->(:Summation)
+(:Disease)-[:referenceDatabase]->(:ReferenceDatabase)
+(:EntityFunctionalStatus)-[:diseaseEntity]->(:CandidateSet)
+(:EntityFunctionalStatus)-[:diseaseEntity]->(:Complex)
+(:EntityFunctionalStatus)-[:diseaseEntity]->(:DefinedSet)
+(:EntityFunctionalStatus)-[:diseaseEntity]->(:EntityWithAccessionedSequence)
+(:EntityFunctionalStatus)-[:functionalStatus]->(:FunctionalStatus)
+(:EntityFunctionalStatus)-[:normalEntity]->(:CandidateSet)
+(:EntityFunctionalStatus)-[:normalEntity]->(:Complex)
+(:EntityFunctionalStatus)-[:normalEntity]->(:DefinedSet)
+(:EntityFunctionalStatus)-[:normalEntity]->(:EntityWithAccessionedSequence)
+(:EntityFunctionalStatus)-[:normalEntity]->(:Polymer)
+(:EntityWithAccessionedSequence)-[:cellType]->(:CellType)
+(:EntityWithAccessionedSequence)-[:compartment]->(:Compartment)
+(:EntityWithAccessionedSequence)-[:crossReference]->(:DatabaseIdentifier)
+(:EntityWithAccessionedSequence)-[:disease]->(:Disease)
+(:EntityWithAccessionedSequence)-[:goCellularComponent]->(:Compartment)
+(:EntityWithAccessionedSequence)-[:hasModifiedResidue]->(:FragmentDeletionModification)
+(:EntityWithAccessionedSequence)-[:hasModifiedResidue]->(:FragmentInsertionModification)
+(:EntityWithAccessionedSequence)-[:hasModifiedResidue]->(:FragmentReplacedModification)
+(:EntityWithAccessionedSequence)-[:hasModifiedResidue]->(:GroupModifiedResidue)
+(:EntityWithAccessionedSequence)-[:hasModifiedResidue]->(:InterChainCrosslinkedResidue)
+(:EntityWithAccessionedSequence)-[:hasModifiedResidue]->(:IntraChainCrosslinkedResidue)
+(:EntityWithAccessionedSequence)-[:hasModifiedResidue]->(:ModifiedResidue)
+(:EntityWithAccessionedSequence)-[:hasModifiedResidue]->(:NonsenseMutation)
+(:EntityWithAccessionedSequence)-[:inferredTo]->(:BlackBoxEvent)
+(:EntityWithAccessionedSequence)-[:inferredTo]->(:CandidateSet)
+(:EntityWithAccessionedSequence)-[:inferredTo]->(:Complex)
+(:EntityWithAccessionedSequence)-[:inferredTo]->(:DefinedSet)
+(:EntityWithAccessionedSequence)-[:inferredTo]->(:Depolymerisation)
+(:EntityWithAccessionedSequence)-[:inferredTo]->(:EntityWithAccessionedSequence)
+(:EntityWithAccessionedSequence)-[:inferredTo]->(:FailedReaction)
+(:EntityWithAccessionedSequence)-[:inferredTo]->(:Polymer)
+(:EntityWithAccessionedSequence)-[:inferredTo]->(:Polymerisation)
+(:EntityWithAccessionedSequence)-[:inferredTo]->(:Reaction)
+(:EntityWithAccessionedSequence)-[:inferredTo]->(:TopLevelPathway)
+(:EntityWithAccessionedSequence)-[:literatureReference]->(:Book)
+(:EntityWithAccessionedSequence)-[:literatureReference]->(:LiteratureReference)
+(:EntityWithAccessionedSequence)-[:literatureReference]->(:URL)
+(:EntityWithAccessionedSequence)-[:referenceEntity]->(:ReferenceDNASequence)
+(:EntityWithAccessionedSequence)-[:referenceEntity]->(:ReferenceIsoform)
+(:EntityWithAccessionedSequence)-[:referenceEntity]->(:ReferenceMolecule)
+(:EntityWithAccessionedSequence)-[:referenceEntity]->(:ReferenceRNASequence)
+(:EntityWithAccessionedSequence)-[:referenceEntity]->(:ReferenceTherapeutic)
+(:EntityWithAccessionedSequence)-[:species]->(:Species)
+(:EntityWithAccessionedSequence)-[:summation]->(:Summation)
+(:EvidenceType)-[:referenceDatabase]->(:ReferenceDatabase)
+(:FailedReaction)-[:catalystActivity]->(:CatalystActivity)
+(:FailedReaction)-[:catalystActivityReference]->(:CatalystActivityReference)
+(:FailedReaction)-[:compartment]->(:Compartment)
+(:FailedReaction)-[:crossReference]->(:DatabaseIdentifier)
+(:FailedReaction)-[:disease]->(:Disease)
+(:FailedReaction)-[:entityFunctionalStatus]->(:EntityFunctionalStatus)
+(:FailedReaction)-[:entityOnOtherCell]->(:CandidateSet)
+(:FailedReaction)-[:entityOnOtherCell]->(:Complex)
+(:FailedReaction)-[:entityOnOtherCell]->(:DefinedSet)
+(:FailedReaction)-[:entityOnOtherCell]->(:EntityWithAccessionedSequence)
+(:FailedReaction)-[:entityOnOtherCell]->(:OtherEntity)
+(:FailedReaction)-[:entityOnOtherCell]->(:Polymer)
+(:FailedReaction)-[:entityOnOtherCell]->(:SimpleEntity)
+(:FailedReaction)-[:inferredTo]->(:BlackBoxEvent)
+(:FailedReaction)-[:inferredTo]->(:CandidateSet)
+(:FailedReaction)-[:inferredTo]->(:Complex)
+(:FailedReaction)-[:inferredTo]->(:DefinedSet)
+(:FailedReaction)-[:inferredTo]->(:Depolymerisation)
+(:FailedReaction)-[:inferredTo]->(:EntityWithAccessionedSequence)
+(:FailedReaction)-[:inferredTo]->(:FailedReaction)
+(:FailedReaction)-[:inferredTo]->(:Polymer)
+(:FailedReaction)-[:inferredTo]->(:Polymerisation)
+(:FailedReaction)-[:inferredTo]->(:Reaction)
+(:FailedReaction)-[:inferredTo]->(:TopLevelPathway)
+(:FailedReaction)-[:input]->(:CandidateSet)
+(:FailedReaction)-[:input]->(:Cell)
+(:FailedReaction)-[:input]->(:ChemicalDrug)
+(:FailedReaction)-[:input]->(:Complex)
+(:FailedReaction)-[:input]->(:DefinedSet)
+(:FailedReaction)-[:input]->(:EntityWithAccessionedSequence)
+(:FailedReaction)-[:input]->(:OtherEntity)
+(:FailedReaction)-[:input]->(:Polymer)
+(:FailedReaction)-[:input]->(:ProteinDrug)
+(:FailedReaction)-[:input]->(:RNADrug)
+(:FailedReaction)-[:input]->(:SimpleEntity)
+(:FailedReaction)-[:internalReviewed]->(:InstanceEdit)
+(:FailedReaction)-[:literatureReference]->(:Book)
+(:FailedReaction)-[:literatureReference]->(:LiteratureReference)
+(:FailedReaction)-[:literatureReference]->(:URL)
+(:FailedReaction)-[:normalReaction]->(:BlackBoxEvent)
+(:FailedReaction)-[:normalReaction]->(:Reaction)
+(:FailedReaction)-[:precedingEvent]->(:BlackBoxEvent)
+(:FailedReaction)-[:precedingEvent]->(:CellDevelopmentStep)
+(:FailedReaction)-[:precedingEvent]->(:Depolymerisation)
+(:FailedReaction)-[:precedingEvent]->(:FailedReaction)
+(:FailedReaction)-[:precedingEvent]->(:Pathway)
+(:FailedReaction)-[:precedingEvent]->(:Polymerisation)
+(:FailedReaction)-[:precedingEvent]->(:Reaction)
+(:FailedReaction)-[:previousReviewStatus]->(:ReviewStatus)
+(:FailedReaction)-[:regulatedBy]->(:NegativeGeneExpressionRegulation)
+(:FailedReaction)-[:regulatedBy]->(:PositiveGeneExpressionRegulation)
+(:FailedReaction)-[:regulatedBy]->(:Requirement)
+(:FailedReaction)-[:regulationReference]->(:RegulationReference)
+(:FailedReaction)-[:relatedSpecies]->(:Species)
+(:FailedReaction)-[:requiredInputComponent]->(:CandidateSet)
+(:FailedReaction)-[:requiredInputComponent]->(:Complex)
+(:FailedReaction)-[:requiredInputComponent]->(:DefinedSet)
+(:FailedReaction)-[:requiredInputComponent]->(:EntityWithAccessionedSequence)
+(:FailedReaction)-[:requiredInputComponent]->(:OtherEntity)
+(:FailedReaction)-[:requiredInputComponent]->(:SimpleEntity)
+(:FailedReaction)-[:reviewStatus]->(:ReviewStatus)
+(:FailedReaction)-[:species]->(:Species)
+(:FailedReaction)-[:structureModified]->(:InstanceEdit)
+(:FailedReaction)-[:summation]->(:Summation)
+(:FragmentDeletionModification)-[:referenceSequence]->(:ReferenceDNASequence)
+(:FragmentDeletionModification)-[:referenceSequence]->(:ReferenceIsoform)
+(:FragmentDeletionModification)-[:referenceSequence]->(:ReferenceRNASequence)
+(:FragmentInsertionModification)-[:referenceSequence]->(:ReferenceDNASequence)
+(:FragmentInsertionModification)-[:referenceSequence]->(:ReferenceIsoform)
+(:FragmentInsertionModification)-[:referenceSequence]->(:ReferenceRNASequence)
+(:FragmentReplacedModification)-[:referenceSequence]->(:ReferenceDNASequence)
+(:FragmentReplacedModification)-[:referenceSequence]->(:ReferenceIsoform)
+(:FragmentReplacedModification)-[:referenceSequence]->(:ReferenceRNASequence)
+(:FunctionalStatus)-[:functionalStatusType]->(:FunctionalStatusType)
+(:FunctionalStatus)-[:structuralVariant]->(:SequenceOntology)
+(:GO_BiologicalProcess)-[:referenceDatabase]->(:ReferenceDatabase)
+(:GO_MolecularFunction)-[:referenceDatabase]->(:ReferenceDatabase)
+(:GroupModifiedResidue)-[:modification]->(:CandidateSet)
+(:GroupModifiedResidue)-[:modification]->(:DefinedSet)
+(:GroupModifiedResidue)-[:modification]->(:Polymer)
+(:GroupModifiedResidue)-[:modification]->(:ReferenceGroup)
+(:GroupModifiedResidue)-[:modification]->(:ReferenceMolecule)
+(:GroupModifiedResidue)-[:psiMod]->(:PsiMod)
+(:GroupModifiedResidue)-[:referenceSequence]->(:ReferenceDNASequence)
+(:GroupModifiedResidue)-[:referenceSequence]->(:ReferenceIsoform)
+(:GroupModifiedResidue)-[:referenceSequence]->(:ReferenceRNASequence)
+(:InstanceEdit)-[:authored]->(:BlackBoxEvent)
+(:InstanceEdit)-[:authored]->(:CandidateSet)
+(:InstanceEdit)-[:authored]->(:CellDevelopmentStep)
+(:InstanceEdit)-[:authored]->(:CellLineagePath)
+(:InstanceEdit)-[:authored]->(:ChemicalDrug)
+(:InstanceEdit)-[:authored]->(:Complex)
+(:InstanceEdit)-[:authored]->(:DefinedSet)
+(:InstanceEdit)-[:authored]->(:Depolymerisation)
+(:InstanceEdit)-[:authored]->(:EntityWithAccessionedSequence)
+(:InstanceEdit)-[:authored]->(:FailedReaction)
+(:InstanceEdit)-[:authored]->(:OtherEntity)
+(:InstanceEdit)-[:authored]->(:Polymer)
+(:InstanceEdit)-[:authored]->(:Polymerisation)
+(:InstanceEdit)-[:authored]->(:ProteinDrug)
+(:InstanceEdit)-[:authored]->(:Reaction)
+(:InstanceEdit)-[:authored]->(:SimpleEntity)
+(:InstanceEdit)-[:authored]->(:TopLevelPathway)
+(:InstanceEdit)-[:created]->(:Affiliation)
+(:InstanceEdit)-[:created]->(:Anatomy)
+(:InstanceEdit)-[:created]->(:BlackBoxEvent)
+(:InstanceEdit)-[:created]->(:Book)
+(:InstanceEdit)-[:created]->(:CandidateSet)
+(:InstanceEdit)-[:created]->(:CatalystActivity)
+(:InstanceEdit)-[:created]->(:CatalystActivityReference)
+(:InstanceEdit)-[:created]->(:Cell)
+(:InstanceEdit)-[:created]->(:CellDevelopmentStep)
+(:InstanceEdit)-[:created]->(:CellLineagePath)
+(:InstanceEdit)-[:created]->(:CellType)
+(:InstanceEdit)-[:created]->(:ChemicalDrug)
+(:InstanceEdit)-[:created]->(:Compartment)
+(:InstanceEdit)-[:created]->(:Complex)
+(:InstanceEdit)-[:created]->(:DatabaseIdentifier)
+(:InstanceEdit)-[:created]->(:DefinedSet)
+(:InstanceEdit)-[:created]->(:Deleted)
+(:InstanceEdit)-[:created]->(:DeletedControlledVocabulary)
+(:InstanceEdit)-[:created]->(:DeletedInstance)
+(:InstanceEdit)-[:created]->(:Depolymerisation)
+(:InstanceEdit)-[:created]->(:Disease)
+(:InstanceEdit)-[:created]->(:EntityFunctionalStatus)
+(:InstanceEdit)-[:created]->(:EntityWithAccessionedSequence)
+(:InstanceEdit)-[:created]->(:EvidenceType)
+(:InstanceEdit)-[:created]->(:FailedReaction)
+(:InstanceEdit)-[:created]->(:Figure)
+(:InstanceEdit)-[:created]->(:FragmentDeletionModification)
+(:InstanceEdit)-[:created]->(:FragmentInsertionModification)
+(:InstanceEdit)-[:created]->(:FragmentReplacedModification)
+(:InstanceEdit)-[:created]->(:FunctionalStatus)
+(:InstanceEdit)-[:created]->(:FunctionalStatusType)
+(:InstanceEdit)-[:created]->(:GO_BiologicalProcess)
+(:InstanceEdit)-[:created]->(:GO_MolecularFunction)
+(:InstanceEdit)-[:created]->(:GroupModifiedResidue)
+(:InstanceEdit)-[:created]->(:InstanceEdit)
+(:InstanceEdit)-[:created]->(:InterChainCrosslinkedResidue)
+(:InstanceEdit)-[:created]->(:IntraChainCrosslinkedResidue)
+(:InstanceEdit)-[:created]->(:LiteratureReference)
+(:InstanceEdit)-[:created]->(:MarkerReference)
+(:InstanceEdit)-[:created]->(:ModifiedResidue)
+(:InstanceEdit)-[:created]->(:NegativeGeneExpressionRegulation)
+(:InstanceEdit)-[:created]->(:NegativePrecedingEvent)
+(:InstanceEdit)-[:created]->(:NegativePrecedingEventReason)
+(:InstanceEdit)-[:created]->(:NonsenseMutation)
+(:InstanceEdit)-[:created]->(:OtherEntity)
+(:InstanceEdit)-[:created]->(:Person)
+(:InstanceEdit)-[:created]->(:Polymer)
+(:InstanceEdit)-[:created]->(:Polymerisation)
+(:InstanceEdit)-[:created]->(:PositiveGeneExpressionRegulation)
+(:InstanceEdit)-[:created]->(:ProteinDrug)
+(:InstanceEdit)-[:created]->(:PsiMod)
+(:InstanceEdit)-[:created]->(:RNADrug)
+(:InstanceEdit)-[:created]->(:Reaction)
+(:InstanceEdit)-[:created]->(:ReferenceDNASequence)
+(:InstanceEdit)-[:created]->(:ReferenceDatabase)
+(:InstanceEdit)-[:created]->(:ReferenceGroup)
+(:InstanceEdit)-[:created]->(:ReferenceIsoform)
+(:InstanceEdit)-[:created]->(:ReferenceMolecule)
+(:InstanceEdit)-[:created]->(:ReferenceRNASequence)
+(:InstanceEdit)-[:created]->(:ReferenceTherapeutic)
+(:InstanceEdit)-[:created]->(:RegulationReference)
+(:InstanceEdit)-[:created]->(:Release)
+(:InstanceEdit)-[:created]->(:Requirement)
+(:InstanceEdit)-[:created]->(:ReviewStatus)
+(:InstanceEdit)-[:created]->(:SequenceOntology)
+(:InstanceEdit)-[:created]->(:SimpleEntity)
+(:InstanceEdit)-[:created]->(:Species)
+(:InstanceEdit)-[:created]->(:Summation)
+(:InstanceEdit)-[:created]->(:TopLevelPathway)
+(:InstanceEdit)-[:created]->(:URL)
+(:InstanceEdit)-[:created]->(:UpdateTracker)
+(:InstanceEdit)-[:edited]->(:BlackBoxEvent)
+(:InstanceEdit)-[:edited]->(:CandidateSet)
+(:InstanceEdit)-[:edited]->(:CellDevelopmentStep)
+(:InstanceEdit)-[:edited]->(:CellLineagePath)
+(:InstanceEdit)-[:edited]->(:Complex)
+(:InstanceEdit)-[:edited]->(:DefinedSet)
+(:InstanceEdit)-[:edited]->(:Depolymerisation)
+(:InstanceEdit)-[:edited]->(:EntityWithAccessionedSequence)
+(:InstanceEdit)-[:edited]->(:FailedReaction)
+(:InstanceEdit)-[:edited]->(:Polymerisation)
+(:InstanceEdit)-[:edited]->(:Reaction)
+(:InstanceEdit)-[:edited]->(:TopLevelPathway)
+(:InstanceEdit)-[:modified]->(:Affiliation)
+(:InstanceEdit)-[:modified]->(:Anatomy)
+(:InstanceEdit)-[:modified]->(:BlackBoxEvent)
+(:InstanceEdit)-[:modified]->(:Book)
+(:InstanceEdit)-[:modified]->(:CandidateSet)
+(:InstanceEdit)-[:modified]->(:CatalystActivity)
+(:InstanceEdit)-[:modified]->(:CatalystActivityReference)
+(:InstanceEdit)-[:modified]->(:Cell)
+(:InstanceEdit)-[:modified]->(:CellDevelopmentStep)
+(:InstanceEdit)-[:modified]->(:CellLineagePath)
+(:InstanceEdit)-[:modified]->(:CellType)
+(:InstanceEdit)-[:modified]->(:ChemicalDrug)
+(:InstanceEdit)-[:modified]->(:Compartment)
+(:InstanceEdit)-[:modified]->(:Complex)
+(:InstanceEdit)-[:modified]->(:DatabaseIdentifier)
+(:InstanceEdit)-[:modified]->(:DefinedSet)
+(:InstanceEdit)-[:modified]->(:Deleted)
+(:InstanceEdit)-[:modified]->(:DeletedControlledVocabulary)
+(:InstanceEdit)-[:modified]->(:DeletedInstance)
+(:InstanceEdit)-[:modified]->(:Depolymerisation)
+(:InstanceEdit)-[:modified]->(:Disease)
+(:InstanceEdit)-[:modified]->(:EntityFunctionalStatus)
+(:InstanceEdit)-[:modified]->(:EntityWithAccessionedSequence)
+(:InstanceEdit)-[:modified]->(:EvidenceType)
+(:InstanceEdit)-[:modified]->(:FailedReaction)
+(:InstanceEdit)-[:modified]->(:Figure)
+(:InstanceEdit)-[:modified]->(:FragmentDeletionModification)
+(:InstanceEdit)-[:modified]->(:FragmentInsertionModification)
+(:InstanceEdit)-[:modified]->(:FragmentReplacedModification)
+(:InstanceEdit)-[:modified]->(:FunctionalStatus)
+(:InstanceEdit)-[:modified]->(:GO_BiologicalProcess)
+(:InstanceEdit)-[:modified]->(:GO_MolecularFunction)
+(:InstanceEdit)-[:modified]->(:GroupModifiedResidue)
+(:InstanceEdit)-[:modified]->(:InstanceEdit)
+(:InstanceEdit)-[:modified]->(:InterChainCrosslinkedResidue)
+(:InstanceEdit)-[:modified]->(:IntraChainCrosslinkedResidue)
+(:InstanceEdit)-[:modified]->(:LiteratureReference)
+(:InstanceEdit)-[:modified]->(:MarkerReference)
+(:InstanceEdit)-[:modified]->(:ModifiedResidue)
+(:InstanceEdit)-[:modified]->(:NegativeGeneExpressionRegulation)
+(:InstanceEdit)-[:modified]->(:NegativePrecedingEvent)
+(:InstanceEdit)-[:modified]->(:NegativePrecedingEventReason)
+(:InstanceEdit)-[:modified]->(:NonsenseMutation)
+(:InstanceEdit)-[:modified]->(:OtherEntity)
+(:InstanceEdit)-[:modified]->(:Person)
+(:InstanceEdit)-[:modified]->(:Polymer)
+(:InstanceEdit)-[:modified]->(:Polymerisation)
+(:InstanceEdit)-[:modified]->(:PositiveGeneExpressionRegulation)
+(:InstanceEdit)-[:modified]->(:ProteinDrug)
+(:InstanceEdit)-[:modified]->(:PsiMod)
+(:InstanceEdit)-[:modified]->(:Reaction)
+(:InstanceEdit)-[:modified]->(:ReferenceDNASequence)
+(:InstanceEdit)-[:modified]->(:ReferenceDatabase)
+(:InstanceEdit)-[:modified]->(:ReferenceGroup)
+(:InstanceEdit)-[:modified]->(:ReferenceIsoform)
+(:InstanceEdit)-[:modified]->(:ReferenceMolecule)
+(:InstanceEdit)-[:modified]->(:ReferenceRNASequence)
+(:InstanceEdit)-[:modified]->(:ReferenceTherapeutic)
+(:InstanceEdit)-[:modified]->(:RegulationReference)
+(:InstanceEdit)-[:modified]->(:Release)
+(:InstanceEdit)-[:modified]->(:Requirement)
+(:InstanceEdit)-[:modified]->(:ReviewStatus)
+(:InstanceEdit)-[:modified]->(:SequenceOntology)
+(:InstanceEdit)-[:modified]->(:SimpleEntity)
+(:InstanceEdit)-[:modified]->(:Species)
+(:InstanceEdit)-[:modified]->(:Summation)
+(:InstanceEdit)-[:modified]->(:TopLevelPathway)
+(:InstanceEdit)-[:modified]->(:URL)
+(:InstanceEdit)-[:modified]->(:UpdateTracker)
+(:InstanceEdit)-[:reviewed]->(:BlackBoxEvent)
+(:InstanceEdit)-[:reviewed]->(:CellDevelopmentStep)
+(:InstanceEdit)-[:reviewed]->(:CellLineagePath)
+(:InstanceEdit)-[:reviewed]->(:Complex)
+(:InstanceEdit)-[:reviewed]->(:DefinedSet)
+(:InstanceEdit)-[:reviewed]->(:Depolymerisation)
+(:InstanceEdit)-[:reviewed]->(:EntityWithAccessionedSequence)
+(:InstanceEdit)-[:reviewed]->(:FailedReaction)
+(:InstanceEdit)-[:reviewed]->(:Polymerisation)
+(:InstanceEdit)-[:reviewed]->(:Reaction)
+(:InstanceEdit)-[:reviewed]->(:TopLevelPathway)
+(:InstanceEdit)-[:revised]->(:BlackBoxEvent)
+(:InstanceEdit)-[:revised]->(:Complex)
+(:InstanceEdit)-[:revised]->(:DefinedSet)
+(:InstanceEdit)-[:revised]->(:FailedReaction)
+(:InstanceEdit)-[:revised]->(:Polymerisation)
+(:InstanceEdit)-[:revised]->(:Reaction)
+(:InstanceEdit)-[:revised]->(:TopLevelPathway)
+(:InterChainCrosslinkedResidue)-[:equivalentTo]->(:InterChainCrosslinkedResidue)
+(:InterChainCrosslinkedResidue)-[:modification]->(:CandidateSet)
+(:InterChainCrosslinkedResidue)-[:modification]->(:DefinedSet)
+(:InterChainCrosslinkedResidue)-[:modification]->(:Polymer)
+(:InterChainCrosslinkedResidue)-[:modification]->(:ReferenceGroup)
+(:InterChainCrosslinkedResidue)-[:modification]->(:ReferenceMolecule)
+(:InterChainCrosslinkedResidue)-[:psiMod]->(:PsiMod)
+(:InterChainCrosslinkedResidue)-[:referenceSequence]->(:ReferenceDNASequence)
+(:InterChainCrosslinkedResidue)-[:referenceSequence]->(:ReferenceIsoform)
+(:InterChainCrosslinkedResidue)-[:referenceSequence]->(:ReferenceRNASequence)
+(:InterChainCrosslinkedResidue)-[:secondReferenceSequence]->(:ReferenceDNASequence)
+(:InterChainCrosslinkedResidue)-[:secondReferenceSequence]->(:ReferenceGeneProduct)
+(:IntraChainCrosslinkedResidue)-[:modification]->(:CandidateSet)
+(:IntraChainCrosslinkedResidue)-[:modification]->(:DefinedSet)
+(:IntraChainCrosslinkedResidue)-[:modification]->(:Polymer)
+(:IntraChainCrosslinkedResidue)-[:modification]->(:ReferenceGroup)
+(:IntraChainCrosslinkedResidue)-[:modification]->(:ReferenceMolecule)
+(:IntraChainCrosslinkedResidue)-[:psiMod]->(:PsiMod)
+(:IntraChainCrosslinkedResidue)-[:referenceSequence]->(:ReferenceDNASequence)
+(:IntraChainCrosslinkedResidue)-[:referenceSequence]->(:ReferenceIsoform)
+(:IntraChainCrosslinkedResidue)-[:referenceSequence]->(:ReferenceRNASequence)
+(:MarkerReference)-[:cell]->(:Cell)
+(:MarkerReference)-[:literatureReference]->(:Book)
+(:MarkerReference)-[:literatureReference]->(:LiteratureReference)
+(:MarkerReference)-[:literatureReference]->(:URL)
+(:MarkerReference)-[:marker]->(:EntityWithAccessionedSequence)
+(:ModifiedResidue)-[:psiMod]->(:PsiMod)
+(:ModifiedResidue)-[:referenceSequence]->(:ReferenceDNASequence)
+(:ModifiedResidue)-[:referenceSequence]->(:ReferenceIsoform)
+(:ModifiedResidue)-[:referenceSequence]->(:ReferenceRNASequence)
+(:NegativeGeneExpressionRegulation)-[:activeUnit]->(:CandidateSet)
+(:NegativeGeneExpressionRegulation)-[:activeUnit]->(:ChemicalDrug)
+(:NegativeGeneExpressionRegulation)-[:activeUnit]->(:Complex)
+(:NegativeGeneExpressionRegulation)-[:activeUnit]->(:DefinedSet)
+(:NegativeGeneExpressionRegulation)-[:activeUnit]->(:EntityWithAccessionedSequence)
+(:NegativeGeneExpressionRegulation)-[:activeUnit]->(:ProteinDrug)
+(:NegativeGeneExpressionRegulation)-[:activeUnit]->(:SimpleEntity)
+(:NegativeGeneExpressionRegulation)-[:activity]->(:GO_MolecularFunction)
+(:NegativeGeneExpressionRegulation)-[:goBiologicalProcess]->(:GO_BiologicalProcess)
+(:NegativeGeneExpressionRegulation)-[:regulator]->(:CandidateSet)
+(:NegativeGeneExpressionRegulation)-[:regulator]->(:Cell)
+(:NegativeGeneExpressionRegulation)-[:regulator]->(:ChemicalDrug)
+(:NegativeGeneExpressionRegulation)-[:regulator]->(:Complex)
+(:NegativeGeneExpressionRegulation)-[:regulator]->(:DefinedSet)
+(:NegativeGeneExpressionRegulation)-[:regulator]->(:EntityWithAccessionedSequence)
+(:NegativeGeneExpressionRegulation)-[:regulator]->(:Polymer)
+(:NegativeGeneExpressionRegulation)-[:regulator]->(:SimpleEntity)
+(:NegativePrecedingEvent)-[:precedingEvent]->(:BlackBoxEvent)
+(:NegativePrecedingEvent)-[:precedingEvent]->(:CellDevelopmentStep)
+(:NegativePrecedingEvent)-[:precedingEvent]->(:Depolymerisation)
+(:NegativePrecedingEvent)-[:precedingEvent]->(:FailedReaction)
+(:NegativePrecedingEvent)-[:precedingEvent]->(:Pathway)
+(:NegativePrecedingEvent)-[:precedingEvent]->(:Polymerisation)
+(:NegativePrecedingEvent)-[:precedingEvent]->(:Reaction)
+(:NegativePrecedingEvent)-[:reason]->(:DeletedControlledVocabulary)
+(:NegativePrecedingEvent)-[:reason]->(:NegativePrecedingEventReason)
+(:NonsenseMutation)-[:psiMod]->(:PsiMod)
+(:NonsenseMutation)-[:referenceSequence]->(:ReferenceDNASequence)
+(:NonsenseMutation)-[:referenceSequence]->(:ReferenceIsoform)
+(:NonsenseMutation)-[:referenceSequence]->(:ReferenceRNASequence)
+(:OtherEntity)-[:cellType]->(:CellType)
+(:OtherEntity)-[:compartment]->(:Compartment)
+(:OtherEntity)-[:crossReference]->(:DatabaseIdentifier)
+(:OtherEntity)-[:disease]->(:Disease)
+(:OtherEntity)-[:literatureReference]->(:Book)
+(:OtherEntity)-[:literatureReference]->(:LiteratureReference)
+(:OtherEntity)-[:literatureReference]->(:URL)
+(:OtherEntity)-[:summation]->(:Summation)
+(:Pathway)-[:normalPathway]->(:TopLevelPathway)
+(:Pathway)-[:precedingEvent]->(:BlackBoxEvent)
+(:Pathway)-[:precedingEvent]->(:CellDevelopmentStep)
+(:Pathway)-[:precedingEvent]->(:Depolymerisation)
+(:Pathway)-[:precedingEvent]->(:FailedReaction)
+(:Pathway)-[:precedingEvent]->(:Pathway)
+(:Pathway)-[:precedingEvent]->(:Polymerisation)
+(:Pathway)-[:precedingEvent]->(:Reaction)
+(:Pathway)-[:relatedSpecies]->(:Species)
+(:Person)-[:affiliation]->(:Affiliation)
+(:Person)-[:author]->(:Book)
+(:Person)-[:author]->(:InstanceEdit)
+(:Person)-[:author]->(:LiteratureReference)
+(:Person)-[:author]->(:URL)
+(:Person)-[:crossReference]->(:DatabaseIdentifier)
+(:Polymer)-[:compartment]->(:Compartment)
+(:Polymer)-[:crossReference]->(:DatabaseIdentifier)
+(:Polymer)-[:disease]->(:Disease)
+(:Polymer)-[:goCellularComponent]->(:Compartment)
+(:Polymer)-[:inferredTo]->(:BlackBoxEvent)
+(:Polymer)-[:inferredTo]->(:CandidateSet)
+(:Polymer)-[:inferredTo]->(:Complex)
+(:Polymer)-[:inferredTo]->(:DefinedSet)
+(:Polymer)-[:inferredTo]->(:Depolymerisation)
+(:Polymer)-[:inferredTo]->(:EntityWithAccessionedSequence)
+(:Polymer)-[:inferredTo]->(:FailedReaction)
+(:Polymer)-[:inferredTo]->(:Polymer)
+(:Polymer)-[:inferredTo]->(:Polymerisation)
+(:Polymer)-[:inferredTo]->(:Reaction)
+(:Polymer)-[:inferredTo]->(:TopLevelPathway)
+(:Polymer)-[:literatureReference]->(:Book)
+(:Polymer)-[:literatureReference]->(:LiteratureReference)
+(:Polymer)-[:literatureReference]->(:URL)
+(:Polymer)-[:repeatedUnit]->(:CandidateSet)
+(:Polymer)-[:repeatedUnit]->(:Complex)
+(:Polymer)-[:repeatedUnit]->(:DefinedSet)
+(:Polymer)-[:repeatedUnit]->(:EntityWithAccessionedSequence)
+(:Polymer)-[:repeatedUnit]->(:OtherEntity)
+(:Polymer)-[:repeatedUnit]->(:Polymer)
+(:Polymer)-[:repeatedUnit]->(:SimpleEntity)
+(:Polymer)-[:species]->(:Species)
+(:Polymer)-[:summation]->(:Summation)
+(:Polymerisation)-[:catalystActivity]->(:CatalystActivity)
+(:Polymerisation)-[:catalystActivityReference]->(:CatalystActivityReference)
+(:Polymerisation)-[:compartment]->(:Compartment)
+(:Polymerisation)-[:crossReference]->(:DatabaseIdentifier)
+(:Polymerisation)-[:disease]->(:Disease)
+(:Polymerisation)-[:evidenceType]->(:EvidenceType)
+(:Polymerisation)-[:goBiologicalProcess]->(:GO_BiologicalProcess)
+(:Polymerisation)-[:inferredTo]->(:BlackBoxEvent)
+(:Polymerisation)-[:inferredTo]->(:CandidateSet)
+(:Polymerisation)-[:inferredTo]->(:Complex)
+(:Polymerisation)-[:inferredTo]->(:DefinedSet)
+(:Polymerisation)-[:inferredTo]->(:Depolymerisation)
+(:Polymerisation)-[:inferredTo]->(:EntityWithAccessionedSequence)
+(:Polymerisation)-[:inferredTo]->(:FailedReaction)
+(:Polymerisation)-[:inferredTo]->(:Polymer)
+(:Polymerisation)-[:inferredTo]->(:Polymerisation)
+(:Polymerisation)-[:inferredTo]->(:Reaction)
+(:Polymerisation)-[:inferredTo]->(:TopLevelPathway)
+(:Polymerisation)-[:input]->(:CandidateSet)
+(:Polymerisation)-[:input]->(:Cell)
+(:Polymerisation)-[:input]->(:ChemicalDrug)
+(:Polymerisation)-[:input]->(:Complex)
+(:Polymerisation)-[:input]->(:DefinedSet)
+(:Polymerisation)-[:input]->(:EntityWithAccessionedSequence)
+(:Polymerisation)-[:input]->(:OtherEntity)
+(:Polymerisation)-[:input]->(:Polymer)
+(:Polymerisation)-[:input]->(:ProteinDrug)
+(:Polymerisation)-[:input]->(:RNADrug)
+(:Polymerisation)-[:input]->(:SimpleEntity)
+(:Polymerisation)-[:internalReviewed]->(:InstanceEdit)
+(:Polymerisation)-[:literatureReference]->(:Book)
+(:Polymerisation)-[:literatureReference]->(:LiteratureReference)
+(:Polymerisation)-[:literatureReference]->(:URL)
+(:Polymerisation)-[:output]->(:CandidateSet)
+(:Polymerisation)-[:output]->(:Cell)
+(:Polymerisation)-[:output]->(:ChemicalDrug)
+(:Polymerisation)-[:output]->(:Complex)
+(:Polymerisation)-[:output]->(:DefinedSet)
+(:Polymerisation)-[:output]->(:EntityWithAccessionedSequence)
+(:Polymerisation)-[:output]->(:OtherEntity)
+(:Polymerisation)-[:output]->(:Polymer)
+(:Polymerisation)-[:output]->(:SimpleEntity)
+(:Polymerisation)-[:precedingEvent]->(:BlackBoxEvent)
+(:Polymerisation)-[:precedingEvent]->(:CellDevelopmentStep)
+(:Polymerisation)-[:precedingEvent]->(:Depolymerisation)
+(:Polymerisation)-[:precedingEvent]->(:FailedReaction)
+(:Polymerisation)-[:precedingEvent]->(:Pathway)
+(:Polymerisation)-[:precedingEvent]->(:Polymerisation)
+(:Polymerisation)-[:precedingEvent]->(:Reaction)
+(:Polymerisation)-[:previousReviewStatus]->(:ReviewStatus)
+(:Polymerisation)-[:regulatedBy]->(:NegativeGeneExpressionRegulation)
+(:Polymerisation)-[:regulatedBy]->(:PositiveGeneExpressionRegulation)
+(:Polymerisation)-[:regulatedBy]->(:Requirement)
+(:Polymerisation)-[:regulationReference]->(:RegulationReference)
+(:Polymerisation)-[:relatedSpecies]->(:Species)
+(:Polymerisation)-[:requiredInputComponent]->(:CandidateSet)
+(:Polymerisation)-[:requiredInputComponent]->(:Complex)
+(:Polymerisation)-[:requiredInputComponent]->(:DefinedSet)
+(:Polymerisation)-[:requiredInputComponent]->(:EntityWithAccessionedSequence)
+(:Polymerisation)-[:requiredInputComponent]->(:OtherEntity)
+(:Polymerisation)-[:requiredInputComponent]->(:SimpleEntity)
+(:Polymerisation)-[:reviewStatus]->(:ReviewStatus)
+(:Polymerisation)-[:species]->(:Species)
+(:Polymerisation)-[:structureModified]->(:InstanceEdit)
+(:Polymerisation)-[:summation]->(:Summation)
+(:PositiveGeneExpressionRegulation)-[:activeUnit]->(:CandidateSet)
+(:PositiveGeneExpressionRegulation)-[:activeUnit]->(:ChemicalDrug)
+(:PositiveGeneExpressionRegulation)-[:activeUnit]->(:Complex)
+(:PositiveGeneExpressionRegulation)-[:activeUnit]->(:DefinedSet)
+(:PositiveGeneExpressionRegulation)-[:activeUnit]->(:EntityWithAccessionedSequence)
+(:PositiveGeneExpressionRegulation)-[:activeUnit]->(:ProteinDrug)
+(:PositiveGeneExpressionRegulation)-[:activeUnit]->(:SimpleEntity)
+(:PositiveGeneExpressionRegulation)-[:activity]->(:GO_MolecularFunction)
+(:PositiveGeneExpressionRegulation)-[:goBiologicalProcess]->(:GO_BiologicalProcess)
+(:PositiveGeneExpressionRegulation)-[:regulator]->(:CandidateSet)
+(:PositiveGeneExpressionRegulation)-[:regulator]->(:Cell)
+(:PositiveGeneExpressionRegulation)-[:regulator]->(:ChemicalDrug)
+(:PositiveGeneExpressionRegulation)-[:regulator]->(:Complex)
+(:PositiveGeneExpressionRegulation)-[:regulator]->(:DefinedSet)
+(:PositiveGeneExpressionRegulation)-[:regulator]->(:EntityWithAccessionedSequence)
+(:PositiveGeneExpressionRegulation)-[:regulator]->(:Polymer)
+(:PositiveGeneExpressionRegulation)-[:regulator]->(:SimpleEntity)
+(:ProteinDrug)-[:compartment]->(:Compartment)
+(:ProteinDrug)-[:crossReference]->(:DatabaseIdentifier)
+(:ProteinDrug)-[:disease]->(:Disease)
+(:ProteinDrug)-[:literatureReference]->(:Book)
+(:ProteinDrug)-[:literatureReference]->(:LiteratureReference)
+(:ProteinDrug)-[:literatureReference]->(:URL)
+(:ProteinDrug)-[:referenceEntity]->(:ReferenceDNASequence)
+(:ProteinDrug)-[:referenceEntity]->(:ReferenceIsoform)
+(:ProteinDrug)-[:referenceEntity]->(:ReferenceMolecule)
+(:ProteinDrug)-[:referenceEntity]->(:ReferenceRNASequence)
+(:ProteinDrug)-[:referenceEntity]->(:ReferenceTherapeutic)
+(:ProteinDrug)-[:summation]->(:Summation)
+(:PsiMod)-[:referenceDatabase]->(:ReferenceDatabase)
+(:RNADrug)-[:compartment]->(:Compartment)
+(:RNADrug)-[:crossReference]->(:DatabaseIdentifier)
+(:RNADrug)-[:disease]->(:Disease)
+(:RNADrug)-[:literatureReference]->(:Book)
+(:RNADrug)-[:literatureReference]->(:LiteratureReference)
+(:RNADrug)-[:literatureReference]->(:URL)
+(:RNADrug)-[:referenceEntity]->(:ReferenceDNASequence)
+(:RNADrug)-[:referenceEntity]->(:ReferenceIsoform)
+(:RNADrug)-[:referenceEntity]->(:ReferenceMolecule)
+(:RNADrug)-[:referenceEntity]->(:ReferenceRNASequence)
+(:RNADrug)-[:referenceEntity]->(:ReferenceTherapeutic)
+(:Reaction)-[:catalystActivity]->(:CatalystActivity)
+(:Reaction)-[:catalystActivityReference]->(:CatalystActivityReference)
+(:Reaction)-[:compartment]->(:Compartment)
+(:Reaction)-[:crossReference]->(:DatabaseIdentifier)
+(:Reaction)-[:disease]->(:Disease)
+(:Reaction)-[:entityFunctionalStatus]->(:EntityFunctionalStatus)
+(:Reaction)-[:entityOnOtherCell]->(:CandidateSet)
+(:Reaction)-[:entityOnOtherCell]->(:Complex)
+(:Reaction)-[:entityOnOtherCell]->(:DefinedSet)
+(:Reaction)-[:entityOnOtherCell]->(:EntityWithAccessionedSequence)
+(:Reaction)-[:entityOnOtherCell]->(:OtherEntity)
+(:Reaction)-[:entityOnOtherCell]->(:Polymer)
+(:Reaction)-[:entityOnOtherCell]->(:SimpleEntity)
+(:Reaction)-[:evidenceType]->(:EvidenceType)
+(:Reaction)-[:figure]->(:Figure)
+(:Reaction)-[:goBiologicalProcess]->(:GO_BiologicalProcess)
+(:Reaction)-[:inferredTo]->(:BlackBoxEvent)
+(:Reaction)-[:inferredTo]->(:CandidateSet)
+(:Reaction)-[:inferredTo]->(:Complex)
+(:Reaction)-[:inferredTo]->(:DefinedSet)
+(:Reaction)-[:inferredTo]->(:Depolymerisation)
+(:Reaction)-[:inferredTo]->(:EntityWithAccessionedSequence)
+(:Reaction)-[:inferredTo]->(:FailedReaction)
+(:Reaction)-[:inferredTo]->(:Polymer)
+(:Reaction)-[:inferredTo]->(:Polymerisation)
+(:Reaction)-[:inferredTo]->(:Reaction)
+(:Reaction)-[:inferredTo]->(:TopLevelPathway)
+(:Reaction)-[:input]->(:CandidateSet)
+(:Reaction)-[:input]->(:Cell)
+(:Reaction)-[:input]->(:ChemicalDrug)
+(:Reaction)-[:input]->(:Complex)
+(:Reaction)-[:input]->(:DefinedSet)
+(:Reaction)-[:input]->(:EntityWithAccessionedSequence)
+(:Reaction)-[:input]->(:OtherEntity)
+(:Reaction)-[:input]->(:Polymer)
+(:Reaction)-[:input]->(:ProteinDrug)
+(:Reaction)-[:input]->(:RNADrug)
+(:Reaction)-[:input]->(:SimpleEntity)
+(:Reaction)-[:internalReviewed]->(:InstanceEdit)
+(:Reaction)-[:literatureReference]->(:Book)
+(:Reaction)-[:literatureReference]->(:LiteratureReference)
+(:Reaction)-[:literatureReference]->(:URL)
+(:Reaction)-[:negativePrecedingEvent]->(:NegativePrecedingEvent)
+(:Reaction)-[:normalReaction]->(:BlackBoxEvent)
+(:Reaction)-[:normalReaction]->(:Reaction)
+(:Reaction)-[:output]->(:CandidateSet)
+(:Reaction)-[:output]->(:Cell)
+(:Reaction)-[:output]->(:ChemicalDrug)
+(:Reaction)-[:output]->(:Complex)
+(:Reaction)-[:output]->(:DefinedSet)
+(:Reaction)-[:output]->(:EntityWithAccessionedSequence)
+(:Reaction)-[:output]->(:OtherEntity)
+(:Reaction)-[:output]->(:Polymer)
+(:Reaction)-[:output]->(:SimpleEntity)
+(:Reaction)-[:precedingEvent]->(:BlackBoxEvent)
+(:Reaction)-[:precedingEvent]->(:CellDevelopmentStep)
+(:Reaction)-[:precedingEvent]->(:Depolymerisation)
+(:Reaction)-[:precedingEvent]->(:FailedReaction)
+(:Reaction)-[:precedingEvent]->(:Pathway)
+(:Reaction)-[:precedingEvent]->(:Polymerisation)
+(:Reaction)-[:precedingEvent]->(:Reaction)
+(:Reaction)-[:previousReviewStatus]->(:ReviewStatus)
+(:Reaction)-[:regulatedBy]->(:NegativeGeneExpressionRegulation)
+(:Reaction)-[:regulatedBy]->(:PositiveGeneExpressionRegulation)
+(:Reaction)-[:regulatedBy]->(:Requirement)
+(:Reaction)-[:regulationReference]->(:RegulationReference)
+(:Reaction)-[:relatedSpecies]->(:Species)
+(:Reaction)-[:requiredInputComponent]->(:CandidateSet)
+(:Reaction)-[:requiredInputComponent]->(:Complex)
+(:Reaction)-[:requiredInputComponent]->(:DefinedSet)
+(:Reaction)-[:requiredInputComponent]->(:EntityWithAccessionedSequence)
+(:Reaction)-[:requiredInputComponent]->(:OtherEntity)
+(:Reaction)-[:requiredInputComponent]->(:SimpleEntity)
+(:Reaction)-[:reverseReaction]->(:Reaction)
+(:Reaction)-[:reviewStatus]->(:ReviewStatus)
+(:Reaction)-[:species]->(:Species)
+(:Reaction)-[:structureModified]->(:InstanceEdit)
+(:Reaction)-[:summation]->(:Summation)
+(:ReferenceDNASequence)-[:created]->(:Affiliation)
+(:ReferenceDNASequence)-[:created]->(:Anatomy)
+(:ReferenceDNASequence)-[:created]->(:BlackBoxEvent)
+(:ReferenceDNASequence)-[:created]->(:Book)
+(:ReferenceDNASequence)-[:created]->(:CandidateSet)
+(:ReferenceDNASequence)-[:created]->(:CatalystActivity)
+(:ReferenceDNASequence)-[:created]->(:CatalystActivityReference)
+(:ReferenceDNASequence)-[:created]->(:Cell)
+(:ReferenceDNASequence)-[:created]->(:CellDevelopmentStep)
+(:ReferenceDNASequence)-[:created]->(:CellLineagePath)
+(:ReferenceDNASequence)-[:created]->(:CellType)
+(:ReferenceDNASequence)-[:created]->(:ChemicalDrug)
+(:ReferenceDNASequence)-[:created]->(:Compartment)
+(:ReferenceDNASequence)-[:created]->(:Complex)
+(:ReferenceDNASequence)-[:created]->(:DatabaseIdentifier)
+(:ReferenceDNASequence)-[:created]->(:DefinedSet)
+(:ReferenceDNASequence)-[:created]->(:Deleted)
+(:ReferenceDNASequence)-[:created]->(:DeletedControlledVocabulary)
+(:ReferenceDNASequence)-[:created]->(:DeletedInstance)
+(:ReferenceDNASequence)-[:created]->(:Depolymerisation)
+(:ReferenceDNASequence)-[:created]->(:Disease)
+(:ReferenceDNASequence)-[:created]->(:EntityFunctionalStatus)
+(:ReferenceDNASequence)-[:created]->(:EntityWithAccessionedSequence)
+(:ReferenceDNASequence)-[:created]->(:EvidenceType)
+(:ReferenceDNASequence)-[:created]->(:FailedReaction)
+(:ReferenceDNASequence)-[:created]->(:Figure)
+(:ReferenceDNASequence)-[:created]->(:FragmentDeletionModification)
+(:ReferenceDNASequence)-[:created]->(:FragmentInsertionModification)
+(:ReferenceDNASequence)-[:created]->(:FragmentReplacedModification)
+(:ReferenceDNASequence)-[:created]->(:FunctionalStatus)
+(:ReferenceDNASequence)-[:created]->(:FunctionalStatusType)
+(:ReferenceDNASequence)-[:created]->(:GO_BiologicalProcess)
+(:ReferenceDNASequence)-[:created]->(:GO_MolecularFunction)
+(:ReferenceDNASequence)-[:created]->(:GroupModifiedResidue)
+(:ReferenceDNASequence)-[:created]->(:InstanceEdit)
+(:ReferenceDNASequence)-[:created]->(:InterChainCrosslinkedResidue)
+(:ReferenceDNASequence)-[:created]->(:IntraChainCrosslinkedResidue)
+(:ReferenceDNASequence)-[:created]->(:LiteratureReference)
+(:ReferenceDNASequence)-[:created]->(:MarkerReference)
+(:ReferenceDNASequence)-[:created]->(:ModifiedResidue)
+(:ReferenceDNASequence)-[:created]->(:NegativeGeneExpressionRegulation)
+(:ReferenceDNASequence)-[:created]->(:NegativePrecedingEvent)
+(:ReferenceDNASequence)-[:created]->(:NegativePrecedingEventReason)
+(:ReferenceDNASequence)-[:created]->(:NonsenseMutation)
+(:ReferenceDNASequence)-[:created]->(:OtherEntity)
+(:ReferenceDNASequence)-[:created]->(:Person)
+(:ReferenceDNASequence)-[:created]->(:Polymer)
+(:ReferenceDNASequence)-[:created]->(:Polymerisation)
+(:ReferenceDNASequence)-[:created]->(:PositiveGeneExpressionRegulation)
+(:ReferenceDNASequence)-[:created]->(:ProteinDrug)
+(:ReferenceDNASequence)-[:created]->(:PsiMod)
+(:ReferenceDNASequence)-[:created]->(:RNADrug)
+(:ReferenceDNASequence)-[:created]->(:Reaction)
+(:ReferenceDNASequence)-[:created]->(:ReferenceDNASequence)
+(:ReferenceDNASequence)-[:created]->(:ReferenceDatabase)
+(:ReferenceDNASequence)-[:created]->(:ReferenceGroup)
+(:ReferenceDNASequence)-[:created]->(:ReferenceIsoform)
+(:ReferenceDNASequence)-[:created]->(:ReferenceMolecule)
+(:ReferenceDNASequence)-[:created]->(:ReferenceRNASequence)
+(:ReferenceDNASequence)-[:created]->(:ReferenceTherapeutic)
+(:ReferenceDNASequence)-[:created]->(:RegulationReference)
+(:ReferenceDNASequence)-[:created]->(:Release)
+(:ReferenceDNASequence)-[:created]->(:Requirement)
+(:ReferenceDNASequence)-[:created]->(:ReviewStatus)
+(:ReferenceDNASequence)-[:created]->(:SequenceOntology)
+(:ReferenceDNASequence)-[:created]->(:SimpleEntity)
+(:ReferenceDNASequence)-[:created]->(:Species)
+(:ReferenceDNASequence)-[:created]->(:Summation)
+(:ReferenceDNASequence)-[:created]->(:TopLevelPathway)
+(:ReferenceDNASequence)-[:created]->(:URL)
+(:ReferenceDNASequence)-[:created]->(:UpdateTracker)
+(:ReferenceDNASequence)-[:crossReference]->(:DatabaseIdentifier)
+(:ReferenceDNASequence)-[:referenceDatabase]->(:ReferenceDatabase)
+(:ReferenceDNASequence)-[:species]->(:Species)
+(:ReferenceGroup)-[:crossReference]->(:DatabaseIdentifier)
+(:ReferenceGroup)-[:referenceDatabase]->(:ReferenceDatabase)
+(:ReferenceIsoform)-[:crossReference]->(:DatabaseIdentifier)
+(:ReferenceIsoform)-[:isoformParent]->(:ReferenceIsoform)
+(:ReferenceIsoform)-[:referenceDatabase]->(:ReferenceDatabase)
+(:ReferenceIsoform)-[:referenceGene]->(:ReferenceDNASequence)
+(:ReferenceIsoform)-[:referenceTranscript]->(:ReferenceRNASequence)
+(:ReferenceIsoform)-[:species]->(:Species)
+(:ReferenceMolecule)-[:crossReference]->(:DatabaseIdentifier)
+(:ReferenceMolecule)-[:referenceDatabase]->(:ReferenceDatabase)
+(:ReferenceMolecule)-[:species]->(:Species)
+(:ReferenceRNASequence)-[:created]->(:Affiliation)
+(:ReferenceRNASequence)-[:created]->(:Anatomy)
+(:ReferenceRNASequence)-[:created]->(:BlackBoxEvent)
+(:ReferenceRNASequence)-[:created]->(:Book)
+(:ReferenceRNASequence)-[:created]->(:CandidateSet)
+(:ReferenceRNASequence)-[:created]->(:CatalystActivity)
+(:ReferenceRNASequence)-[:created]->(:CatalystActivityReference)
+(:ReferenceRNASequence)-[:created]->(:Cell)
+(:ReferenceRNASequence)-[:created]->(:CellDevelopmentStep)
+(:ReferenceRNASequence)-[:created]->(:CellLineagePath)
+(:ReferenceRNASequence)-[:created]->(:CellType)
+(:ReferenceRNASequence)-[:created]->(:ChemicalDrug)
+(:ReferenceRNASequence)-[:created]->(:Compartment)
+(:ReferenceRNASequence)-[:created]->(:Complex)
+(:ReferenceRNASequence)-[:created]->(:DatabaseIdentifier)
+(:ReferenceRNASequence)-[:created]->(:DefinedSet)
+(:ReferenceRNASequence)-[:created]->(:Deleted)
+(:ReferenceRNASequence)-[:created]->(:DeletedControlledVocabulary)
+(:ReferenceRNASequence)-[:created]->(:DeletedInstance)
+(:ReferenceRNASequence)-[:created]->(:Depolymerisation)
+(:ReferenceRNASequence)-[:created]->(:Disease)
+(:ReferenceRNASequence)-[:created]->(:EntityFunctionalStatus)
+(:ReferenceRNASequence)-[:created]->(:EntityWithAccessionedSequence)
+(:ReferenceRNASequence)-[:created]->(:EvidenceType)
+(:ReferenceRNASequence)-[:created]->(:FailedReaction)
+(:ReferenceRNASequence)-[:created]->(:Figure)
+(:ReferenceRNASequence)-[:created]->(:FragmentDeletionModification)
+(:ReferenceRNASequence)-[:created]->(:FragmentInsertionModification)
+(:ReferenceRNASequence)-[:created]->(:FragmentReplacedModification)
+(:ReferenceRNASequence)-[:created]->(:FunctionalStatus)
+(:ReferenceRNASequence)-[:created]->(:FunctionalStatusType)
+(:ReferenceRNASequence)-[:created]->(:GO_BiologicalProcess)
+(:ReferenceRNASequence)-[:created]->(:GO_MolecularFunction)
+(:ReferenceRNASequence)-[:created]->(:GroupModifiedResidue)
+(:ReferenceRNASequence)-[:created]->(:InstanceEdit)
+(:ReferenceRNASequence)-[:created]->(:InterChainCrosslinkedResidue)
+(:ReferenceRNASequence)-[:created]->(:IntraChainCrosslinkedResidue)
+(:ReferenceRNASequence)-[:created]->(:LiteratureReference)
+(:ReferenceRNASequence)-[:created]->(:MarkerReference)
+(:ReferenceRNASequence)-[:created]->(:ModifiedResidue)
+(:ReferenceRNASequence)-[:created]->(:NegativeGeneExpressionRegulation)
+(:ReferenceRNASequence)-[:created]->(:NegativePrecedingEvent)
+(:ReferenceRNASequence)-[:created]->(:NegativePrecedingEventReason)
+(:ReferenceRNASequence)-[:created]->(:NonsenseMutation)
+(:ReferenceRNASequence)-[:created]->(:OtherEntity)
+(:ReferenceRNASequence)-[:created]->(:Person)
+(:ReferenceRNASequence)-[:created]->(:Polymer)
+(:ReferenceRNASequence)-[:created]->(:Polymerisation)
+(:ReferenceRNASequence)-[:created]->(:PositiveGeneExpressionRegulation)
+(:ReferenceRNASequence)-[:created]->(:ProteinDrug)
+(:ReferenceRNASequence)-[:created]->(:PsiMod)
+(:ReferenceRNASequence)-[:created]->(:RNADrug)
+(:ReferenceRNASequence)-[:created]->(:Reaction)
+(:ReferenceRNASequence)-[:created]->(:ReferenceDNASequence)
+(:ReferenceRNASequence)-[:created]->(:ReferenceDatabase)
+(:ReferenceRNASequence)-[:created]->(:ReferenceGroup)
+(:ReferenceRNASequence)-[:created]->(:ReferenceIsoform)
+(:ReferenceRNASequence)-[:created]->(:ReferenceMolecule)
+(:ReferenceRNASequence)-[:created]->(:ReferenceRNASequence)
+(:ReferenceRNASequence)-[:created]->(:ReferenceTherapeutic)
+(:ReferenceRNASequence)-[:created]->(:RegulationReference)
+(:ReferenceRNASequence)-[:created]->(:Release)
+(:ReferenceRNASequence)-[:created]->(:Requirement)
+(:ReferenceRNASequence)-[:created]->(:ReviewStatus)
+(:ReferenceRNASequence)-[:created]->(:SequenceOntology)
+(:ReferenceRNASequence)-[:created]->(:SimpleEntity)
+(:ReferenceRNASequence)-[:created]->(:Species)
+(:ReferenceRNASequence)-[:created]->(:Summation)
+(:ReferenceRNASequence)-[:created]->(:TopLevelPathway)
+(:ReferenceRNASequence)-[:created]->(:URL)
+(:ReferenceRNASequence)-[:created]->(:UpdateTracker)
+(:ReferenceRNASequence)-[:crossReference]->(:DatabaseIdentifier)
+(:ReferenceRNASequence)-[:referenceDatabase]->(:ReferenceDatabase)
+(:ReferenceRNASequence)-[:referenceGene]->(:ReferenceDNASequence)
+(:ReferenceRNASequence)-[:species]->(:Species)
+(:ReferenceTherapeutic)-[:crossReference]->(:DatabaseIdentifier)
+(:ReferenceTherapeutic)-[:referenceDatabase]->(:ReferenceDatabase)
+(:RegulationReference)-[:literatureReference]->(:Book)
+(:RegulationReference)-[:literatureReference]->(:LiteratureReference)
+(:RegulationReference)-[:literatureReference]->(:URL)
+(:RegulationReference)-[:regulation]->(:NegativeGeneExpressionRegulation)
+(:RegulationReference)-[:regulation]->(:PositiveGeneExpressionRegulation)
+(:RegulationReference)-[:regulation]->(:Requirement)
+(:Requirement)-[:activeUnit]->(:CandidateSet)
+(:Requirement)-[:activeUnit]->(:ChemicalDrug)
+(:Requirement)-[:activeUnit]->(:Complex)
+(:Requirement)-[:activeUnit]->(:DefinedSet)
+(:Requirement)-[:activeUnit]->(:EntityWithAccessionedSequence)
+(:Requirement)-[:activeUnit]->(:ProteinDrug)
+(:Requirement)-[:activeUnit]->(:SimpleEntity)
+(:Requirement)-[:activity]->(:GO_MolecularFunction)
+(:Requirement)-[:goBiologicalProcess]->(:GO_BiologicalProcess)
+(:Requirement)-[:regulator]->(:CandidateSet)
+(:Requirement)-[:regulator]->(:Cell)
+(:Requirement)-[:regulator]->(:ChemicalDrug)
+(:Requirement)-[:regulator]->(:Complex)
+(:Requirement)-[:regulator]->(:DefinedSet)
+(:Requirement)-[:regulator]->(:EntityWithAccessionedSequence)
+(:Requirement)-[:regulator]->(:Polymer)
+(:Requirement)-[:regulator]->(:SimpleEntity)
+(:SequenceOntology)-[:referenceDatabase]->(:ReferenceDatabase)
+(:SimpleEntity)-[:cellType]->(:CellType)
+(:SimpleEntity)-[:compartment]->(:Compartment)
+(:SimpleEntity)-[:crossReference]->(:DatabaseIdentifier)
+(:SimpleEntity)-[:disease]->(:Disease)
+(:SimpleEntity)-[:figure]->(:Figure)
+(:SimpleEntity)-[:goCellularComponent]->(:Compartment)
+(:SimpleEntity)-[:literatureReference]->(:Book)
+(:SimpleEntity)-[:literatureReference]->(:LiteratureReference)
+(:SimpleEntity)-[:literatureReference]->(:URL)
+(:SimpleEntity)-[:referenceEntity]->(:ReferenceDNASequence)
+(:SimpleEntity)-[:referenceEntity]->(:ReferenceIsoform)
+(:SimpleEntity)-[:referenceEntity]->(:ReferenceMolecule)
+(:SimpleEntity)-[:referenceEntity]->(:ReferenceRNASequence)
+(:SimpleEntity)-[:referenceEntity]->(:ReferenceTherapeutic)
+(:SimpleEntity)-[:summation]->(:Summation)
+(:Species)-[:crossReference]->(:DatabaseIdentifier)
+(:Species)-[:superTaxon]->(:Species)
+(:Summation)-[:literatureReference]->(:Book)
+(:Summation)-[:literatureReference]->(:LiteratureReference)
+(:Summation)-[:literatureReference]->(:URL)
+(:TopLevelPathway)-[:compartment]->(:Compartment)
+(:TopLevelPathway)-[:crossReference]->(:DatabaseIdentifier)
+(:TopLevelPathway)-[:disease]->(:Disease)
+(:TopLevelPathway)-[:evidenceType]->(:EvidenceType)
+(:TopLevelPathway)-[:figure]->(:Figure)
+(:TopLevelPathway)-[:goBiologicalProcess]->(:GO_BiologicalProcess)
+(:TopLevelPathway)-[:hasEncapsulatedEvent]->(:CellLineagePath)
+(:TopLevelPathway)-[:hasEncapsulatedEvent]->(:TopLevelPathway)
+(:TopLevelPathway)-[:hasEvent]->(:BlackBoxEvent)
+(:TopLevelPathway)-[:hasEvent]->(:CellDevelopmentStep)
+(:TopLevelPathway)-[:hasEvent]->(:CellLineagePath)
+(:TopLevelPathway)-[:hasEvent]->(:Depolymerisation)
+(:TopLevelPathway)-[:hasEvent]->(:FailedReaction)
+(:TopLevelPathway)-[:hasEvent]->(:Polymerisation)
+(:TopLevelPathway)-[:hasEvent]->(:Reaction)
+(:TopLevelPathway)-[:inferredTo]->(:BlackBoxEvent)
+(:TopLevelPathway)-[:inferredTo]->(:CandidateSet)
+(:TopLevelPathway)-[:inferredTo]->(:Complex)
+(:TopLevelPathway)-[:inferredTo]->(:DefinedSet)
+(:TopLevelPathway)-[:inferredTo]->(:Depolymerisation)
+(:TopLevelPathway)-[:inferredTo]->(:EntityWithAccessionedSequence)
+(:TopLevelPathway)-[:inferredTo]->(:FailedReaction)
+(:TopLevelPathway)-[:inferredTo]->(:Polymer)
+(:TopLevelPathway)-[:inferredTo]->(:Polymerisation)
+(:TopLevelPathway)-[:inferredTo]->(:Reaction)
+(:TopLevelPathway)-[:inferredTo]->(:TopLevelPathway)
+(:TopLevelPathway)-[:internalReviewed]->(:InstanceEdit)
+(:TopLevelPathway)-[:literatureReference]->(:Book)
+(:TopLevelPathway)-[:literatureReference]->(:LiteratureReference)
+(:TopLevelPathway)-[:literatureReference]->(:URL)
+(:TopLevelPathway)-[:previousReviewStatus]->(:ReviewStatus)
+(:TopLevelPathway)-[:reviewStatus]->(:ReviewStatus)
+(:TopLevelPathway)-[:species]->(:Species)
+(:TopLevelPathway)-[:structureModified]->(:InstanceEdit)
+(:TopLevelPathway)-[:summation]->(:Summation)
+(:UpdateTracker)-[:release]->(:DBInfo)
+(:UpdateTracker)-[:updatedInstance]->(:BlackBoxEvent)
+(:UpdateTracker)-[:updatedInstance]->(:CandidateSet)
+(:UpdateTracker)-[:updatedInstance]->(:Cell)
+(:UpdateTracker)-[:updatedInstance]->(:CellDevelopmentStep)
+(:UpdateTracker)-[:updatedInstance]->(:CellLineagePath)
+(:UpdateTracker)-[:updatedInstance]->(:ChemicalDrug)
+(:UpdateTracker)-[:updatedInstance]->(:Complex)
+(:UpdateTracker)-[:updatedInstance]->(:DefinedSet)
+(:UpdateTracker)-[:updatedInstance]->(:Depolymerisation)
+(:UpdateTracker)-[:updatedInstance]->(:EntityWithAccessionedSequence)
+(:UpdateTracker)-[:updatedInstance]->(:FailedReaction)
+(:UpdateTracker)-[:updatedInstance]->(:OtherEntity)
+(:UpdateTracker)-[:updatedInstance]->(:Polymer)
+(:UpdateTracker)-[:updatedInstance]->(:Polymerisation)
+(:UpdateTracker)-[:updatedInstance]->(:ProteinDrug)
+(:UpdateTracker)-[:updatedInstance]->(:Reaction)
+(:UpdateTracker)-[:updatedInstance]->(:SimpleEntity)
+(:UpdateTracker)-[:updatedInstance]->(:TopLevelPathway)

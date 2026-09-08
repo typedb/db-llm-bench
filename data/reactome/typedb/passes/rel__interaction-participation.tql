@@ -1,0 +1,8 @@
+given
+    $interaction: integer,
+    $interactor: integer;
+match
+$p0 isa interaction, has db-id == $interaction;
+$p1 isa reference-entity, has db-id == $interactor;
+insert
+$x isa interaction-participation, links (interaction: $p0, interactor: $p1);

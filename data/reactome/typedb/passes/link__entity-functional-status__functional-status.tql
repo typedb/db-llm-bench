@@ -1,0 +1,8 @@
+given
+    $db_id: integer,
+    $functional_status: integer;
+match
+$x isa entity-functional-status, has db-id == $db_id;
+$p isa functional-status, has db-id == $functional_status;
+insert
+$x links (functional-status: $p);

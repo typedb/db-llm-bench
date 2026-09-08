@@ -1,0 +1,60 @@
+# Reactome hard questions against claude-sonnet-5.
+#
+# The question set is data/reactome/questions-hard.json: the twelve questions
+# written to balance the language bias of the baseline set — two that lean on
+# window-style aggregation (Cypher's home ground) and ten on the type system,
+# n-ary facts and the attribute hierarchy (TypeQL's). questions.json carries
+# them too; this file exists so they can be run in isolation. The DB block
+# below is identical to reactome.yml so the two runs are comparable.
+#
+# Prereqs:
+#   1. Seed the Reactome stack (restores both dumps, then exports into TypeDB):
+#        cd databases/reactome && docker compose up -d --wait neo4j mysql
+#        docker compose up -d --wait
+#   2. export ANTHROPIC_API_KEY=...
+#
+# Run:  cargo run -p bench-cli -- src/reactome-hard.yml results-reactome-hard.json
+dbs:
+  - typedb:
+      prompts: data/prompts/typedb.txt
+      url: http://localhost:1729
+      database: reactome
+      auth:
+        username: admin
+        password: password
+        tls: false
+      schema: data/reactome/typedb/schema.tql
+      examples: data/reactome/typedb
+      skills: data/skills/typedb
+  - neo4j:
+      prompts: data/prompts/neo4j.txt
+      url: bolt://localhost:7687
+      auth:
+        username: neo4j
+        password: password
+      schema: data/reactome/neo4j/schema.txt
+      examples: data/reactome/neo4j
+      skills: data/skills/neo4j
+  - sql:
+      # The shared data/prompts/sql.txt names PostgreSQL; this dataset runs on
+      # MySQL, so it uses the MySQL-worded variant of the same template.
+      prompts: data/prompts/sql-mysql.txt
+      url: mysql://bench_ro:bench_ro@localhost/reactome
+      schema: data/reactome/sql/schema.sql
+      examples: data/reactome/sql
+      skills: data/skills/sql
+
+# max_tokens above the 4096 default: Sonnet 5 thinks before answering, and a
+# model that exhausts its budget mid-thought never reaches a fenced query,
+# which scores as a capability failure when it is a configuration one.
+models:
+  - claude:
+      model: claude-sonnet-5
+      max_tokens: 8192
+questionsPath: data/reactome/questions-hard.json
+exampleCounts:
+  - 5
+maxRetryCounts:
+  - 0
+  - 4
+skillsBaseline: false

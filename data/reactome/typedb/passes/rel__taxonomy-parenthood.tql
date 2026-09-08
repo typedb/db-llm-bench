@@ -1,0 +1,8 @@
+given
+    $sub_taxon: integer,
+    $super_taxon: integer;
+match
+$p0 isa taxon, has db-id == $sub_taxon;
+$p1 isa taxon, has db-id == $super_taxon;
+insert
+$x isa taxonomy-parenthood, links (sub-taxon: $p0, super-taxon: $p1);

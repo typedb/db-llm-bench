@@ -1,0 +1,12 @@
+[package]
+name = "db-neo4j"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+bench-core.workspace = true
+async-trait.workspace = true
+chrono.workspace = true
+neo4rs = "0.8"
+serde.workspace = true
+tokio = { workspace = true, features = ["time", "sync"] }

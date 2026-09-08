@@ -1,0 +1,8 @@
+given
+    $typed_status: integer,
+    $status_type: integer;
+match
+$p0 isa functional-status, has db-id == $typed_status;
+$p1 isa functional-status-type, has db-id == $status_type;
+insert
+$x isa functional-status-typing, links (typed-status: $p0, status-type: $p1);

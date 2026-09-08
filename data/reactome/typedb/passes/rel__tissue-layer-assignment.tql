@@ -1,0 +1,8 @@
+given
+    $localised_cell: integer,
+    $tissue_layer: integer;
+match
+$p0 isa cell, has db-id == $localised_cell;
+$p1 isa anatomy, has db-id == $tissue_layer;
+insert
+$x isa tissue-layer-assignment, links (localised-cell: $p0, tissue-layer: $p1);

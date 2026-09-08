@@ -1,0 +1,8 @@
+given
+    $surrounded_compartment: integer,
+    $surrounding_compartment: integer;
+match
+$p0 isa go-cellular-component, has db-id == $surrounded_compartment;
+$p1 isa go-cellular-component, has db-id == $surrounding_compartment;
+insert
+$x isa compartment-surrounding, links (surrounded-compartment: $p0, surrounding-compartment: $p1);

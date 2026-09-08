@@ -1,0 +1,56 @@
+[workspace]
+resolver = "3"
+members = [
+    "src/core",
+    "src/config",
+    "src/dbs/dummy",
+    "src/dbs/neo4j",
+    "src/dbs/sql",
+    "src/dbs/typedb",
+    "src/providers/claude",
+    "src/providers/dummy",
+    "src/providers/http-util",
+    "src/providers/openai-compatible",
+    "src/runner",
+    "src/output",
+    "src/cli",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+
+[workspace.dependencies]
+bench-core = { path = "src/core" }
+bench-config = { path = "src/config" }
+bench-runner = { path = "src/runner" }
+bench-output = { path = "src/output" }
+db-dummy = { path = "src/dbs/dummy" }
+db-neo4j = { path = "src/dbs/neo4j" }
+db-sql = { path = "src/dbs/sql" }
+db-typedb = { path = "src/dbs/typedb" }
+provider-claude = { path = "src/providers/claude" }
+provider-dummy = { path = "src/providers/dummy" }
+provider-http-util = { path = "src/providers/http-util" }
+provider-openai-compatible = { path = "src/providers/openai-compatible" }
+
+anyhow = "1"
+async-trait = "0.1"
+chrono = "0.4"
+futures = "0.3"
+rust_decimal = "1"
+sqlx = { version = "0.8", default-features = false, features = [
+    "runtime-tokio",
+    "tls-rustls",
+    "postgres",
+    "mysql",
+    "chrono",
+    "rust_decimal",
+    "json",
+] }
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+serde_yaml2 = "0.1"
+thiserror = "2"
+tokio = { version = "1", features = ["rt-multi-thread", "macros"] }

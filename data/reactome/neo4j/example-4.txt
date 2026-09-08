@@ -1,0 +1,4 @@
+Question: Which compartment is recorded for the most reaction-like events? Report its name and that count, using columns named compartment and reactions.
+```
+MATCH (r:ReactionLikeEvent)-[:compartment]->(c) WITH c, count(DISTINCT r) AS reactions RETURN c.displayName AS compartment, reactions ORDER BY reactions DESC, compartment ASC LIMIT 1
+```

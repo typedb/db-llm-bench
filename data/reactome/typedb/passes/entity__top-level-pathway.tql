@@ -1,0 +1,18 @@
+given
+    $db_id: integer,
+    $display_name: string?,
+    $schema_class: string?,
+    $st_id: string?,
+    $old_st_id: string?,
+    $is_canonical: boolean?,
+    $definition: string?,
+    $release_date: date?;
+insert
+$x isa top-level-pathway, has db-id == $db_id;
+try { $x has display-name == $display_name; };
+try { $x has schema-class == $schema_class; };
+try { $x has st-id == $st_id; };
+try { $x has old-st-id == $old_st_id; };
+try { $x has is-canonical == $is_canonical; };
+try { $x has definition == $definition; };
+try { $x has release-date == $release_date; };

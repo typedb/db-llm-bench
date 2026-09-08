@@ -1,0 +1,8 @@
+given
+    $reviewed_thing: integer,
+    $status: integer;
+match
+$p0 isa database-object, has db-id == $reviewed_thing;
+$p1 isa review-status, has db-id == $status;
+insert
+$x isa review-status-assignment, links (reviewed-thing: $p0, status: $p1);

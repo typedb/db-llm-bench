@@ -1,0 +1,8 @@
+given
+    $curated_object: integer,
+    $edit: integer;
+match
+$p0 isa database-object, has db-id == $curated_object;
+$p1 isa instance-edit, has db-id == $edit;
+insert
+$x isa structure-modification, links (curated-object: $p0, edit: $p1);

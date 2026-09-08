@@ -1,0 +1,4 @@
+Question: How many events have a related species that is not also one of their own species?
+```
+SELECT COUNT(DISTINCT rs.DB_ID) FROM Event_2_relatedSpecies rs WHERE NOT EXISTS (SELECT 1 FROM Event_2_species es WHERE es.DB_ID = rs.DB_ID AND es.species = rs.relatedSpecies);
+```

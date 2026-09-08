@@ -1,0 +1,8 @@
+given
+    $summarised_thing: integer,
+    $summation: integer;
+match
+$p0 isa database-object, has db-id == $summarised_thing;
+$p1 isa summation, has db-id == $summation;
+insert
+$x isa summarisation, links (summarised-thing: $p0, summation: $p1);

@@ -1,0 +1,8 @@
+given
+    $referencing_reaction: integer,
+    $catalyst_reference: integer;
+match
+$p0 isa reaction-like-event, has db-id == $referencing_reaction;
+$p1 isa catalyst-activity-reference, has db-id == $catalyst_reference;
+insert
+$x isa catalyst-activity-reference-link, links (referencing-reaction: $p0, catalyst-reference: $p1);

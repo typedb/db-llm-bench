@@ -1,0 +1,19 @@
+.idea
+/target
+*.iml
+__pycache__/
+/results*.json
+/src/local.yml
+**/.DS_STORE
+
+# Reactome ships its data as two large dumps (a ~841MB MySQL dump and a ~528MB
+# Neo4j dump) downloaded per release from reactome.org — far over GitHub's
+# file-size limit. databases/reactome/README.md says where to fetch them.
+# Named individually rather than by glob so the derived schema.sql, which is
+# small and belongs in the repo, keeps being tracked.
+/data/reactome/sql/gk_current.sql
+/data/reactome/neo4j/reactome.graphdb.dump
+
+# TypeDB load: exported CSVs and per-pass loader output, both regenerable
+/data/reactome/typedb/work/
+/data/reactome/typedb/loader-output/

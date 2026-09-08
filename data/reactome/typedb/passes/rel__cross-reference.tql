@@ -1,0 +1,8 @@
+given
+    $referring_thing: integer,
+    $external_identifier: integer;
+match
+$p0 isa database-object, has db-id == $referring_thing;
+$p1 isa database-identifier, has db-id == $external_identifier;
+insert
+$x isa cross-reference, links (referring-thing: $p0, external-identifier: $p1);

@@ -1,0 +1,4 @@
+Question: How many pathways are assigned to Homo sapiens?
+```
+match $p isa pathway; species-assignment (classified-thing: $p, species: $s); $s has display-name "Homo sapiens"; select $p; distinct; reduce $count = count;
+```

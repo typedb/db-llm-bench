@@ -1,0 +1,8 @@
+given
+    $evidenced_thing: integer,
+    $evidence: integer;
+match
+$p0 isa database-object, has db-id == $evidenced_thing;
+$p1 isa evidence-type, has db-id == $evidence;
+insert
+$x isa evidence-type-assignment, links (evidenced-thing: $p0, evidence: $p1);

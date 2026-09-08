@@ -1,0 +1,4 @@
+Question: How many pathways are assigned to Homo sapiens?
+```
+SELECT COUNT(DISTINCT es.DB_ID) FROM Event_2_species es JOIN Pathway p ON p.DB_ID = es.DB_ID JOIN DatabaseObject d ON d.DB_ID = es.species WHERE d._displayName = 'Homo sapiens';
+```

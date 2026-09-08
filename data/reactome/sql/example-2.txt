@@ -1,0 +1,4 @@
+Question: Across Homo sapiens reaction-like events, how many pairings of an event with one of its compartments are recorded? Count each event-and-compartment pairing separately, so an event assigned three compartments contributes three pairings.
+```
+SELECT COUNT(*) FROM (SELECT DISTINCT rc.DB_ID, rc.compartment FROM ReactionlikeEvent_2_compartment rc JOIN Event_2_species es ON es.DB_ID = rc.DB_ID JOIN DatabaseObject sp ON sp.DB_ID = es.species AND sp._displayName = 'Homo sapiens') t;
+```

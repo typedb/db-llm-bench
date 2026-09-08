@@ -1,0 +1,10 @@
+given
+    $reaction: integer,
+    $consumed_entity: integer,
+    $ordering: integer,
+    $stoichiometry: integer;
+match
+$p0 isa reaction-like-event, has db-id == $reaction;
+$p1 isa physical-entity, has db-id == $consumed_entity;
+insert
+$x isa reaction-input, links (reaction: $p0, consumed-entity: $p1), has ordering == $ordering, has stoichiometry == $stoichiometry;

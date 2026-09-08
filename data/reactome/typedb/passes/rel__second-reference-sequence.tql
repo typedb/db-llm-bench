@@ -1,0 +1,8 @@
+given
+    $crosslinked_residue: integer,
+    $partner_sequence: integer;
+match
+$p0 isa inter-chain-crosslinked-residue, has db-id == $crosslinked_residue;
+$p1 isa reference-sequence, has db-id == $partner_sequence;
+insert
+$x isa second-reference-sequence, links (crosslinked-residue: $p0, partner-sequence: $p1);

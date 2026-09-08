@@ -1,0 +1,8 @@
+given
+    $containing_polymer: integer,
+    $repeated_unit: integer;
+match
+$p0 isa polymer, has db-id == $containing_polymer;
+$p1 isa physical-entity, has db-id == $repeated_unit;
+insert
+$x isa polymer-repetition, links (containing-polymer: $p0, repeated-unit: $p1);

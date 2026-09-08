@@ -1,0 +1,14 @@
+given
+    $excluded_preceding_event: integer,
+    $following_event: integer,
+    $exclusion_reason: integer?,
+    $db_id: integer,
+    $display_name: string,
+    $schema_class: string;
+match
+$p0 isa event, has db-id == $excluded_preceding_event;
+$p1 isa event, has db-id == $following_event;
+try { $p2 isa negative-preceding-event-reason, has db-id == $exclusion_reason; };
+insert
+$x isa negative-precedence, links (excluded-preceding-event: $p0, following-event: $p1), has db-id == $db_id, has display-name == $display_name, has schema-class == $schema_class;
+try { $x links (exclusion-reason: $p2); };

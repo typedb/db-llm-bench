@@ -1,0 +1,8 @@
+given
+    $localised_cell: integer,
+    $organ: integer;
+match
+$p0 isa cell, has db-id == $localised_cell;
+$p1 isa anatomy, has db-id == $organ;
+insert
+$x isa organ-assignment, links (localised-cell: $p0, organ: $p1);

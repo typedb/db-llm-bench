@@ -1,0 +1,8 @@
+given
+    $db_id: integer,
+    $regulation_active_unit: integer;
+match
+$x isa regulation, has db-id == $db_id;
+$p isa physical-entity, has db-id == $regulation_active_unit;
+insert
+$x links (regulation-active-unit: $p);

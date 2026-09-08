@@ -1,0 +1,8 @@
+given
+    $marker_ref: integer,
+    $marker_entity: integer;
+match
+$p0 isa marker-reference, has db-id == $marker_ref;
+$p1 isa entity-with-accessioned-sequence, has db-id == $marker_entity;
+insert
+$x isa marker-assignment, links (marker-ref: $p0, marker-entity: $p1);

@@ -1,0 +1,8 @@
+given
+    $crosslinked_residue: integer,
+    $equivalent_residue: integer;
+match
+$p0 isa inter-chain-crosslinked-residue, has db-id == $crosslinked_residue;
+$p1 isa inter-chain-crosslinked-residue, has db-id == $equivalent_residue;
+insert
+$x isa crosslink-equivalence, links (crosslinked-residue: $p0, equivalent-residue: $p1);

@@ -1,0 +1,8 @@
+given
+    $referencing_marker: integer,
+    $referenced_cell: integer;
+match
+$p0 isa marker-reference, has db-id == $referencing_marker;
+$p1 isa cell, has db-id == $referenced_cell;
+insert
+$x isa marker-reference-cell, links (referencing-marker: $p0, referenced-cell: $p1);

@@ -1,0 +1,8 @@
+given
+    $marked_cell: integer,
+    $protein_marker: integer;
+match
+$p0 isa cell, has db-id == $marked_cell;
+$p1 isa entity-with-accessioned-sequence, has db-id == $protein_marker;
+insert
+$x isa protein-marker-assignment, links (marked-cell: $p0, protein-marker: $p1);

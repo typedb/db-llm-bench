@@ -1,0 +1,19 @@
+Question: Counting the events directly contained by the pathway with stable identifier R-HSA-168256 as depth 1, how many events below that pathway are reachable at two or more different depths?
+```
+with
+fun sub-depths($p: event) -> { event, integer }:
+  match
+    { event-containment (containing-pathway: $p, contained-event: $e); let $d = 1; } or
+    { event-containment (containing-pathway: $p, contained-event: $m);
+      let $e, $d0 in sub-depths($m);
+      let $d = $d0 + 1; };
+  return { $e, $d };
+match
+  $root isa pathway, has st-id "R-HSA-168256";
+  let $e, $d in sub-depths($root);
+select $e, $d;
+distinct;
+reduce $k = count($d) groupby $e;
+match $k > 1;
+reduce $count = count;
+```

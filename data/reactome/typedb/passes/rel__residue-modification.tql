@@ -1,0 +1,8 @@
+given
+    $modified_residue: integer,
+    $modifying_group: integer;
+match
+$p0 isa abstract-modified-residue, has db-id == $modified_residue;
+$p1 isa reference-entity, has db-id == $modifying_group;
+insert
+$x isa residue-modification, links (modified-residue: $p0, modifying-group: $p1);

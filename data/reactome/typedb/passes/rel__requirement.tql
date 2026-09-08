@@ -1,0 +1,20 @@
+given
+    $regulated_event: integer?,
+    $regulator: integer,
+    $regulatory_activity: integer?,
+    $regulation_active_unit: integer?,
+    $db_id: integer,
+    $display_name: string,
+    $schema_class: string,
+    $st_id: string?;
+match
+try { $p0 isa reaction-like-event, has db-id == $regulated_event; };
+$p1 isa physical-entity, has db-id == $regulator;
+try { $p2 isa go-molecular-function, has db-id == $regulatory_activity; };
+try { $p3 isa physical-entity, has db-id == $regulation_active_unit; };
+insert
+$x isa requirement, links (regulator: $p1), has db-id == $db_id, has display-name == $display_name, has schema-class == $schema_class;
+try { $x links (regulated-event: $p0); };
+try { $x links (regulatory-activity: $p2); };
+try { $x links (regulation-active-unit: $p3); };
+try { $x has st-id == $st_id; };

@@ -1,0 +1,8 @@
+given
+    $inferred_event: integer,
+    $source_event: integer;
+match
+$p0 isa event, has db-id == $inferred_event;
+$p1 isa event, has db-id == $source_event;
+insert
+$x isa event-inference, links (inferred-event: $p0, source-event: $p1);

@@ -1,0 +1,8 @@
+given
+    $evidencing_reference: integer,
+    $evidenced_catalysis: integer;
+match
+$p0 isa catalyst-activity-reference, has db-id == $evidencing_reference;
+$p1 isa catalysis, has db-id == $evidenced_catalysis;
+insert
+$x isa catalyst-activity-evidence, links (evidencing-reference: $p0, evidenced-catalysis: $p1);

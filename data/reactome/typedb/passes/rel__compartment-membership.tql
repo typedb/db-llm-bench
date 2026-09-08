@@ -1,0 +1,8 @@
+given
+    $part_compartment: integer,
+    $whole_compartment: integer;
+match
+$p0 isa go-cellular-component, has db-id == $part_compartment;
+$p1 isa go-cellular-component, has db-id == $whole_compartment;
+insert
+$x isa compartment-membership, links (part-compartment: $p0, whole-compartment: $p1);

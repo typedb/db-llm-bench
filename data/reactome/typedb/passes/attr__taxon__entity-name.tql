@@ -1,0 +1,7 @@
+given
+    $db_id: integer,
+    $entity_name: string;
+match
+$x isa taxon, has db-id == $db_id;
+insert
+$x has entity-name == $entity_name;

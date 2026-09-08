@@ -1,0 +1,20 @@
+given
+    $db_id: integer,
+    $display_name: string?,
+    $schema_class: string?,
+    $st_id: string?,
+    $old_st_id: string?,
+    $is_chimeric: boolean?,
+    $systematic_name: string?,
+    $definition: string?,
+    $release_date: date?;
+insert
+$x isa cell-development-step, has db-id == $db_id;
+try { $x has display-name == $display_name; };
+try { $x has schema-class == $schema_class; };
+try { $x has st-id == $st_id; };
+try { $x has old-st-id == $old_st_id; };
+try { $x has is-chimeric == $is_chimeric; };
+try { $x has systematic-name == $systematic_name; };
+try { $x has definition == $definition; };
+try { $x has release-date == $release_date; };

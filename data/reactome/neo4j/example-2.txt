@@ -1,0 +1,6 @@
+Question: Across Homo sapiens reaction-like events, how many pairings of an event with one of its compartments are recorded? Count each event-and-compartment pairing separately, so an event assigned three compartments contributes three pairings.
+```
+MATCH (r:ReactionLikeEvent)-[:species]->(:Species {displayName:'Homo sapiens'})
+MATCH (r)-[:compartment]->(c)
+RETURN count(DISTINCT [elementId(r), elementId(c)])
+```

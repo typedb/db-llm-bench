@@ -1,0 +1,8 @@
+given
+    $annotated_regulation: integer,
+    $regulation_biological_process: integer;
+match
+$p0 isa regulation, has db-id == $annotated_regulation;
+$p1 isa go-biological-process, has db-id == $regulation_biological_process;
+insert
+$x isa regulation-go-annotation, links (annotated-regulation: $p0, regulation-biological-process: $p1);

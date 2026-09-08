@@ -1,0 +1,8 @@
+given
+    $typed_thing: integer,
+    $assigned_cell_type: integer;
+match
+$p0 isa database-object, has db-id == $typed_thing;
+$p1 isa cell-type, has db-id == $assigned_cell_type;
+insert
+$x isa cell-type-assignment, links (typed-thing: $p0, assigned-cell-type: $p1);

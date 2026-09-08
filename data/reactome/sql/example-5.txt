@@ -1,0 +1,4 @@
+Question: Counting the events directly contained by the pathway with stable identifier R-HSA-168256 as depth 1, how many events below that pathway are reachable at two or more different depths?
+```
+WITH RECURSIVE lv AS (SELECT he.hasEvent AS ev, 1 AS d FROM DatabaseObject o JOIN StableIdentifier s ON s.DB_ID = o.stableIdentifier JOIN Pathway_2_hasEvent he ON he.DB_ID = o.DB_ID WHERE s.identifier = 'R-HSA-168256' UNION SELECT he.hasEvent, lv.d + 1 FROM lv JOIN Pathway_2_hasEvent he ON he.DB_ID = lv.ev) SELECT COUNT(*) FROM (SELECT ev FROM lv GROUP BY ev HAVING COUNT(DISTINCT d) > 1) t;
+```

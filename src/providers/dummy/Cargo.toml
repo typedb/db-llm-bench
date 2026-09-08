@@ -1,0 +1,12 @@
+[package]
+name = "provider-dummy"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+bench-core.workspace = true
+async-trait.workspace = true
+serde.workspace = true
+
+[dev-dependencies]
+tokio.workspace = true

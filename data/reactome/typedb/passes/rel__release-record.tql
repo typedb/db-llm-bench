@@ -1,0 +1,8 @@
+given
+    $tracked_object: integer,
+    $tracking_release: integer;
+match
+$p0 isa database-object, has db-id == $tracked_object;
+$p1 isa release, has db-id == $tracking_release;
+insert
+$x isa release-record, links (tracked-object: $p0, tracking-release: $p1);

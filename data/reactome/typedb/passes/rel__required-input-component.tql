@@ -1,0 +1,8 @@
+given
+    $reaction: integer,
+    $required_component: integer;
+match
+$p0 isa reaction-like-event, has db-id == $reaction;
+$p1 isa physical-entity, has db-id == $required_component;
+insert
+$x isa required-input-component, links (reaction: $p0, required-component: $p1);

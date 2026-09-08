@@ -1,0 +1,807 @@
+# Reactome schema for TypeDB 3.12.
+#
+# The entity hierarchy mirrors Reactome's own class hierarchy, so a query
+# against a supertype (physical-entity, regulation, composition) also matches
+# every subtype. Relations are n-ary where the fact is n-ary: catalysis ties a
+# catalyst, a molecular function and a reaction in one relation, and
+# entity-functional-status ties an event, a diseased entity, the normal entity
+# it replaces and the functional consequence.
+
+define
+
+# --- attributes ---
+attribute db-id, value integer;
+
+attribute id @abstract, value string;
+attribute st-id sub id;
+attribute old-st-id sub id;
+attribute identifier sub id;
+attribute accession sub id;
+attribute tax-id sub id;
+attribute variant-identifier sub id;
+
+attribute name @abstract, value string;
+attribute display-name sub name;
+attribute entity-name sub name;
+attribute gene-name sub name;
+attribute systematic-name sub name;
+attribute first-name sub name;
+attribute surname sub name;
+attribute affiliation-name sub name;
+
+attribute schema-class, value string;
+attribute definition, value string;
+attribute ec-number, value string;
+attribute abbreviation, value string;
+attribute summary-text, value string;
+attribute note, value string;
+attribute release-number, value integer;
+attribute release-date, value date;
+attribute edited-on, value datetime;
+attribute coordinate, value integer;
+attribute sequence-length, value integer;
+attribute approved, value boolean;
+attribute withdrawn, value boolean;
+attribute is-canonical, value boolean;
+attribute is-chimeric, value boolean;
+attribute therapeutic-type, value string;
+# Deliberately outside the `name` hierarchy: this names the action an update
+# tracker performed, not an object. Under `name`, "objects whose name contains
+# X" would start matching update trackers by their verb.
+attribute action-name, value string;
+# Ordering and stoichiometry sit on the relation, not on either endpoint:
+# they are facts about the participation, not about the participant.
+attribute ordering, value integer;
+attribute stoichiometry, value integer;
+
+# --- entity hierarchy (mirrors Reactome's classes) ---
+
+entity database-object @abstract,
+  owns db-id @key,
+  owns display-name,
+  owns schema-class,
+  owns st-id @card(0..1),
+  owns old-st-id @card(0..1),
+  plays cell-type-assignment:typed-thing,
+  plays compartment-assignment:localised-thing,
+  plays cross-reference:referring-thing,
+  plays curation:curated-object,
+  plays database-of:external-thing,
+  plays disease-annotation:diseased-thing,
+  plays entity-on-other-cell:interacting-thing,
+  plays evidence-type-assignment:evidenced-thing,
+  plays figure-illustration:illustrated-thing,
+  plays go-cellular-component-assignment:localised-thing,
+  plays literature-citation:citing-thing,
+  plays ontology-parenthood:ontology-child,
+  plays ontology-parenthood:ontology-parent,
+  plays previous-review-status-assignment:reviewed-thing,
+  plays psi-mod-assignment:modified-thing,
+  plays related-species-assignment:classified-thing,
+  plays release-record:tracked-object,
+  plays replacement-instance:replacement,
+  plays review-status-assignment:reviewed-thing,
+  plays species-assignment:classified-thing,
+  plays summarisation:summarised-thing,
+  plays tissue-assignment:localised-thing,
+  plays update-tracking:updated-object;
+entity abstract-modified-residue sub database-object,
+  owns coordinate @card(0..1),
+  plays modified-residue-assignment:residue,
+  plays residue-modification:modified-residue,
+  plays residue-reference-sequence:modified-residue;
+entity affiliation sub database-object,
+  owns affiliation-name @card(0..),
+  plays person-affiliation:affiliation,
+  plays publication-publisher:publisher;
+entity external-ontology sub database-object,
+  owns identifier @card(0..1),
+  owns definition @card(0..1),
+  owns entity-name @card(0..),
+  plays disease-annotation:disease;
+entity anatomy sub external-ontology,
+  plays organ-assignment:organ,
+  plays tissue-assignment:tissue,
+  plays tissue-layer-assignment:tissue-layer;
+entity event sub database-object,
+  owns entity-name @card(0..),
+  owns definition @card(0..1),
+  owns release-date @card(0..1),
+  plays event-containment:contained-event,
+  plays event-inference:inferred-event,
+  plays event-inference:source-event,
+  plays event-precedence:following-event,
+  plays event-precedence:preceding-event,
+  plays go-annotation:annotated-event,
+  plays negative-precedence:excluded-preceding-event,
+  plays negative-precedence:following-event;
+entity reaction-like-event sub event,
+  owns is-chimeric @card(0..1),
+  owns systematic-name @card(0..1),
+  plays catalysis:catalysed-reaction,
+  plays catalyst-activity-reference-link:referencing-reaction,
+  plays entity-functional-status:affected-event,
+  plays normal-reaction-link:disease-reaction,
+  plays normal-reaction-link:normal-reaction,
+  plays reaction-participation:reaction,
+  plays reaction-type-assignment:typed-reaction,
+  plays regulation-reference-link:referencing-reaction,
+  plays regulation:regulated-event,
+  plays reverse-reaction-link:forward-reaction,
+  plays reverse-reaction-link:reverse-reaction;
+entity black-box-event sub reaction-like-event;
+entity publication sub database-object,
+  plays literature-citation:cited-publication,
+  plays publication-authorship:publication;
+entity book sub publication,
+  plays publication-publisher:published-work;
+entity physical-entity sub database-object,
+  owns entity-name @card(0..),
+  owns definition @card(0..1),
+  owns systematic-name @card(0..1),
+  plays candidate-membership:candidate,
+  plays catalysis:active-unit,
+  plays catalysis:catalyst,
+  plays complex-composition:component,
+  plays composition:part,
+  plays entity-functional-status:disease-entity,
+  plays entity-functional-status:normal-entity,
+  plays entity-inference:inferred-entity,
+  plays entity-inference:source-entity,
+  plays entity-on-other-cell:other-cell-entity,
+  plays included-location:localised-thing,
+  plays polymer-repetition:repeated-unit,
+  plays reaction-input:consumed-entity,
+  plays reaction-output:produced-entity,
+  plays reaction-participation:participant,
+  plays reference-assignment:instance-entity,
+  plays regulation:regulation-active-unit,
+  plays regulation:regulator,
+  plays required-input-component:required-component,
+  plays set-membership:member;
+entity entity-set sub physical-entity,
+  plays set-membership:containing-set;
+entity candidate-set sub entity-set;
+entity control-reference sub database-object;
+entity catalyst-activity-reference sub control-reference,
+  plays catalyst-activity-evidence:evidencing-reference,
+  plays catalyst-activity-reference-link:catalyst-reference;
+entity cell sub physical-entity,
+  plays cell-marker-reference:marked-cell,
+  plays marker-reference-cell:referenced-cell,
+  plays organ-assignment:localised-cell,
+  plays protein-marker-assignment:marked-cell,
+  plays rna-marker-assignment:marked-cell,
+  plays tissue-layer-assignment:localised-cell;
+entity cell-development-step sub reaction-like-event;
+entity pathway sub event,
+  owns is-canonical @card(0..1),
+  plays encapsulated-event:encapsulated,
+  plays encapsulated-event:encapsulating-pathway,
+  plays event-containment:containing-pathway,
+  plays normal-pathway-link:disease-pathway,
+  plays normal-pathway-link:normal-pathway;
+entity cell-lineage-path sub pathway;
+entity cell-type sub external-ontology,
+  plays cell-type-assignment:assigned-cell-type;
+entity drug sub physical-entity;
+entity chemical-drug sub drug;
+entity go-term sub database-object,
+  owns accession @card(0..1),
+  owns definition @card(0..1),
+  owns entity-name @card(0..);
+entity go-cellular-component sub go-term,
+  plays compartment-assignment:compartment,
+  plays compartment-membership:part-compartment,
+  plays compartment-membership:whole-compartment,
+  plays compartment-part:part-compartment,
+  plays compartment-part:whole-compartment,
+  plays compartment-surrounding:surrounded-compartment,
+  plays compartment-surrounding:surrounding-compartment,
+  plays go-cellular-component-assignment:cellular-component,
+  plays included-location:location;
+entity compartment sub go-cellular-component;
+entity complex sub physical-entity,
+  plays complex-composition:containing-complex;
+entity controlled-vocabulary sub database-object,
+  owns entity-name @card(0..);
+entity translational-modification sub abstract-modified-residue;
+entity crosslinked-residue sub translational-modification;
+entity meta-database-object sub database-object;
+entity release sub meta-database-object,
+  owns release-number @card(0..1),
+  owns release-date @card(0..1),
+  owns entity-name @card(0..),
+  plays release-record:tracking-release;
+entity dbinfo sub release;
+entity database-identifier sub database-object,
+  owns identifier @card(0..1),
+  plays cross-reference:external-identifier;
+entity defined-set sub entity-set;
+entity deleted sub meta-database-object,
+  plays deleted-instance-record:deletion,
+  plays deletion-reason:deletion,
+  plays replacement-instance:deletion;
+entity deleted-controlled-vocabulary sub controlled-vocabulary,
+  plays deletion-reason:reason;
+entity deleted-instance sub meta-database-object,
+  owns entity-name @card(0..),
+  plays deleted-instance-record:deleted-thing;
+entity depolymerisation sub reaction-like-event;
+entity disease sub external-ontology;
+entity genome-encoded-entity sub physical-entity;
+entity entity-with-accessioned-sequence sub genome-encoded-entity,
+  plays marker-assignment:marker-entity,
+  plays modified-residue-assignment:modified-entity,
+  plays protein-marker-assignment:protein-marker,
+  plays rna-marker-assignment:rna-marker;
+entity evidence-type sub external-ontology,
+  plays evidence-type-assignment:evidence;
+entity failed-reaction sub reaction-like-event;
+entity figure sub database-object,
+  plays figure-illustration:figure;
+entity genetically-modified-residue sub abstract-modified-residue;
+entity fragment-modification sub genetically-modified-residue;
+entity fragment-deletion-modification sub fragment-modification;
+entity fragment-insertion-modification sub fragment-modification;
+entity fragment-replaced-modification sub fragment-modification;
+entity functional-status sub database-object,
+  plays entity-functional-status:functional-status,
+  plays functional-status-typing:typed-status,
+  plays structural-variant-assignment:varied-status;
+entity functional-status-type sub database-object,
+  owns entity-name @card(0..),
+  plays functional-status-typing:status-type;
+entity go-biological-process sub go-term,
+  plays go-annotation:biological-process,
+  plays regulation-go-annotation:regulation-biological-process;
+entity go-molecular-function sub go-term,
+  owns ec-number @card(0..),
+  plays catalysis:catalytic-activity,
+  plays regulation:regulatory-activity;
+entity group-modified-residue sub translational-modification;
+entity instance-edit sub database-object,
+  owns edited-on @card(0..1),
+  owns note @card(0..1),
+  plays curation:edit,
+  plays edit-authorship:authored-edit;
+entity inter-chain-crosslinked-residue sub crosslinked-residue,
+  plays crosslink-equivalence:crosslinked-residue,
+  plays crosslink-equivalence:equivalent-residue,
+  plays second-reference-sequence:crosslinked-residue;
+entity interaction sub database-object,
+  plays interaction-participation:interaction;
+entity intra-chain-crosslinked-residue sub crosslinked-residue;
+entity literature-reference sub publication;
+entity marker-reference sub control-reference,
+  plays cell-marker-reference:cell-marker-ref,
+  plays marker-assignment:marker-ref,
+  plays marker-reference-cell:referencing-marker;
+entity modified-nucleotide sub abstract-modified-residue;
+entity modified-residue sub translational-modification;
+entity negative-preceding-event-reason sub controlled-vocabulary,
+  plays negative-precedence:exclusion-reason;
+entity replaced-residue sub genetically-modified-residue;
+entity nonsense-mutation sub replaced-residue;
+entity other-entity sub physical-entity;
+entity person sub database-object,
+  owns first-name @card(0..1),
+  owns surname @card(0..1),
+  plays edit-authorship:edit-author,
+  plays person-affiliation:affiliated-person,
+  plays publication-authorship:publication-author;
+entity polymer sub physical-entity,
+  plays polymer-repetition:containing-polymer;
+entity polymerisation sub reaction-like-event;
+entity protein-drug sub drug;
+entity psi-mod sub external-ontology,
+  plays psi-mod-assignment:psi-mod-term;
+entity rnadrug sub drug;
+entity reaction sub reaction-like-event;
+entity reaction-type sub controlled-vocabulary,
+  plays reaction-type-assignment:assigned-reaction-type;
+entity reference-entity sub database-object,
+  owns identifier @card(0..1),
+  owns entity-name @card(0..),
+  plays interaction-participation:interactor,
+  plays reference-assignment:reference,
+  plays residue-modification:modifying-group;
+entity reference-sequence sub reference-entity,
+  owns gene-name @card(0..),
+  owns sequence-length @card(0..1),
+  plays reference-gene-link:referring-sequence,
+  plays reference-transcript-link:referring-sequence,
+  plays residue-reference-sequence:residue-sequence,
+  plays second-reference-sequence:partner-sequence;
+entity reference-dnasequence sub reference-sequence,
+  plays reference-gene-link:gene-sequence;
+entity reference-database sub database-object,
+  owns entity-name @card(0..),
+  plays database-of:reference-database;
+entity reference-gene-product sub reference-sequence,
+  plays isoform-parenthood:parent-gene-product;
+entity reference-group sub reference-entity;
+entity reference-isoform sub reference-gene-product,
+  owns variant-identifier @card(0..1),
+  plays isoform-parenthood:isoform;
+entity reference-molecule sub reference-entity,
+  owns gene-name @card(0..);
+entity reference-rnasequence sub reference-sequence,
+  plays reference-transcript-link:transcript-sequence;
+entity reference-therapeutic sub reference-entity,
+  owns approved @card(0..1),
+  owns withdrawn @card(0..1),
+  owns therapeutic-type @card(0..1);
+entity regulation-reference sub control-reference,
+  plays regulation-evidence:evidencing-reference,
+  plays regulation-reference-link:regulation-ref;
+entity review-status sub controlled-vocabulary,
+  plays previous-review-status-assignment:previous-status,
+  plays review-status-assignment:status;
+entity sequence-ontology sub external-ontology,
+  plays structural-variant-assignment:variant-term;
+entity simple-entity sub physical-entity;
+entity taxon sub database-object,
+  owns tax-id @card(0..1),
+  owns abbreviation @card(0..1),
+  owns entity-name @card(0..),
+  plays species-assignment:species,
+  plays taxonomy-parenthood:sub-taxon,
+  plays taxonomy-parenthood:super-taxon;
+entity species sub taxon,
+  plays related-species-assignment:related-species;
+entity summation sub database-object,
+  owns summary-text @card(0..1),
+  plays summarisation:summation;
+entity top-level-pathway sub pathway;
+entity url sub publication;
+entity update-tracker sub meta-database-object,
+  owns action-name @card(0..),
+  plays update-tracking:tracker;
+
+# --- relations ---
+# ---------------------------------------------------------------------------
+# Event structure
+# ---------------------------------------------------------------------------
+
+# A pathway contains events in a curated order; `ordering` is the rank the
+# relational model keeps in Pathway_2_hasEvent.hasEvent_rank.
+relation event-containment,
+  relates containing-pathway,
+  relates contained-event,
+  owns ordering @card(0..1);
+
+# Ordering between events, and the curated statement that one event does NOT
+# precede another (Reactome records the reason for the exclusion).
+relation event-precedence,
+  relates preceding-event,
+  relates following-event;
+
+relation negative-precedence,
+  owns db-id @key,
+  owns display-name,
+  owns schema-class,
+  relates excluded-preceding-event,
+  relates following-event,
+  relates exclusion-reason @card(0..1);
+
+# Reaction participants. The abstract supertype lets a query ask for any
+# participation without naming the direction.
+relation reaction-participation @abstract,
+  relates reaction,
+  relates participant,
+  owns ordering @card(0..1),
+  owns stoichiometry @card(0..1);
+
+relation reaction-input sub reaction-participation,
+  relates consumed-entity as participant;
+
+relation reaction-output sub reaction-participation,
+  relates produced-entity as participant;
+
+relation required-input-component sub reaction-participation,
+  relates required-component as participant;
+
+# ---------------------------------------------------------------------------
+# Catalysis — ternary
+# ---------------------------------------------------------------------------
+# Reactome reifies this as a CatalystActivity holding a physical entity and a
+# GO molecular function, which reactions then reference. Because one such
+# activity is shared by many reactions, the fact being stated is really
+# three-way: this entity, performing this molecular function, catalyses this
+# reaction. An active unit narrows which part of the catalyst is responsible.
+# One relation per CatalystActivity node, holding every reaction that node is
+# referenced by — 63 at the most. Reactome shares one activity across reactions
+# rather than repeating it, and that sharing is a fact about the activity, not a
+# reason to mint a separate relation per reaction. `db-id` is the node's own, so
+# it keys the relation.
+relation catalysis,
+  owns db-id @key,
+  owns display-name,
+  owns schema-class,
+  plays catalyst-activity-evidence:evidenced-catalysis,
+  relates catalysed-reaction @card(0..),
+  relates catalyst,
+  relates catalytic-activity @card(0..1),
+  relates active-unit @card(0..);
+
+# ---------------------------------------------------------------------------
+# Regulation — a relation hierarchy
+# ---------------------------------------------------------------------------
+# Subtyping carries what the relational model can only express by joining the
+# PositiveRegulation table: `requirement` is a positive regulation, and its
+# name says nothing about that.
+relation regulation @abstract,
+  owns db-id @key,
+  owns display-name,
+  owns schema-class,
+  owns st-id @card(0..1),
+  plays regulation-evidence:evidenced-regulation,
+  plays regulation-go-annotation:annotated-regulation,
+  relates regulated-event @card(0..),
+  relates regulator,
+  relates regulatory-activity @card(0..1),
+  relates regulation-active-unit @card(0..);
+
+relation positive-regulation sub regulation;
+relation requirement sub positive-regulation;
+relation positive-gene-expression-regulation sub positive-regulation;
+relation negative-regulation sub regulation;
+relation negative-gene-expression-regulation sub negative-regulation;
+
+# ---------------------------------------------------------------------------
+# Composition — one abstract relation over complexes, sets and polymers
+# ---------------------------------------------------------------------------
+# SQL needs Complex_2_hasComponent UNION EntitySet_2_hasMember to walk a
+# structure; here both are `composition`, so one traversal covers them.
+relation composition @abstract,
+  relates whole,
+  relates part,
+  owns ordering @card(0..1),
+  owns stoichiometry @card(0..1);
+
+relation complex-composition sub composition,
+  relates containing-complex as whole,
+  relates component as part;
+
+relation set-membership sub composition,
+  relates containing-set as whole,
+  relates member as part;
+
+relation candidate-membership sub set-membership,
+  relates candidate as member;
+
+relation polymer-repetition sub composition,
+  relates containing-polymer as whole,
+  relates repeated-unit as part;
+
+# ---------------------------------------------------------------------------
+# Annotation
+# ---------------------------------------------------------------------------
+relation species-assignment,
+  relates classified-thing,
+  relates species;
+
+relation related-species-assignment,
+  relates classified-thing,
+  relates related-species;
+
+relation compartment-assignment,
+  relates localised-thing,
+  relates compartment;
+
+relation included-location,
+  relates localised-thing,
+  relates location;
+
+relation disease-annotation,
+  relates diseased-thing,
+  relates disease;
+
+relation go-annotation,
+  relates annotated-event,
+  relates biological-process;
+
+# A protein/molecule instance and the reference entity it is an instance of.
+relation reference-assignment,
+  relates instance-entity,
+  relates reference;
+
+relation modified-residue-assignment,
+  relates modified-entity,
+  relates residue;
+
+relation cross-reference,
+  relates referring-thing,
+  relates external-identifier;
+
+relation database-of,
+  relates external-thing,
+  relates reference-database;
+
+# Ontology parenthood, used by GO and the external ontologies; recursive.
+relation ontology-parenthood,
+  relates ontology-child,
+  relates ontology-parent;
+
+relation taxonomy-parenthood,
+  relates sub-taxon,
+  relates super-taxon;
+
+# ---------------------------------------------------------------------------
+# Inference between species
+# ---------------------------------------------------------------------------
+relation event-inference,
+  relates inferred-event,
+  relates source-event;
+
+relation entity-inference,
+  relates inferred-entity,
+  relates source-entity;
+
+# ---------------------------------------------------------------------------
+# Disease variants — 4-ary
+# ---------------------------------------------------------------------------
+# The fact ties an event to the diseased form of an entity, the normal form it
+# replaces, and the functional consequence. Splitting it into binaries loses
+# which normal entity the disease entity stands in for.
+relation entity-functional-status,
+  owns db-id @key,
+  owns display-name,
+  owns schema-class,
+  relates affected-event @card(1..),
+  relates disease-entity,
+  relates normal-entity @card(0..1),
+  relates functional-status @card(1..);
+
+relation functional-status-typing,
+  relates typed-status,
+  relates status-type;
+
+# ---------------------------------------------------------------------------
+# Literature and curation
+# ---------------------------------------------------------------------------
+relation literature-citation,
+  relates citing-thing,
+  relates cited-publication;
+
+relation summarisation,
+  relates summarised-thing,
+  relates summation;
+
+relation publication-authorship,
+  relates publication,
+  relates publication-author,
+  owns ordering @card(0..1);
+
+relation person-affiliation,
+  relates affiliated-person,
+  relates affiliation;
+
+# Every curation act is the same shape — an object and the edit that touched
+# it — so the subtypes differ only in what the edit means. Asking "was this
+# touched at all" is one query over the supertype.
+relation curation @abstract,
+  relates curated-object,
+  relates edit;
+
+relation creation sub curation;
+relation modification sub curation;
+relation authoring sub curation;
+relation review sub curation;
+relation internal-review sub curation;
+relation revision sub curation;
+# `edited` and `structureModified` are the same shape as the rest — an object
+# and the edit that touched it — so they belong here rather than as standalone
+# relations. Adding them makes "touched by any curation act" answer correctly.
+relation editing sub curation;
+relation structure-modification sub curation;
+
+relation edit-authorship,
+  relates authored-edit,
+  relates edit-author,
+  owns ordering @card(0..1);
+
+relation release-record,
+  relates tracked-object,
+  relates tracking-release;
+
+relation update-tracking,
+  relates tracker,
+  relates updated-object;
+
+# ---------------------------------------------------------------------------
+# Reference sequence cross-links
+# ---------------------------------------------------------------------------
+relation reference-gene-link,
+  relates referring-sequence,
+  relates gene-sequence;
+
+relation reference-transcript-link,
+  relates referring-sequence,
+  relates transcript-sequence;
+
+relation residue-reference-sequence,
+  relates modified-residue,
+  relates residue-sequence;
+
+relation second-reference-sequence,
+  relates crosslinked-residue,
+  relates partner-sequence;
+
+relation isoform-parenthood,
+  relates isoform,
+  relates parent-gene-product;
+
+relation residue-modification,
+  relates modified-residue,
+  relates modifying-group;
+
+relation crosslink-equivalence,
+  relates crosslinked-residue,
+  relates equivalent-residue;
+
+# ---------------------------------------------------------------------------
+# Interactions
+# ---------------------------------------------------------------------------
+relation interaction-participation,
+  relates interaction,
+  relates interactor;
+
+# ---------------------------------------------------------------------------
+# Cells, markers and anatomy
+# ---------------------------------------------------------------------------
+relation cell-marker-reference,
+  relates marked-cell,
+  relates cell-marker-ref;
+
+relation marker-reference-cell,
+  relates referencing-marker,
+  relates referenced-cell;
+
+relation marker-assignment,
+  relates marker-ref,
+  relates marker-entity;
+
+relation protein-marker-assignment,
+  relates marked-cell,
+  relates protein-marker;
+
+relation rna-marker-assignment,
+  relates marked-cell,
+  relates rna-marker;
+
+relation organ-assignment,
+  relates localised-cell,
+  relates organ;
+
+relation tissue-assignment,
+  relates localised-thing,
+  relates tissue;
+
+relation tissue-layer-assignment,
+  relates localised-cell,
+  relates tissue-layer;
+
+relation cell-type-assignment,
+  relates typed-thing,
+  relates assigned-cell-type;
+
+# ---------------------------------------------------------------------------
+# Compartment topology — GO cellular components relate to one another
+# ---------------------------------------------------------------------------
+relation compartment-membership,
+  relates part-compartment,
+  relates whole-compartment;
+
+relation compartment-part,
+  relates whole-compartment,
+  relates part-compartment;
+
+relation compartment-surrounding,
+  relates surrounded-compartment,
+  relates surrounding-compartment;
+
+relation go-cellular-component-assignment,
+  relates localised-thing,
+  relates cellular-component;
+
+# ---------------------------------------------------------------------------
+# Control references — the literature evidence for a catalysis or regulation.
+# The evidence points at the relation itself, which TypeDB allows: a relation
+# can play a role in another relation, so no reification is reintroduced.
+# ---------------------------------------------------------------------------
+relation catalyst-activity-reference-link,
+  relates referencing-reaction,
+  relates catalyst-reference;
+
+relation catalyst-activity-evidence,
+  relates evidencing-reference,
+  relates evidenced-catalysis;
+
+relation regulation-reference-link,
+  relates referencing-reaction,
+  relates regulation-ref;
+
+relation regulation-evidence,
+  relates evidencing-reference,
+  relates evidenced-regulation;
+
+# 28 goBiologicalProcess edges start at a Regulation rather than an Event, so
+# they cannot use go-annotation, whose annotated-event role only events play.
+relation regulation-go-annotation,
+  relates annotated-regulation,
+  relates regulation-biological-process;
+
+# ---------------------------------------------------------------------------
+# Curation and review status
+# ---------------------------------------------------------------------------
+relation review-status-assignment,
+  relates reviewed-thing,
+  relates status;
+
+relation previous-review-status-assignment,
+  relates reviewed-thing,
+  relates previous-status;
+
+relation evidence-type-assignment,
+  relates evidenced-thing,
+  relates evidence;
+
+relation figure-illustration,
+  relates illustrated-thing,
+  relates figure;
+
+relation psi-mod-assignment,
+  relates modified-thing,
+  relates psi-mod-term;
+
+relation structural-variant-assignment,
+  relates varied-status,
+  relates variant-term;
+
+relation publication-publisher,
+  relates published-work,
+  relates publisher;
+
+# ---------------------------------------------------------------------------
+# Deletion bookkeeping
+# ---------------------------------------------------------------------------
+relation deleted-instance-record,
+  relates deletion,
+  relates deleted-thing;
+
+relation replacement-instance,
+  relates deletion,
+  relates replacement;
+
+relation deletion-reason,
+  relates deletion,
+  relates reason;
+
+# ---------------------------------------------------------------------------
+# Alternative event structure
+# ---------------------------------------------------------------------------
+relation encapsulated-event,
+  relates encapsulating-pathway,
+  relates encapsulated;
+
+relation normal-reaction-link,
+  relates disease-reaction,
+  relates normal-reaction;
+
+relation normal-pathway-link,
+  relates disease-pathway,
+  relates normal-pathway;
+
+relation reverse-reaction-link,
+  relates forward-reaction,
+  relates reverse-reaction;
+
+relation entity-on-other-cell,
+  relates interacting-thing,
+  relates other-cell-entity;
+
+relation reaction-type-assignment,
+  relates typed-reaction,
+  relates assigned-reaction-type;

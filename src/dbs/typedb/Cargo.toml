@@ -1,0 +1,14 @@
+[package]
+name = "db-typedb"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+bench-core.workspace = true
+async-trait.workspace = true
+futures.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+tokio = { workspace = true, features = ["time", "sync"] }
+typedb-driver = "3"
+chrono.workspace = true

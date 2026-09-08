@@ -1,0 +1,8 @@
+given
+    $deletion: integer,
+    $replacement: integer;
+match
+$p0 isa deleted, has db-id == $deletion;
+$p1 isa database-object, has db-id == $replacement;
+insert
+$x isa replacement-instance, links (deletion: $p0, replacement: $p1);

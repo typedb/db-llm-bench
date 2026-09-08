@@ -1,0 +1,8 @@
+given
+    $modified_residue: integer,
+    $residue_sequence: integer;
+match
+$p0 isa abstract-modified-residue, has db-id == $modified_residue;
+$p1 isa reference-sequence, has db-id == $residue_sequence;
+insert
+$x isa residue-reference-sequence, links (modified-residue: $p0, residue-sequence: $p1);

@@ -1,0 +1,11 @@
+[package]
+name = "bench-config"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+bench-core.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+serde_yaml2.workspace = true
+thiserror.workspace = true

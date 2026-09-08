@@ -1,0 +1,18 @@
+given
+    $db_id: integer,
+    $display_name: string?,
+    $schema_class: string?,
+    $st_id: string?,
+    $old_st_id: string?,
+    $ec_number: string?,
+    $accession: string?,
+    $definition: string?;
+insert
+$x isa go-molecular-function, has db-id == $db_id;
+try { $x has display-name == $display_name; };
+try { $x has schema-class == $schema_class; };
+try { $x has st-id == $st_id; };
+try { $x has old-st-id == $old_st_id; };
+try { $x has ec-number == $ec_number; };
+try { $x has accession == $accession; };
+try { $x has definition == $definition; };

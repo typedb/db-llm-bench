@@ -1,0 +1,221 @@
+# Boots the three Reactome benchmark DBs: restores the MySQL and Neo4j dumps
+# from ../../data/reactome, then exports the graph from Neo4j into TypeDB.
+#
+# Reactome ships each quarterly release as both a MySQL dump of the curation
+# database and a Neo4j dump generated from it, so there is no shared source
+# file to prep — each DB restores its own native dump and the two loads are
+# independent. TypeDB has no dump and is derived from the graph (see
+# typedb-load below).
+#
+# All the loads are slow (841 MB of MyISAM INSERTs; a 528 MB compressed graph
+# store; ~25 minutes of TypeDB bulk load), so the first `up` takes a while —
+# watch it with `docker compose logs -f`. No service reports healthy until its
+# load has finished, so `--wait` is the reliable way to block on readiness.
+#
+# The project is named after the dataset so its containers and volumes are
+# identifiable as Reactome's rather than as the folder's.
+name: reactome
+
+volumes:
+  mysql_data:
+  neo4j_data:
+  typedb_data:
+
+services:
+  # Self-seeding: files in /docker-entrypoint-initdb.d run once, on first init,
+  # in filename order. No separate seed service is needed, and the container
+  # deliberately does not accept TCP connections until the dump has finished
+  # loading (see the healthcheck).
+  mysql:
+    # The dump's header reports server version 8.0.42, and every table is
+    # MyISAM — both fine on 8.0, but not on 9.x, where MyISAM support is gone.
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: reactome
+    command:
+      # mysqldump emits extended INSERTs and Reactome's rows are wide (long
+      # descriptions and literature references), so raise the packet ceiling
+      # above the 64M default. key_buffer_size is the MyISAM index cache —
+      # every table here is MyISAM, so it is the setting that governs load
+      # speed and index rebuild time.
+      - --max-allowed-packet=1G
+      - --key-buffer-size=512M
+    ports:
+      - "3306:3306"
+    volumes:
+      # The dump carries no CREATE DATABASE or USE statement, so what puts it
+      # in the right schema is the entrypoint running it with
+      # --database=$MYSQL_DATABASE.
+      - ../../data/reactome/sql/gk_current.sql:/docker-entrypoint-initdb.d/01-gk_current.sql:ro
+      - ../mysql/roles.sql:/docker-entrypoint-initdb.d/02-roles.sql:ro
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      # -h 127.0.0.1 forces TCP on purpose: during init the entrypoint runs a
+      # temporary server with --skip-networking, so a TCP ping stays red until
+      # the dump has loaded and the real server is listening. A socket-based
+      # check would go green mid-load.
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u root -ppassword --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      # Failures inside start_period don't count toward retries, so this is the
+      # load budget rather than a delay — the container is marked healthy as
+      # soon as it passes, regardless of how much of the window is left.
+      start_period: 45m
+
+  # One-shot: restores the dump into the `neo4j` database before the server
+  # starts. neo4j-admin needs the store offline, so this cannot run against a
+  # live server — hence a separate container sharing the data volume rather
+  # than seeding a running server.
+  neo4j-load:
+    image: neo4j:5-community
+    volumes:
+      # neo4j-admin resolves the dump as <database>.dump inside --from-path, so
+      # the bind mount renames Reactome's file to match the target database.
+      # Community edition serves exactly one user database, always `neo4j`.
+      - ../../data/reactome/neo4j/reactome.graphdb.dump:/dumps/neo4j.dump:ro
+      - neo4j_data:/data
+    environment:
+      # neo4j-admin sizes its heap from this, not from the server.memory.*
+      # settings; the default is small enough to slow the restore noticeably.
+      HEAP_SIZE: 2G
+    command:
+      - neo4j-admin
+      - database
+      - load
+      - neo4j
+      - --from-path=/dumps
+      # Makes re-running `docker compose up` a clean reload rather than an
+      # error on the second run.
+      - --overwrite-destination=true
+
+  # One-shot: upgrades the restored store to a format Neo4j 5 will serve.
+  # Reactome's dump is written in AF4.3.0 (a 4.3-era format); `database load`
+  # accepts it, but the server refuses to start on it.
+  neo4j-migrate:
+    image: neo4j:5-community
+    depends_on:
+      neo4j-load:
+        condition: service_completed_successfully
+    volumes:
+      - neo4j_data:/data
+    environment:
+      HEAP_SIZE: 2G
+    command:
+      - neo4j-admin
+      - database
+      - migrate
+      - neo4j
+      # Neo4j 5 removed BTREE. The dump carries 13 BTREE indexes and 23
+      # uniqueness constraints backed by BTREE indexes, and migration aborts on
+      # them unless replacements exist; this flag rebuilds them as RANGE.
+      # Reactome's are all single-property exact-match lookups (dbId, stId,
+      # identifier), which is what RANGE handles well — but the indexes are
+      # repopulated from scratch, so the first queries after a load are slower
+      # until that settles.
+      - --force-btree-indexes-to-range
+
+  neo4j:
+    image: neo4j:5-community
+    depends_on:
+      neo4j-migrate:
+        condition: service_completed_successfully
+    environment:
+      NEO4J_AUTH: neo4j/password
+      # Server-side transaction timeout, matching the cap the benchmark applies
+      # to the other DBs.
+      NEO4J_db_transaction_timeout: 180s
+      NEO4J_server_memory_heap_max__size: 4G
+      NEO4J_server_memory_pagecache_size: 2G
+      # Cap a SINGLE transaction, not just the global pool. The default is 0B
+      # (unlimited per transaction) while dbms.memory.transaction.total.max
+      # defaults to 70% of heap — 2.8G here — so one pathological generated
+      # query can consume the entire budget and the failure arrives as global
+      # pool exhaustion. That is indistinguishable from a sick server, gets
+      # retried, and eventually kills the run. With a per-transaction cap the
+      # offending query dies alone, well inside the global budget, and scores
+      # as the failure it is.
+      #
+      # 1G is far above anything legitimate here: the slowest reference query
+      # on this store finishes in ~1.2s. Raise it if a genuine query starts
+      # hitting the ceiling.
+      NEO4J_db_memory_transaction_max: 1G
+    ports:
+      - "7687:7687"
+      - "7474:7474" # browser UI, handy for debugging
+    volumes:
+      - neo4j_data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "cypher-shell -u neo4j -p password 'RETURN 1' || exit 1"]
+      interval: 5s
+      timeout: 10s
+      retries: 30
+      start_period: 5m
+
+  typedb:
+    # Must match the loader image's TYPEDB_VERSION: loader and server share a
+    # protocol and a mismatch panics the server on the handshake.
+    image: typedb/typedb:3.12.3
+    command:
+      - "--development-mode.enabled=true"
+    environment:
+      # Reactome's pathway hierarchy is deep enough that the recursive queries
+      # overflow a tokio worker's default 2MB stack: the server aborts with
+      # `thread 'tokio-rt-worker' has overflowed its stack` (exit 133) and
+      # every later query in the run fails on a dead connection. It is
+      # scheduling-dependent, so the same query crashes on one run and passes
+      # on the next. Tokio takes its worker stack size from RUST_MIN_STACK
+      # when the runtime does not set one explicitly.
+      RUST_MIN_STACK: "134217728"
+    ports:
+      - "1729:1729"
+      - "8000:8000" # HTTP API, for TypeDB Studio and ad-hoc queries over REST
+    volumes:
+      # Mounted at .../data, not its parent: the image declares
+      # `VOLUME /var/lib/typedb/data`, so Docker creates an anonymous volume
+      # there that shadows anything mounted higher up — the store would go to
+      # the anonymous volume and be lost when the container is recreated. The
+      # load takes ~25 minutes, so it must survive.
+      - typedb_data:/var/lib/typedb/data
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c '</dev/tcp/localhost/1729'"]
+      interval: 5s
+      timeout: 5s
+      retries: 60
+      start_period: 2m
+
+  # One-shot: export from Neo4j, regenerate the loader passes, then load.
+  # Depends on Neo4j because the export reads from it — the TypeQL schema was
+  # derived from the same class hierarchy the graph exposes, so the graph is
+  # the source that needs no reconciliation.
+  typedb-load:
+    build: ./loader
+    depends_on:
+      typedb:
+        condition: service_healthy
+    # Deliberately NOT depends_on neo4j: that would re-trigger neo4j-load,
+    # whose `neo4j-admin database load` cannot overwrite a store while the
+    # server is running, so the whole run fails. Bring Neo4j up first
+    # (`docker compose up -d --wait neo4j`); seed.sh checks it is reachable
+    # and stops with a clear message if not.
+    volumes:
+      - ../../data/reactome:/reactome
+    environment:
+      ADDRESS: https://j5z6pw-0.cluster.typedb.dev:80
+      DB: reactome
+      DB_USER: admin
+      DB_PASS: f5gyqHrms9L0TuFg
+      TYPEDB: /usr/local/bin/typedb
+      WORK: /reactome/typedb/work
+      # Loader checkpoints are written to a temp file and renamed into place.
+      # On a Windows host the bind mount rejects rename-over-existing with
+      # EPERM part way through a large pass, which aborts the whole load under
+      # `set -e` with the error buried in that pass's log. Keeping the loader's
+      # scratch output on the container filesystem avoids it; the per-pass
+      # reject counts still print, and a single pass can be re-run with OUT
+      # pointed back at /reactome/typedb/loader-output to inspect rejects.log.
+      OUT: /tmp/loader-output
+      NEO4J_HTTP: http://neo4j:7474/db/neo4j/tx/commit
+      NEO4J_USER: neo4j
+      NEO4J_PASS: password

@@ -1,0 +1,8 @@
+given
+    $disease_pathway: integer,
+    $normal_pathway: integer;
+match
+$p0 isa pathway, has db-id == $disease_pathway;
+$p1 isa pathway, has db-id == $normal_pathway;
+insert
+$x isa normal-pathway-link, links (disease-pathway: $p0, normal-pathway: $p1);

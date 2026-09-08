@@ -1,0 +1,9 @@
+given
+    $containing_pathway: integer,
+    $contained_event: integer,
+    $ordering: integer;
+match
+$p0 isa pathway, has db-id == $containing_pathway;
+$p1 isa event, has db-id == $contained_event;
+insert
+$x isa event-containment, links (containing-pathway: $p0, contained-event: $p1), has ordering == $ordering;

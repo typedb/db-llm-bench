@@ -1,0 +1,8 @@
+given
+    $referring_sequence: integer,
+    $transcript_sequence: integer;
+match
+$p0 isa reference-sequence, has db-id == $referring_sequence;
+$p1 isa reference-rnasequence, has db-id == $transcript_sequence;
+insert
+$x isa reference-transcript-link, links (referring-sequence: $p0, transcript-sequence: $p1);

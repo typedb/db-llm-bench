@@ -1,0 +1,8 @@
+[package]
+name = "bench-output"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+bench-core.workspace = true
+serde_json.workspace = true

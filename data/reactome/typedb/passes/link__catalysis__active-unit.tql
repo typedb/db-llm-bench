@@ -1,0 +1,8 @@
+given
+    $db_id: integer,
+    $active_unit: integer;
+match
+$x isa catalysis, has db-id == $db_id;
+$p isa physical-entity, has db-id == $active_unit;
+insert
+$x links (active-unit: $p);

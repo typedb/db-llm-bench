@@ -1,0 +1,8 @@
+given
+    $disease_reaction: integer,
+    $normal_reaction: integer;
+match
+$p0 isa reaction-like-event, has db-id == $disease_reaction;
+$p1 isa reaction-like-event, has db-id == $normal_reaction;
+insert
+$x isa normal-reaction-link, links (disease-reaction: $p0, normal-reaction: $p1);

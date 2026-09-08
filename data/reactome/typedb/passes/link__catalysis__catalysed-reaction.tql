@@ -1,0 +1,8 @@
+given
+    $db_id: integer,
+    $catalysed_reaction: integer;
+match
+$x isa catalysis, has db-id == $db_id;
+$p isa reaction-like-event, has db-id == $catalysed_reaction;
+insert
+$x links (catalysed-reaction: $p);

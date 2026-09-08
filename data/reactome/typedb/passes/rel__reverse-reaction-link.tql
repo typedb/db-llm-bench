@@ -1,0 +1,8 @@
+given
+    $forward_reaction: integer,
+    $reverse_reaction: integer;
+match
+$p0 isa reaction-like-event, has db-id == $forward_reaction;
+$p1 isa reaction-like-event, has db-id == $reverse_reaction;
+insert
+$x isa reverse-reaction-link, links (forward-reaction: $p0, reverse-reaction: $p1);
