@@ -202,10 +202,10 @@ services:
     volumes:
       - ../../data/reactome:/reactome
     environment:
-      ADDRESS: https://j5z6pw-0.cluster.typedb.dev:80
+      ADDRESS: typedb:1729
       DB: reactome
       DB_USER: admin
-      DB_PASS: f5gyqHrms9L0TuFg
+      DB_PASS: password
       TYPEDB: /usr/local/bin/typedb
       WORK: /reactome/typedb/work
       # Loader checkpoints are written to a temp file and renamed into place.
